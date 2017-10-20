@@ -1,0 +1,56 @@
+\documentclass[10pt, draftclsnofoot, onecolumn]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper, margin=0.75in]{geometry}
+\title{}
+\author{Austin Row, Jeremy Fischer, and James Stallkamp \\
+CS 461 \\
+NLP for Digital Manufacturing-Problem Statement \\
+Fall 2017 \\}
+\date{October 2017}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+Abstract \\    
+\end{center}
+The future of computer applications lies in the ability of intelligent machines to make accurate and helpful decisions on behalf of users. One of the first steps in achieving this goal is finding a way to collect data regarding motivations for user decisions without disrupting the user’s workflow within a given application. The \textit{NLP For Digital Manufacturing} project is a proof of concept that will create a virtual assistant for Autodesk’s 3-D computer aided design product, Fusion 360, that uses a speech interface and interviewing capabilities to non-obstructively extract and store the user’s decision motivations. The successful execution of this project will include a virtual assistant that can execute basic workflows within Fusion 360. The ability to interview the user about design decisions will also be attempted, but completion of this capability is not the benchmark for success.
+
+\clearpage
+
+\section*{Problem Description}
+Computers have traditionally played the role of a tool that only does as it is instructed by its user and no more. In recent years, the field of computation has emphasized the integration of  machine learning techniques and aspects of artificial intelligence into commercial products in an effort to minimize the user’s workload. The future of computation and application interaction lies in this form of automation. As artificial intelligence becomes more advanced, computers will become increasingly responsible for work that has traditionally been performed by human users. Part of this transition will require machines to learn what motivates a user’s decisions. Our project will be an exploration into how machine learning techniques can be implemented to teach a computer to make intelligent and accurate decisions on behalf of a user. A natural sub-problem that arises from this is how to provide a learning agent with an environment that allows it to extract meaning from user actions without interjecting in a way that disrupts the user’s natural workflow and thought process. \\
+
+In traditional application environments, the user’s interaction with the computer is facilitated by a keyboard and mouse. This environment poses an issue for the ultimate goal of the project as it offers only two options for the computer to derive meaning from user decisions. Either the computer can attempt to reason about a user’s actions without further input or the computer must interject and disrupt the user’s workflow to inquire about reasoning. In the first case, it is difficult to accurately and completely derive meaning of actions simply by observing. The second case, however, is not conducive to a productive work environment and is likely to agitate a user, which is unacceptable in a commercial application. Thus, a related problem that this project will solve before attempting its ultimate goal is that of how to provide an environment that allows the computer to learn how a user makes decision without disrupting the user’s workflow. \\
+
+\section*{Proposed Solution}
+Our solution to the aforementioned problem is comprised of two parts: the construction of a voice interface for Autodesk’s Fusion 360 product, and the implementation of a virtual assistant that leverages this new interface to collect information regarding how and why users make certain decisions within the product. \\
+
+The first step in completing the proposed solution is the creation of a voice interface for Fusion 360. Part of the problem consists of how to provide the machine with an environment in which it has the opportunity to collect information about a user’s decisions without disrupting the user’s workflow. A speech interface will be natural for the user and something that can run in parallel with the user’s keyboard and mouse interactions. With this, the machine can pursue information about a user’s actions without interjecting into and stopping what they are doing on-screen. This solves the problem of the virtual assistant having an environment in which it can non-obstructively inquire into and learn about the reasoning behind a user’s actions. \\
+
+With the proper learning environment in place, the project will move on to actually use this environment to collect data about why users make certain decisions in specific contexts. On the path to a future with machines that act as collaborators rather than as simple inanimate tools, there lies an intermediary step of collecting information regarding the motivations behind human decisions. As a solution to this intermediary step, we will expand the voice interface implemented in the first part of the project into something that periodically questions the user in an effort to collect data regarding the motivations in the decision-making process. This will help achieve the future goal of creating an intelligent virtual assistant for Fusion 360 by collecting data that the machine needs to learn how to be helpful in automating tasks for users. \\
+
+\section*{Performance Metrics}
+This group understands that the power of the virtual assistant lies in its ability to collect the \textit{why} from design choices. However, given the duration of this project, adding interviewing capabilities to the virtual assistant will be a stretch goal. Therefore, laying the groundwork for the virtual assistant is our overall objective. This project’s deliverables fall into two categories: prototype tasks and learning material. When the voice interface to Fusion 360 pipeline is completed, it should be able to execute some basic commands via the voice interface as described below. The successful execution of these commands will be the pipeline’s benchmark for success. 
+We set as a stretch goal the ability to query the designer for the reasoning behind design choices. \\
+
+Autodesk also values the learning outcomes of this project so the project will include a document entailing the major obstacles, the ceiling of available open source support, and the resources that allowed for the successful implementation of our solution. This document will provide Autodesk with useful information should they choose to pursue the project in the future. A summary of the project's deliverables is as follows: \\
+
+\begin{itemize}
+    \item
+    Virtual assistant will be able to accomplish a basic workflow such as, \\
+    1) "Extrude 5mm." \\
+    2) "Rotate design 90 degrees to the left." \\
+    3) "Save design as myDraftOne.f3d."
+    \item
+    (Stretch goal) The virtual assistant will be able to, at an appropriate time, ask the user a question like, “Did you make this design change for an aesthetic reason or a design constraint reason?”, and store the question paired with the user’s answer.
+    \item
+    (Stretch goal) The virtual assistant will use contextual information that it asked for to make intelligent design decisions for the user.
+    \item
+    A document that indicates the major obstacles, the ceiling of available open source support, the resources that enabled the project to be successful, and a list of tasks in Fusion 360 that can be handled efficiently by the virtual assistant as well as a list of tasks that should be left to the keyboard and mouse interface.
+    \item
+    A high-level design of how the virtual assistant will interview for and collect the motivations behind design decisions from the designer.
+\end{itemize}
+
+\end{document}
