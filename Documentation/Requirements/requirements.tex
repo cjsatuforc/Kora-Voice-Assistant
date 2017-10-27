@@ -144,43 +144,36 @@
     \subsection{Functional Requirements}
     This section includes the requirements that specify all the fundamental actions of the software system.
     	\subsubsection{Functional Requirement 1}
-    	\textbf{ID: FR1} \\
         TITLE: Convert voice to text \\
         DESCRIPTION: The system shall be able to hear voice english statements and output their english text equivalent.
         RATIONAL: This must be done to understand the user's command 
         
         \subsubsection{Functional Requirement 2}
-    	\textbf{ID: FR2} \\
         TITLE: Error State \\
         DESCRIPTION: The system shall inform the user that it can't perform an operation or doesn't understand what the user's commanded is in an error state \\
         RATIONAL: This must be done to inform the user 
         
         \subsubsection{Functional Requirement 3}
-    	\textbf{ID: FR3} \\
         TITLE: Correspond voice command to Fusion 360 action  \\
         DESCRIPTION: The system shall be able to correspond the produced text equivalent described in FR1 to the correct Fusion action
         RATIONAL: This must be done to run commands in Fusion 
         
         \subsubsection{Functional Requirement 4}
-    	\textbf{ID: FR4} \\
         TITLE: Send commands to Fusion  \\
         DESCRIPTION: The system shall be able to send the generated action from FR2 to Fusion
         RATIONAL: This is the last step in the voice command to Fusion action pipeline 
         
         \subsubsection{Functional Requirement 5}
-    	\textbf{ID: FR5} \\
         TITLE: Extrude shape by voice \\
         DESCRIPTION: The system shall be able to extrude a shape accordingly in Fusion by a command similar to "extrude by 5mm."
         RATIONAL: This is the first step in prototype demo 
         
         \subsubsection{Functional Requirement 6}
-    	\textbf{ID: FR6} \\
         TITLE: Rotate camera by voice \\
         DESCRIPTION: The system shall be able to rotate the Fusion camera by a command similar to "rotate the design 90 degrees to the left." 
         RATIONAL: This is the second step in prototype demo 
         
         \subsubsection{Functional Requirement 7}
-    	\textbf{ID: FR7} \\
         TITLE: Save design by voice \\
         DESCRIPTION: The system shall be able to save a Fusion design by a voice command similar to "save my design as \textit{my\_draft\_1.f3d}."
         RATIONAL: This is the last step in prototype demo 
@@ -190,26 +183,22 @@
         %	%
         
         \subsubsection{Stretch Functional Requirement 1}
-    	\textbf{ID: SFR 1} \\
         TITLE: What interview question to ask \\
         DESCRIPTION: The system shall be able to generate an interview question
         RATIONAL: This is the first step in collecting user reasoning data. 
         
         
         \subsubsection{Stretch Functional Requirement 2}
-    	\textbf{ID: SFR 2} \\
         TITLE: When to ask an interview question \\
         DESCRIPTION: The system shall be aware of when it is appropriate to ask a question.
         RATIONAL: This is the second step in collecting user reasoning data. 
         
         \subsubsection{Stretch Functional Requirement 3}
-    	\textbf{ID: SFR 3} \\
         TITLE: Ask a question \\
         DESCRIPTION: The system shall be able to ask a question to the user.
         RATIONAL: This is the third step in collecting user reasoning data. 
         
         \subsubsection{Stretch Functional Requirement 4}
-    	\textbf{ID: SFR 4} \\
         TITLE: Output interview text to a file \\
         DESCRIPTION: The system shall be able to output an interview question paired with the user's answer to a file.
         RATIONAL: This is the last step in collecting user reasoning data. 
@@ -219,19 +208,16 @@
     		The section covers the numerical performance requirements of the system
         
         \subsubsection{Performance Requirement 1}
-    	\textbf{ID: PR 1} \\
         TITLE: Number  of users \\
         DESCRIPTION: \botname can handle one user at time
         RATIONAL: Only one user is using the Fusion at a time. 
         
         \subsubsection{Performance Requirement 2}
-    	\textbf{ID: PR 2} \\
         TITLE: Voice command to Fusion action time \\
         DESCRIPTION: A Fusion action shall take place within one a second of the user's voice command.
         RATIONAL: This window is fast enough for a user's satisfaction and slow enough to allow \botname to process fully.
         
         \subsubsection{Performance Requirement 3}
-    	\textbf{ID: PR 3} \\
         TITLE: Number  of users \\
         DESCRIPTION: \botname can handle one user at time
         RATIONAL: Only one user is using the Fusion at a time. 
@@ -240,16 +226,17 @@
     	\CapstoneTeamName doesn't have access to the Fusion source code. Therefore, \CapstoneTeamName is constrained by the depth and breadth of the Fusion API in the creation of \botname.
         
     \subsection{Software System Attributes}
-    
-    
-    
-    \subsection{Performance Requirements}
-    \subsection{Design Constraints}
-    \subsection{Software System Attributes}
+	   	\subsubsection{Reliability}
+	   	SCALE: The desired task is performed, i.e. if \botname is capable of performing the desired action then it shall be able to understand the voice command and successfully execute the Fusion action.\\
+	   	METER: Measurements obtained from 10 trials per possible command during testing.\\
+	   	MUST: More than 75\% of achievable voice commands.\\
+	   	PLAN: More than 80\% of achievable voice commands.\\
+	   	WISH: 90\% of achievable voice commands.\\
+   
+		
 
-
-\section{Prioritization and Release Plan}
-    \subsection{Prioritization Method}
+\section{Release Plan}
+	The develop of \botname is very sequential. Each step's development and success depends on how the previous step was implemented. For that reason, \CapstoneProjectName's release plan remains tentative. Below is a Gantt chart outlining \botname's development plan.
     \subsection{Release plan}
     	\begin{figure}[H]
     		\includegraphics[width=1\textwidth]{ganttChart.png}
