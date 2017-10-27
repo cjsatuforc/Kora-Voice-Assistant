@@ -1,0 +1,253 @@
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{geometry}
+\geometry{textheight=9.5in, textwidth=7in}
+\setlength\parindent{0pt}
+
+% 1. Fill in these details
+\def \CapstoneTeamName{\textbf{Insert Team Name Here} }
+\def \CapstoneTeamNumber{8}
+\def \GroupMemberOne{James Stallkamp}
+\def \GroupMemberTwo{Jeremy Fischer}
+\def \GroupMemberThree{Austin Row}
+\def \CapstoneProjectName{NLP For Digital Manufacturing}
+\def \CapstoneSponsorCompany{Autodesk}
+\def \CapstoneSponsorPerson{Patti Vrobel}
+\def \botname{Aviato }
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{		%Problem Statement
+				Requirements Document
+				%Technology Review
+				%Design Document
+				%Progress Report
+				}
+			
+\newcommand{\NameSigPair}[1]{\par
+\makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+\par\vspace{-12pt} \textit{\tiny\noindent
+\makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \pagenumbering{gobble}
+    \begin{singlespace}
+    	\includegraphics[height=4cm]{coe_v_spot1}
+        %\hfill 
+        % 4. If you have a logo, use this includegraphics command to put it on the coversheet.
+        \includegraphics[height=4cm]{autodesk}   
+        \par\vspace{.2in}
+        \centering
+        \scshape{
+            \huge CS Capstone \DocType \par
+            {\large\today}\par
+            \vspace{.5in}
+            \textbf{\Huge\CapstoneProjectName}\par
+            \vfill
+            {\large Prepared for}\par
+            \Huge \CapstoneSponsorCompany\par
+            \vspace{5pt}
+            {\Large\NameSigPair{\CapstoneSponsorPerson}\par}
+            {\large Prepared by }\par
+            Group\CapstoneTeamNumber\par
+            % 5. comment out the line below this one if you do not wish to name your team
+            %\CapstoneTeamName\par 
+            \vspace{5pt}
+            {\Large
+                \NameSigPair{\GroupMemberOne}\par
+                \NameSigPair{\GroupMemberTwo}\par
+                \NameSigPair{\GroupMemberThree}\par
+            }
+            \vspace{20pt}
+        }
+        %\begin{abstract}
+       %TODO: 
+        %\end{abstract}     
+    \end{singlespace}
+\end{titlepage}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+% 7. uncomment this (if applicable). Consider adding a page break.
+%\listoffigures
+%\listoftables
+\clearpage
+
+% 8. now you write!
+\section{Introduction}
+        The introduction outlines the purpose and scope of the project. 
+        This section is responsible for defining any prerequisite acronyms and terms used in the document. 
+    \subsection{Purpose}
+        The purpose of this document is to lay out the requirements of \CapstoneTeamName. 
+        This document is a mutual agreement between both parties outlining what will be produced. 
+        The intended audience is those who will be working on \CapstoneTeamName and the client for whom \CapstoneTeamName is for.
+    \subsection{Scope}
+        \botname will be a speech-based virtual assistant for Fusion 360 that lets users perform any one of a subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
+        Workflows in Fusion 360 that are not suited for handling by a voice interface will not be supported by \botname.
+        As a stretch goal, \botname will be capable of questioning user and storing responses to use to predict and automatically assist with future user behavior.
+        It will be a plugin that is bundled with Fusion 360 and will be part of the product's standard download. \\
+
+        \botname will offer users a tool that decreases the time required to achieve their goals within Fusion 360 by offering an interface that runs in parallel with and complements the keyboard and mouse.
+        If the stretch goal is achieved, \botname will further increase productivity by learning to predict and automate specific workflows within the product.
+        
+
+    \subsection{Definitions, Acronyms, and Abbreviations}
+        \begin{table}[h]
+            \centering
+            \caption{Definitions}
+            \label{my-label}
+            \begin{tabular}{|l|l|}
+                \hline
+                \textbf{Term} & \textbf{Definition} \\ \hline
+                API & Application programing interface \\ \hline
+                CAD & Computer Aided Design \\ \hline
+                CAM & Computer Aided Manufacturing \\ \hline
+                Fusion 360 & 
+                Referred to as just, Fusion, is an Autodesk Cloud-based 3D CAD/CAM tool/product \\ \hline
+                Task & In the context of Fusion 360, a function or operation that can be performed in Fusion 360 \\ \hline
+                Plugin & Software that adds specific new functionlity to another piece of software \\ \hline
+                User & Someone who interacts \botname  \\ \hline
+                Workflow & A sequence of tasks \\ \hline
+            \end{tabular}
+        \end{table}
+    \subsection{References}
+        %TODO
+    \subsection{Overview}
+        The rest of this document contains a user story outlining \CapstoneTeamName workflow, specific functionalities that \CapstoneTeamName will support by completion, assumptions and dependencies, and design constraints. 
+        The next section contains the overall \CapstoneTeamName description, followed by the specific requirements. 
+
+\section{Overall Description}
+    This section describes the contents and organization of the rest of the document. 
+    %TODO: Expand this to give brief summary of contents and organization of the rest of the document.
+    \subsection{Product Perspective}
+        
+    \subsection{Product Functions}
+    \subsection{User Characteristics}
+    \subsection{Constraints}
+    \subsection{Assumptions and Dependencies}
+
+
+\section{Specific Requirements}
+    \subsection{External Interface}
+    \subsection{Functional Requirements}
+    This section includes the requirements that specify all the fundamental actions of the software system.
+    	\subsubsection{Functional Requirement 1}
+    	\textbf{ID: FR1} \\
+        TITLE: Convert voice to text \\
+        DESCRIPTION: The system shall be able to hear voice english statements and output their english text equivalent.
+        RATIONAL: This must be done to understand the user's command \\
+        
+        \subsubsection{Functional Requirement 2}
+    	\textbf{ID: FR2} \\
+        TITLE: Error State \\
+        DESCRIPTION: The system shall inform the user that it can't perform an operation or doesn't understand what the user's commanded is in an error state \\
+        RATIONAL: This must be done to inform the user \\
+        
+        \subsubsection{Functional Requirement 3}
+    	\textbf{ID: FR3} \\
+        TITLE: Correspond voice command to Fusion 360 action  \\
+        DESCRIPTION: The system shall be able to correspond the produced text equivalent described in FR1 to the correct Fusion action
+        RATIONAL: This must be done to run commands in Fusion \\
+        
+        \subsubsection{Functional Requirement 4}
+    	\textbf{ID: FR4} \\
+        TITLE: Send commands to Fusion  \\
+        DESCRIPTION: The system shall be able to send the generated action from FR2 to Fusion
+        RATIONAL: This is the last step in the voice command to Fusion action pipeline \\
+        
+        \subsubsection{Functional Requirement 5}
+    	\textbf{ID: FR5} \\
+        TITLE: Extrude shape by voice \\
+        DESCRIPTION: The system shall be able to extrude a shape accordingly in Fusion by a command similar to "extrude by 5mm."
+        RATIONAL: This is the first step in prototype demo \\
+        
+        \subsubsection{Functional Requirement 6}
+    	\textbf{ID: FR6} \\
+        TITLE: Rotate camera by voice \\
+        DESCRIPTION: The system shall be able to rotate the Fusion camera by a command similar to "rotate the design 90 degrees to the left." 
+        RATIONAL: This is the second step in prototype demo \\
+        
+        \subsubsection{Functional Requirement 7}
+    	\textbf{ID: FR7} \\
+        TITLE: Save design by voice \\
+        DESCRIPTION: The system shall be able to save a Fusion design by a voice command similar to "save my design as \textit{my\_draft\_1.f3d}."
+        RATIONAL: This is the last step in prototype demo \\
+        
+        %	%
+        %	Below are stretch goals
+        %	%
+        
+        \subsubsection{Stretch Functional Requirement 1}
+    	\textbf{ID: SFR 1} \\
+        TITLE: What interview question to ask \\
+        DESCRIPTION: The system shall be able to generate an interview question
+        RATIONAL: This is the first step in collecting user reasoning data. \\
+        
+        
+        \subsubsection{Stretch Functional Requirement 2}
+    	\textbf{ID: SFR 2} \\
+        TITLE: When to ask an interview question \\
+        DESCRIPTION: The system shall be aware of when it is appropriate to ask a question.
+        RATIONAL: This is the second step in collecting user reasoning data. \\
+        
+        \subsubsection{Stretch Functional Requirement 3}
+    	\textbf{ID: SFR 3} \\
+        TITLE: Ask a question \\
+        DESCRIPTION: The system shall be able to ask a question to the user.
+        RATIONAL: This is the third step in collecting user reasoning data. \\
+        
+        \subsubsection{Stretch Functional Requirement 4}
+    	\textbf{ID: SFR 4} \\
+        TITLE: Output interview text to a file \\
+        DESCRIPTION: The system shall be able to output an interview question paired with the user's answer to a file.
+        RATIONAL: This is the last step in collecting user reasoning data. \\
+        
+        
+    \subsection{Performance Requirements}
+    	The section covers the numerical performance requirements of the system
+        
+        \subsubsection{Performance Requirement 1}
+    	\textbf{ID: PR 1} \\
+        TITLE: Number  of users \\
+        DESCRIPTION: \botname can handle one user at time
+        RATIONAL: Only one user is using the Fusion at a time. \\
+        
+        \subsubsection{Performance Requirement 2}
+    	\textbf{ID: PR 2} \\
+        TITLE: Voice command to Fusion action time \\
+        DESCRIPTION: A Fusion action shall take place within one a second of the user's voice command.
+        RATIONAL: This window is fast enough for a user's satisfaction and slow enough to allow \botname to process fully.\\
+        
+        \subsubsection{Performance Requirement 3}
+    	\textbf{ID: PR 3} \\
+        TITLE: Number  of users \\
+        DESCRIPTION: \botname can handle one user at time
+        RATIONAL: Only one user is using the Fusion at a time. \\
+        
+    \subsection{Design Constraints}
+    	\CapstoneTeamName doesn't have access to the Fusion source code. Therefore, \CapstoneTeamName is constrained by the depth and breadth of the Fusion API in the creation of \botname.
+        
+    \subsection{Software System Attributes}
+    
+    
+    
+    \subsection{Performance Requirements}
+    \subsection{Design Constraints}
+    \subsection{Software System Attributes}
+
+
+\section{Prioritization and Release Plan}
+    \subsection{Prioritization Method}
+    \subsection{Release plan}
+
+
+%\bibliography{requirementsBib} 
+%\bibliographystyle{ieeetr}
+
+\end{document}
