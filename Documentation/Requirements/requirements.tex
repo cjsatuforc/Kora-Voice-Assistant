@@ -23,6 +23,7 @@
 \def \CapstoneSponsorCompany{Autodesk}
 \def \CapstoneSponsorPerson{Patti Vrobel}
 \def \botname{Aviato }
+\def \totalMemoryRequirement{20 MB }
 
 % 2. Uncomment the appropriate line below so that the document type works
 \def \DocType{		%Problem Statement
@@ -122,21 +123,48 @@
                 Workflow & A sequence of tasks \\ \hline
             \end{tabular}
         \end{table}
-    \subsection{References}
+    %\subsection{References}
         %TODO
     \subsection{Overview}
-        The rest of this document contains a user story outlining \CapstoneTeamName workflow, specific functionalities that \CapstoneTeamName will support by completion, assumptions and dependencies, and design constraints. 
-        The next section contains the overall \CapstoneTeamName description, followed by the specific requirements. 
+        %This section describes the contents and organization of the rest of the document. 
+        The rest of this document contains a user story outlining intended uses and specific functionalities of \botname as well as assumptions, dependencies, and design constraints. 
 
 \section{Overall Description}
     \subsection{Product Perspective}
-		\botname is a natural language interface plugin for Autodesk's Fusion360. 
-		However the purpose of \botname goes beyond voice commands, \botname will eventually become an intelligent virtual assitant. 
-		Ultimately \botname will be able to automate or make suggestions for basic design tasks.
-		\botname will start as just a natural language interface for Fusion360, which will allow users to use voice commands to control Fusion360.
-		In addition to voice commands \botname will ask the user questions related to design choices, the responses to these questions will saved for later analysis.
-		The responses collected from users will be used to train \botname to ultimately become an intelligent virtual assitant.
-		
+
+        %\subsubsection{System Interfaces}
+            %TODO: Revisit this. I'm not sure if it is applicable to this project.
+        \subsubsection{User Interfaces}
+            The user will interact with \botname via voice commands spoken in English. 
+            Therefore to be supported, a device must have a mic.
+            In the case of the stretch goal, \botname will periodically speak back to the user to receive insights into the user's actions.
+
+        \subsubsection{Hardware Interfaces} %Included above in the User Interfaces section
+            \botname should be supported on desktop and laptop computers that support Fusion 360 and have microphones to receive the user's speech.
+            For stretch goal support, devices will also need speakers through which \botname can speak back to the user.
+            %TODO: Any other devices? Is there anything else that supports Fusion?
+
+        \subsubsection{Software Interfaces}               
+            %TODO: Should the API version/specific open source projects being used be added here?
+            \botname needs to translate supported speech commands received from the user to the equivalent tasks within the user's Fusion project.
+            The Fusion source code will not be available for modification, thus the commands will need to be executed via the existing Fusion API.
+            To translate the commands, the audio recorded by the user interface will need to be processed by a speech-to-text application.
+            The resulting output will need to be parsed a another application that can derive meaning from natural language text.
+            Finally, the derived meaning will need to have a deterministic mapping to a Fusion API call and thus to a specific task inside of Fusion.
+            %TODO: Insert block diagram here.
+            %TODO: Describe software interfaces for stretch goal where UI communicates back to user then stores/uses responses
+        %\subsubsection{Communications Interfaces}                
+
+        \subsubsection{Memory} 
+            \botname should require at most \totalMemoryRequirement of memory to perform the work necessary to add its functionality to Fusion.
+            For the stretch goal of storing data related to user responses to questions from \botname, there are no memory caps at this time on the amount of data that can be stored.
+
+        %\subsubsection{Operations}
+                %TODO: I'm not sure what this section means.
+
+        \subsubsection{Site Adaptation Requirements} 
+            Since \botname interacts with Fusion 360 using existing architecture, Fusion will not need to be modified to support it. 
+
     \subsection{Product Functions}
 		\botname will provide a natural language interface for users, this allows the user to perform many tasks through verbal commands.
 		The variety of commmands is large and some examples are saving items, extrude items, or rotating the camera view.
@@ -150,11 +178,6 @@
 		\botname will  record user responses and save a transcript along with conextual information.
 		The responses to these questions will be used to train \botname to become an intelligent virtual assitant.
 		
-		Over time \botname will be trained to provide the user more than voice commands.
-		\botname is in a way a framework where in \botname can itself gather information it can hopfully use to learn to aid the user.
-		\botname will eventually be able to offer design suggestions to user.
-		\botname will learn how to do this using machine learning algorithms on the saved responses to the very questions it asks its users.
-		
     \subsection{User Characteristics}
 		\botname will have two types of users administrators and, designers. 
 		Administrators will have special access to \botname that allows them to perform maintaince.
@@ -166,8 +189,10 @@
 		Fusion360 users are trying to design or build somthing and as such are more likely to be technically oriented.
 		however the software is widely available, so the user could technically be simply anyone who has access to Fusion360.
 		At the moment \botname will be designed only to work with Fusion meaning \botname is limited to only Fusion360 users. 
+
     \subsection{Constraints}
 		\botname will be constrained by the API provided by Fusion360. \botname is a plugin for Fusion360 that means \botname will be limited to the API that Fusion360 has made available. 
+
     \subsection{Assumptions and Dependencies}
 
 
