@@ -160,44 +160,43 @@
             For the stretch goal of storing data related to user responses to questions from \botname, there are no memory caps at this time on the amount of data that can be stored.
 
         %\subsubsection{Operations}
-                %TODO: I'm not sure what this section means.
+            %TODO: I'm not sure what this section means.
 
         \subsubsection{Site Adaptation Requirements} 
-            Since \botname interacts with Fusion 360 using existing architecture, Fusion will not need to be modified to support it. 
+            Since \botname interacts with Fusion using existing architecture, Fusion will not need to be modified to support it. 
 
     \subsection{Product Functions}
-		\botname will provide a natural language interface for users, this allows the user to perform many tasks through verbal commands.
-		The variety of commmands is large and some examples are saving items, extrude items, or rotating the camera view.
-		These voice commands will allow the user to control Fusion360 to the
-		
-		\botname will periodically ask the users questions regarding the operations they execute.
-		In order to start an interview \botname must be able to first recognize a situation where it should be asking a question.
-		Then \botname will have to compile a question from infromation mined from the context of the operation in question.
-		Once \botname has figured out what to ask it, it must then be able to articule that question into speech.
-		For this workflow to create anything useful, the response from the user must be saved for future use.
-		\botname will  record user responses and save a transcript along with conextual information.
-		The responses to these questions will be used to train \botname to become an intelligent virtual assitant.
-		
+        \botname will allow the user to perform tasks in Fusion via a voice interface. 
+        Each voice command given by the user will be mapped to a specific task which will then be performed in the open Fusion project. \\
+       
+        As a stretch goal, \botname will periodically ask the users questions regarding why they have performed specific tasks.
+        The questions asked by \botname will pertains to specific predefined contexts.
+		\botname will record user responses and save a transcript along with contextual information.
+        
     \subsection{User Characteristics}
-		\botname will have two types of users administrators and, designers. 
-		Administrators will have special access to \botname that allows them to perform maintaince.
-		\botname must be trained and maintained in order for it to understand different articulations of words and phrases. 
-		This maintaince will be in the form of training exercises where administrators will speak with \botname and provide feedback to the system.
+		\botname will have two types of users: administrators and designers. 
+		Administrators will have access to data collected by \botname including the command logs and, if the stretch goal is accomplished, user responses to questions from \botname. 
 		
-		The primary and intended user is the designers whom are using Fusion360. 
-		Designers building things using Fusion will also be the primary users for \botname.
-		Fusion360 users are trying to design or build somthing and as such are more likely to be technically oriented.
-		however the software is widely available, so the user could technically be simply anyone who has access to Fusion360.
-		At the moment \botname will be designed only to work with Fusion meaning \botname is limited to only Fusion360 users. 
-
+		The primary user is the designer who is working on projects inside of Fusion. 
+        Due to the technical knowledge needed to work within Fusion, it can be assumed that designers are technically oriented.
+        However, know extra knowledge outside of that needed to operate Fusion will be needed to user \botname.
+        
     \subsection{Constraints}
-		\botname will be constrained by the API provided by Fusion360. \botname is a plugin for Fusion360 that means \botname will be limited to the API that Fusion360 has made available. 
+        Since the application will not have access to any parts of the Fusion source code,
+        \botname will be constrained in what tasks it can perform by what is offered in the Fusion API. 
 
     \subsection{Assumptions and Dependencies}
-
+        The stretch goal assumes that the Fusion API offers a way to view actions the user performs with their keyboard and mouse.
+        Without this capability, the application's knowledge of user actions will be constrained to the actions that the user performs through \botname.
 
 \section{Specific Requirements}
     \subsection{External Interface}
+       First time users of \botname should be presented with an onboarding process with an interactive demo.
+       The onboarding process should start with a popup that introduces \botname with a concise description of its purpose.
+       The user should then be able to click "Next" to transition to an interactive demo.
+       The interactive demo should consists of several sequential popups that each ask the user to tell \botname to perform a specific command.
+       This will make the user aware of \botname and what it is capable of.
+
     \subsection{Functional Requirements}
     This section includes the requirements that specify all the fundamental actions of the software system.
     	\subsubsection{Functional Requirement 1}
@@ -248,8 +247,7 @@
         \subsubsection{Stretch Functional Requirement 1}
         TITLE: What interview question to ask \\
         DESCRIPTION: The system shall be able to generate an interview question
-        RATIONAL: This is the first step in collecting user reasoning data. 
-        
+        RATIONAL: This is the first step in collecting user reasoning data.  
         
         \subsubsection{Stretch Functional Requirement 2}
         TITLE: When to ask an interview question \\
