@@ -199,35 +199,25 @@
     This section includes the requirements that specify all the fundamental actions of the software system.
         \subsubsection{Functional Requirement 1}
         TITLE: Error Messaging \\
-        DESCRIPTION: The system shall alert the user when it cannot perform or does not understand a command. \\
-        RATIONAL: If a user's command is not executed, they must be informed why. 
+        DESCRIPTION: The system shall alert the user when it cannot perform, or does not understand, a command and why. \\
+        RATIONAL: This prevents confusion for the user as to why their commands are not working. 
         
         \subsubsection{Functional Requirement 2}
-        TITLE: Correspond voice command to Fusion 360 action  \\
-        DESCRIPTION: The system shall be able to correspond the produced text equivalent described in FR1 to the correct Fusion action. \\
-        RATIONAL: This must be done to run commands in Fusion 
-        
-        \subsubsection{Functional Requirement 3}
-        TITLE: Send commands to Fusion  \\
-        DESCRIPTION: The system shall be able to send the generated action from FR2 to Fusion. \\
-        RATIONAL: This is the last step in the voice command to Fusion action pipeline 
-        
-        \subsubsection{Functional Requirement 4}
         TITLE: Extrude \\
         DESCRIPTION: \botname shall be able to extrude a selected face. \\
         RATIONAL: This is a task that users perform often.
         
-        \subsubsection{Functional Requirement 5}
+        \subsubsection{Functional Requirement 3}
         TITLE: Rotate Camera \\
         DESCRIPTION: \botname shall be able to rotate the Fusion camera. \\
         RATIONAL: This is a task that users perform often.
         
-        \subsubsection{Functional Requirement 6}
+        \subsubsection{Functional Requirement 4}
         TITLE: Save Project \\
         DESCRIPTION: \botname shall be able to save a Fusion project. \\
         RATIONAL: This is a task that users perform often.
         
-        \subsubsection{Functional Requirement 7}
+        \subsubsection{Functional Requirement 5}
         TITLE: Logging User Interactions \\
         DESCRIPTION: \botname shall log every interaction that a user has with \botname and the result of that interaction. \\
         RATIONAL: This offers helpful information for debugging purposes. This information can also be used to learn how \botname is being used and for directing future development of \botname.
