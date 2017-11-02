@@ -3,7 +3,7 @@
 \usepackage[section]{placeins}
 \usepackage{url}
 \usepackage{setspace}
-
+ 
 \usepackage{alltt}                                           
 \usepackage{float}
 \usepackage{color}
@@ -136,11 +136,10 @@
             %TODO: Revisit this. I'm not sure if it is applicable to this project.
         \subsubsection{User Interfaces}
             The user will interact with \botname via voice commands spoken in English. 
-            Therefore to be supported, a device must have a mic.
             In the case of the stretch goal, \botname will periodically speak back to the user to receive insights into the user's actions.
 
         \subsubsection{Hardware Interfaces} %Included above in the User Interfaces section
-            \botname should be supported on desktop and laptop computers that support Fusion 360 and have microphones to receive the user's speech.
+            \botname will be supported on desktop and laptop computers that support Fusion 360 and have microphones to receive the user's speech.
             For stretch goal support, devices will also need speakers through which \botname can speak back to the user.
             %TODO: Any other devices? Is there anything else that supports Fusion?
 
@@ -149,14 +148,14 @@
             \botname needs to translate supported speech commands received from the user to the equivalent tasks within the user's Fusion project.
             The Fusion source code will not be available for modification, thus the commands will need to be executed via the existing Fusion API.
             To translate the commands, the audio recorded by the user interface will need to be processed by a speech-to-text application.
-            The resulting output will need to be parsed a another application that can derive meaning from natural language text.
+            The resulting output will need to be parsed by another application that can derive meaning from natural language text.
             Finally, the derived meaning will need to have a deterministic mapping to a Fusion API call and thus to a specific task inside of Fusion.
             %TODO: Insert block diagram here.
             %TODO: Describe software interfaces for stretch goal where UI communicates back to user then stores/uses responses
         %\subsubsection{Communications Interfaces}                
 
         \subsubsection{Memory} 
-            \botname should require at most \totalMemoryRequirement of memory to perform the work necessary to add its functionality to Fusion.
+            \botname will require at most \totalMemoryRequirement of memory to perform the work necessary to add its functionality to Fusion.
             For the stretch goal of storing data related to user responses to questions from \botname, there are no memory caps at this time on the amount of data that can be stored.
 
         %\subsubsection{Operations}
@@ -170,7 +169,7 @@
         Each voice command given by the user will be mapped to a specific task which will then be performed in the open Fusion project. \\
        
         As a stretch goal, \botname will periodically ask the users questions regarding why they have performed specific tasks.
-        The questions asked by \botname will pertains to specific predefined contexts.
+        The questions asked by \botname will pertain to specific predefined contexts.
 		\botname will record user responses and save a transcript along with contextual information.
         
     \subsection{User Characteristics}
@@ -179,66 +178,59 @@
 		
 		The primary user is the designer who is working on projects inside of Fusion. 
         Due to the technical knowledge needed to work within Fusion, it can be assumed that designers are technically oriented.
-        However, know extra knowledge outside of that needed to operate Fusion will be needed to user \botname.
+        However, no extra knowledge outside of that needed to operate Fusion will be needed to operate \botname.
         
     \subsection{Constraints}
-        Since the application will not have access to any parts of the Fusion source code,
-        \botname will be constrained in what tasks it can perform by what is offered in the Fusion API. 
+        \botname will not be integrated to with the Fusion source code and thus will be constrained in what tasks it can perform by what is offered in the Fusion API. 
 
     \subsection{Assumptions and Dependencies}
         The stretch goal assumes that the Fusion API offers a way to view actions the user performs with their keyboard and mouse.
-        Without this capability, the application's knowledge of user actions will be constrained to the actions that the user performs through \botname.
+        Without this capability, the application's knowledge of user actions will be limited to the actions that the user performs through \botname.
 
 \section{Specific Requirements}
     \subsection{External Interface}
-       First time users of \botname should be presented with an onboarding process with an interactive demo.
-       The onboarding process should start with a popup that introduces \botname with a concise description of its purpose.
-       The user should then be able to click "Next" to transition to an interactive demo.
-       The interactive demo should consists of several sequential popups that each ask the user to tell \botname to perform a specific command.
-       This will make the user aware of \botname and what it is capable of.
+       First time users of \botname will be presented with an onboarding process with an interactive demo.
+       The onboarding process will start with a popup that introduces \botname with a concise description of its purpose.
+       The user will then be able to click "Next" to transition to an interactive demo.
+       The interactive demo will consist of several sequential popups that each ask the user to tell \botname to perform a specific command.
+       This will make the user aware of \botname and the functionality that it offers.
 
     \subsection{Functional Requirements}
     This section includes the requirements that specify all the fundamental actions of the software system.
-    	\subsubsection{Functional Requirement 1}
-        TITLE: Convert voice to text \\
-        DESCRIPTION: The system shall be able to hear voice english statements and output their english text equivalent.
-        RATIONAL: This must be done to understand the user's command 
+        \subsubsection{Functional Requirement 1}
+        TITLE: Error Messaging \\
+        DESCRIPTION: The system shall alert the user when it cannot perform or does not understand a command. \\
+        RATIONAL: If a user's command is not executed, they must be informed why. 
         
         \subsubsection{Functional Requirement 2}
-        TITLE: Error State \\
-        DESCRIPTION: The system shall inform the user that it can't perform an operation or doesn't understand what the user's commanded is in an error state \\
-        RATIONAL: This must be done to inform the user 
-        
-        \subsubsection{Functional Requirement 3}
         TITLE: Correspond voice command to Fusion 360 action  \\
-        DESCRIPTION: The system shall be able to correspond the produced text equivalent described in FR1 to the correct Fusion action
+        DESCRIPTION: The system shall be able to correspond the produced text equivalent described in FR1 to the correct Fusion action. \\
         RATIONAL: This must be done to run commands in Fusion 
         
-        \subsubsection{Functional Requirement 4}
+        \subsubsection{Functional Requirement 3}
         TITLE: Send commands to Fusion  \\
-        DESCRIPTION: The system shall be able to send the generated action from FR2 to Fusion
+        DESCRIPTION: The system shall be able to send the generated action from FR2 to Fusion. \\
         RATIONAL: This is the last step in the voice command to Fusion action pipeline 
         
+        \subsubsection{Functional Requirement 4}
+        TITLE: Extrude \\
+        DESCRIPTION: \botname shall be able to extrude a selected face. \\
+        RATIONAL: This is a task that users perform often.
+        
         \subsubsection{Functional Requirement 5}
-        TITLE: Extrude shape by voice \\
-        DESCRIPTION: The system shall be able to extrude a shape accordingly in Fusion by a command similar to "extrude by 5mm."
-        RATIONAL: This is the first step in prototype demo 
+        TITLE: Rotate Camera \\
+        DESCRIPTION: \botname shall be able to rotate the Fusion camera. \\
+        RATIONAL: This is a task that users perform often.
         
         \subsubsection{Functional Requirement 6}
-        TITLE: Rotate camera by voice \\
-        DESCRIPTION: The system shall be able to rotate the Fusion camera by a command similar to "rotate the design 90 degrees to the left." 
-        RATIONAL: This is the second step in prototype demo 
+        TITLE: Save Project \\
+        DESCRIPTION: \botname shall be able to save a Fusion project. \\
+        RATIONAL: This is a task that users perform often.
         
         \subsubsection{Functional Requirement 7}
-        TITLE: Save design by voice \\
-        DESCRIPTION: The system shall be able to save a Fusion design by a voice command similar to "save my design as \textit{my\_draft\_1.f3d}."
-        RATIONAL: This is the last step in prototype demo 
-        
-        \subsubsection{Functional Requirement 8}
-        TITLE: Log file \\
-        DESCRIPTION: The system shall store a log file of every attempted command along with if the command was successfully executed or not.
-        RATIONAL: This must be done for debugging purposes, and for the exploration of future features.
-        
+        TITLE: Logging User Interactions \\
+        DESCRIPTION: \botname shall log every interaction that a user has with \botname and the result of that interaction. \\
+        RATIONAL: This offers helpful information for debugging purposes. This information can also be used to learn how \botname is being used and for directing future development of \botname.
         
         %	%
         %	Below are stretch goals
@@ -246,64 +238,58 @@
         
         \subsubsection{Stretch Functional Requirement 1}
         TITLE: What interview question to ask \\
-        DESCRIPTION: The system shall be able to generate an interview question
+        DESCRIPTION: The system shall be able to generate an interview question. \\
         RATIONAL: This is the first step in collecting user reasoning data.  
         
         \subsubsection{Stretch Functional Requirement 2}
         TITLE: When to ask an interview question \\
-        DESCRIPTION: The system shall be aware of when it is appropriate to ask a question.
+        DESCRIPTION: The system shall be aware of when it is appropriate to ask a question. \\
         RATIONAL: This is the second step in collecting user reasoning data. 
         
         \subsubsection{Stretch Functional Requirement 3}
         TITLE: Ask a question \\
-        DESCRIPTION: The system shall be able to ask a question to the user.
+        DESCRIPTION: The system shall be able to ask a question to the user. \\
         RATIONAL: This is the third step in collecting user reasoning data. 
         
         \subsubsection{Stretch Functional Requirement 4}
         TITLE: Output interview text to a file \\
-        DESCRIPTION: The system shall be able to output an interview question paired with the user's answer to a file.
+        DESCRIPTION: The system shall be able to output an interview question paired with the user's answer to a file. \\
         RATIONAL: This is the last step in collecting user reasoning data. 
         
 
-   		 \subsection{Performance Requirements}
-    		The section covers the numerical performance requirements of the system
+    \subsection{Performance Requirements}
+        The section lists the performance requirements that will be met by \botname.
         
         \subsubsection{Performance Requirement 1}
-        TITLE: Number  of users \\
-        DESCRIPTION: \botname can handle one user at time
-        RATIONAL: Only one user is using the Fusion at a time. 
+        TITLE: Supported Number of Simultaneous Users \\
+        DESCRIPTION: There is no limit on the number of users, but \botname will only process one command at time and thus will ignore commands given simultaneously. \\
+        RATIONAL: It is difficult to separate two commands when they are given simultaneously and is considered beyond the scope of this project.
         
         \subsubsection{Performance Requirement 2}
-        TITLE: Voice command to Fusion action time \\
-        DESCRIPTION: A Fusion action shall take place within one a second of the user's voice command.
-        RATIONAL: This window is fast enough for a user's satisfaction and slow enough to allow \botname to process fully.
-        
-        \subsubsection{Performance Requirement 3}
-        TITLE: Number  of users \\
-        DESCRIPTION: \botname can handle one user at time
-        RATIONAL: Only one user is using the Fusion at a time. 
+        TITLE: \botname Response Time \\
+        DESCRIPTION: A call to the Fusion API shall be initiated within one a second of \botname hearing a valid command from the user. \\
+        RATIONAL: This is considered the maximum reponse time of a user interface to ensure the user maintains their thought process and is not distracted by the interface.
         
     \subsection{Design Constraints}
-    	\CapstoneTeamName doesn't have access to the Fusion source code. Therefore, \CapstoneTeamName is constrained by the depth and breadth of the Fusion API in the creation of \botname.
+        \botname will execute tasks in Fusion via the Fusion API. 
+        Therefore supported tasks will constrained to those capable of being performed by the API.
         
     \subsection{Software System Attributes}
 	   	\subsubsection{Reliability}
-	   	SCALE: The desired task is performed, i.e. if \botname is capable of performing the desired action then it shall be able to understand the voice command and successfully execute the Fusion action.\\
-	   	METER: Measurements obtained from 10 trials per possible command during testing.\\
-	   	MUST: More than 75\% of achievable voice commands.\\
-	   	PLAN: More than 80\% of achievable voice commands.\\
-	   	WISH: 90\% of achievable voice commands.\\
+	   	SCALE: \botname executes supported voice commands when they are given. 
+	   	METER: Measurements obtained from 10 trials per supported command.\\
+	   	MUST: Execute supported command in at least 70\% of trials.\\
+	   	PLAN: Execute supported command in at least 80\% of trials.\\
+        WISH: Execute supported command in at least 90\% of trials.\\
    
-		
-
 \section{Release Plan}
 	The develop of \botname is very sequential. Each step's development and success depends on how the previous step was implemented. For that reason, \CapstoneProjectName's release plan remains tentative. Below is a Gantt chart outlining \botname's development plan.
     \subsection{Release plan}
     	\begin{figure}[H]
     		\includegraphics[width=1\textwidth]{ganttChart.eps}
     		\centering
-    		\caption{Gantt chart describing \CapstoneProjectName's tentative development schedule}
-   			\label{fig:mesh1}
+    		\caption{\botname Development Schedule}
+   			\label{fig:developmentSchedule1}
     	\end{figure}
 
 
