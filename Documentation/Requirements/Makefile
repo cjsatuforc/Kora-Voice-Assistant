@@ -5,6 +5,8 @@ DVIPDF  = dvipdft
 XDVI	= xdvi -gamma 4
 GH		= gv
 
+BUILDDIR = /usr/local/apps/tex_live/current/bin/x86_64-linux
+
 EXAMPLES = $(wildcard *.c)
 SRC	:= $(shell egrep -l '^[^%]*\\begin\{document\}' *.tex)
 TRG	= $(SRC:%.tex=%.dvi)
@@ -20,16 +22,16 @@ $(TRG): %.dvi: %.tex $(EXAMPLES)
 	# pygmentize -f latex -o __${EXAMPLES}.tex ${EXAMPLES}
 	#requires that you \include{pygments.tex} in your preamble
 
-	$(LATEX) $<
-	$(BIBTEX) $(<:%.tex=%)
-	$(LATEX) $<
-	$(LATEX) $<
+	$(BUILDDIR)/$(LATEX) $<
+	$(BUILDDIR)/$(BIBTEX) $(<:%.tex=%)
+	$(BUILDDIR)/$(LATEX) $<
+	$(BUILDDIR)/$(LATEX) $<
 	#remove the pygmentized output to avoid cluttering up the directory
 	#rm __${SRC}.tex
 
 
 $(PSF): %.ps: %.dvi
-	$(DVIPS) -R -Poutline -t letter $< -o $@
+	$(BUILDDIR)/$(DVIPS) -R -Poutline -t letter $< -o $@
 
 $(PDF): %.pdf: %.ps
 	ps2pdf $<
