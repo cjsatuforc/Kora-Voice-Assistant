@@ -13,6 +13,10 @@
 \geometry{textheight=9.5in, textwidth=7in}
 \setlength\parindent{0pt}
 
+\usepackage{xspace}
+\usepackage{pgfgantt}
+\usepackage{subcaption}
+
 % 1. Fill in these details
 \def \CapstoneTeamName{\textbf{Insert Team Name Here} }
 \def \CapstoneTeamNumber{8}
@@ -22,7 +26,7 @@
 \def \CapstoneProjectName{NLP For Digital Manufacturing}
 \def \CapstoneSponsorCompany{Autodesk}
 \def \CapstoneSponsorPerson{Patti Vrobel}
-\def \botname{Kora }
+\def \botname{Kora\xspace}
 
 % 2. Uncomment the appropriate line below so that the document type works
 \def \DocType{		%Problem Statement
@@ -73,7 +77,9 @@
             \vspace{20pt}
         }
         \begin{abstract}
-       		This document outlines the technical requirements of \botname that \CapstoneProjectName must meet. This document starts with an overall description of the project followed by specific functional and performance requirements and ends with a Gantt chart which gives a rough timeline of when each major requirement shall be done.
+       		This document outlines the technical requirements that \botname must meet before the 2018 OSU Engineering Expo. 
+            It starts with an overall description of the project and follows with specific functional and performance requirements.
+            At the end, there is a Gantt chart which gives a timeline detailing when each major requirement will be completed.
         \end{abstract}     
     \end{singlespace}
 \end{titlepage}
@@ -88,18 +94,18 @@
 % 8. now you write!
 \section{Introduction}
         The introduction outlines the purpose and scope of the project. 
-        This section is responsible for defining any prerequisite acronyms and terms used in the document. 
+        This section is also responsible for defining any prerequisite acronyms and terms used in the document. 
     \subsection{Purpose}
         The purpose of this document is to specify the exact requirements that \botname must meet to be considered a successful project. 
-        This document is a mutual agreement between both parties regarding result of this project.
-        The intended audience is composed of the team members developing \botname and the client that requested the project.
+        This document is a mutual agreement between the client and developers regarding the expected result of this project.
+        The intended audience is the two aforementioned parties.
     \subsection{Scope}
-        \botname will be a speech-based virtual assistant for Fusion 360 that lets users perform any one of a subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
-        Workflows in Fusion 360 that are not suited for handling by a voice interface will not be supported by \botname.
-        As a stretch goal, \botname will be capable of questioning user and storing responses to use to predict and automatically assist with future user behavior.
-        It will be a plugin that is bundled with Fusion 360 and will be part of the product's standard download.
+        \botname will be a speech-based virtual assistant for Fusion that lets users perform any one of a subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
+        Workflows in Fusion that are not suited for handling by a voice interface will not be supported by \botname.
+        As a stretch goal, \botname will be capable of questioning the user and using responses to predict and automatically assist with future user behavior.
+        It will be a plugin that is bundled with Fusion and will be part of the product's standard download. \\
 
-        \botname will offer users a tool that decreases the time required to achieve their goals within Fusion 360 by offering an interface that runs in parallel with and complements the keyboard and mouse.
+        \botname will offer users a tool that decreases the time required to achieve their goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
         If the stretch goal is achieved, \botname will further increase productivity by learning to predict and automate specific workflows within the product.
         
 
@@ -111,22 +117,23 @@
             \begin{tabular}{|l|l|}
                 \hline
                 \textbf{Term} & \textbf{Definition} \\ \hline
-                API & Application programing interface \\ \hline
+                \botname & The virtual assistant that is the focus of this project \\ \hline
+                NLP & Natural Language Processing \\ \hline
+                API & Application Programing Interface \\ \hline
                 CAD & Computer Aided Design \\ \hline
                 CAM & Computer Aided Manufacturing \\ \hline
-                Fusion 360 & 
-                Referred to as just, Fusion, is an Autodesk Cloud-based 3D CAD/CAM tool/product \\ \hline
-                Task & In the context of Fusion 360, a function or operation that can be performed in Fusion 360 \\ \hline
+                Fusion & An Autodesk Cloud-based 3D CAD/CAM tool/product \\ \hline
+                Task & In the context of Fusion, a function or operation that can be performed in Fusion \\ \hline
                 Plugin & Software that adds specific new functionlity to another piece of software \\ \hline
-                User & Someone who interacts \botname  \\ \hline
-                Workflow & A sequence of tasks \\ \hline
+                User & A person that interacts with \botname or Fusion depending on the context \\ \hline
+                Workflow & A sequence of related tasks \\ \hline
             \end{tabular}
         \end{table}
     %\subsection{References}
         %TODO
     \subsection{Overview}
         %This section describes the contents and organization of the rest of the document. 
-        The rest of this document contains a user story outlining intended uses and specific functionalities of \botname as well as assumptions, dependencies, and design constraints. 
+        The rest of this document outlines intended uses and specific functionalities of \botname as well as assumptions, dependencies, and constraints that pertain to the project. 
 
 \section{Overall Description}
     \subsection{Product Perspective}
@@ -134,16 +141,19 @@
         %\subsubsection{System Interfaces}
             %TODO: Revisit this. I'm not sure if it is applicable to this project.
         \subsubsection{User Interfaces}
-            The user will interact with \botname via voice commands spoken in English. 
-            In the case of the stretch goal, \botname will periodically speak back to the user to receive insights into the user's actions.
+            The user will interact with \botname via voice commands given in English. 
+            To initiate a command, the user will say "\botname" followed by the command. \\
+
+            As part of a stretch goal, \botname will periodically ask questions back to the user via a speech synthesizer.
 
         \subsubsection{Hardware Interfaces} 
-            \botname will be supported on desktop and laptop computers that support Fusion 360 and have microphones to receive the user's speech.
+            \botname will be supported on desktop and laptop computers that support Fusion and have microphones to receive the user's speech.
             For stretch goal support, devices will also need speakers through which \botname can speak back to the user.
 
         \subsubsection{Software Interfaces}               
             \botname needs to translate supported speech commands received from the user to the equivalent tasks within the user's Fusion project.
-            For this, a series of open source projects will be linked to derive meaning from text which will then be deterministically mapped to a Fusion API call.
+            For this, a series of open source NLP projects will be linked to derive meaning from speech.
+            The derived meaning will then be mapped to a Fusion API call.
         %\subsubsection{Communications Interfaces}                
 
         %\subsubsection{Operations}
@@ -156,28 +166,36 @@
         \botname will allow the user to perform tasks in Fusion via a voice interface. 
         Each voice command given by the user will be mapped to a specific task which will then be performed in the open Fusion project. \\
        
-        As a stretch goal, \botname will periodically ask the users questions regarding why they have performed specific tasks.
+        As a stretch goal, \botname will periodically ask the user questions regarding why they have performed specific tasks.
         The questions asked by \botname will pertain to specific predefined contexts.
 		\botname will record user responses and save a transcript along with contextual information.
+        Responses will also be used to try to predict and assist with future user actions. \\
+
+        All interactions with \botname will be logged for debugging and future development purposes.
         
     \subsection{User Characteristics}
 		\botname will have two types of users: administrators and designers. 
-		Administrators will have access to data collected by \botname including the command logs and, if the stretch goal is accomplished, user responses to questions from \botname. 
+		Administrators will have access to data collected by \botname including the command logs and, if the stretch goal is accomplished, user responses to questions from \botname. \\
 		
 		The primary user is the designer who is working on projects inside of Fusion. 
         Due to the technical knowledge needed to work within Fusion, it can be assumed that designers are technically oriented.
         However, no extra knowledge outside of that needed to operate Fusion will be needed to operate \botname.
         
     \subsection{Constraints}
-        \botname will not be integrated to with the Fusion source code and thus will be constrained in what tasks it can perform by what is offered in the Fusion API. 
+        \botname will not be integrated with the Fusion source code and thus will be constrained in what tasks it can perform by what is offered in the Fusion API. 
 
     \subsection{Assumptions and Dependencies}
-        The stretch goal assumes that the Fusion API offers a way to view actions the user performs with their keyboard and mouse.
+        Since this project does not focus on developing software to handle speech recognition and natural language processing, it depends on the existence of adequate open source resources for handling this aspect of \botname. \\
+
+        The stretch goal assumes that the Fusion API offers a way to view actions that the user performs with their keyboard and mouse.
         Without this capability, the application's knowledge of user actions will be limited to the actions that the user performs through \botname.
 
 \section{Specific Requirements}
     \subsection{External Interface}
-       First time users of \botname will be presented with an onboarding process with an interactive demo.
+       After \botname is released, Fusion users will be shown a modal the next time that they log into the product that gives a brief description of \botname and asks if they would like to enable it.
+       If a user chooses not to enable \botname, their Fusion editor environment will not be changed. \\
+
+       Users that enable \botname will be presented with an onboarding process that incorporates an interactive demo.
        The onboarding process will start with a popup that introduces \botname with a concise description of its purpose.
        The user will then be able to click "Next" to transition to an interactive demo.
        The interactive demo will consist of several sequential popups that each ask the user to tell \botname to perform a specific command.
@@ -186,88 +204,100 @@
     \subsection{Functional Requirements}
     This section includes the requirements that specify all the fundamental actions of the software system.
         \subsubsection{Functional Requirement 1}
-        TITLE: Error Messaging \\
-        DESCRIPTION: The system shall alert the user when it cannot perform, or does not understand, a command and why. \\
-        RATIONAL: This prevents confusion for the user as to why their commands are not working. 
+        TITLE: Status Messaging \\
+        DESCRIPTION: The system shall alert the user when it has understood a command as well as when it has failed to interpret a user command or has reached an error state. \\
+        RATIONALE: This clarifies for the user if \botname is doing what they think it should be doing or if they need to try again. 
         
         \subsubsection{Functional Requirement 2}
         TITLE: Extrude \\
         DESCRIPTION: \botname shall be able to extrude a selected face. \\
-        RATIONAL: This is a task that users perform often.
+        RATIONALE: This is a task that users perform often.
         
         \subsubsection{Functional Requirement 3}
         TITLE: Rotate Camera \\
         DESCRIPTION: \botname shall be able to rotate the Fusion camera. \\
-        RATIONAL: This is a task that users perform often.
+        RATIONALE: This is a task that users perform often.
         
         \subsubsection{Functional Requirement 4}
         TITLE: Save Project \\
         DESCRIPTION: \botname shall be able to save a Fusion project. \\
-        RATIONAL: This is a task that users perform often.
+        RATIONALE: This is a task that users perform often.
         
         \subsubsection{Functional Requirement 5}
         TITLE: Logging User Interactions \\
-        DESCRIPTION: \botname shall log every interaction that a user has with \botname and the result of that interaction. \\
-        RATIONAL: This offers helpful information for debugging purposes. This information can also be used to learn how \botname is being used and for directing future development of \botname.
-        
+        DESCRIPTION: \botname shall log every interaction that a user has with it and the result of that interaction. \\
+        RATIONALE: This offers helpful information for debugging purposes. This information can also be used to learn how \botname is being used and to drive future development.
+       
+        \subsubsection{Functional Requirement 6}
+        TITLE: Command Signalling \\
+        DESCRIPTION: \botname will begin listening for a command after hearing the user say "\botname". \\
+        RATIONALE: This is a pattern that is used in many successful voice assistants to signal when to start listening for a command.
+
         %	%
         %	Below are stretch goals
         %	%
         
         \subsubsection{Stretch Functional Requirement 1}
-        TITLE: What interview question to ask \\
-        DESCRIPTION: The system shall be able to generate an interview question. \\
-        RATIONAL: This is the first step in collecting user reasoning data.  
+        TITLE: Smart Assistant \\
+        DESCRIPTION: \botname will be able to offer executable suggestions in the form of "Would you like to...?" questions that the user will respond in the affirmative to at least 15\% of the time. \\
+        RATIONALE: This is the ultimate vision for \botname in which it can predict what the user will want to do next and will be able to perform those next steps for the user. 
         
-        \subsubsection{Stretch Functional Requirement 2}
-        TITLE: When to ask an interview question \\
-        DESCRIPTION: The system shall be aware of when it is appropriate to ask a question. \\
-        RATIONAL: This is the second step in collecting user reasoning data. 
-        
-        \subsubsection{Stretch Functional Requirement 3}
-        TITLE: Ask a question \\
-        DESCRIPTION: The system shall be able to ask a question to the user. \\
-        RATIONAL: This is the third step in collecting user reasoning data. 
-        
-        \subsubsection{Stretch Functional Requirement 4}
-        TITLE: Output interview text to a file \\
-        DESCRIPTION: The system shall be able to output an interview question paired with the user's answer to a file. \\
-        RATIONAL: This is the last step in collecting user reasoning data. 
-        
-
     \subsection{Performance Requirements}
         The section lists the performance requirements that will be met by \botname.
         
         \subsubsection{Performance Requirement 1}
-        TITLE: Supported Number of Simultaneous Users \\
-        DESCRIPTION: There is no limit on the number of users, but \botname will only process one command at time and thus will ignore commands given simultaneously. \\
-        RATIONAL: It is difficult to separate two commands when they are given simultaneously and is considered beyond the scope of this project.
-        
-        \subsubsection{Performance Requirement 2}
-        TITLE: \botname Response Time \\
-        DESCRIPTION: A call to the Fusion API shall be initiated within one a second of \botname hearing a valid command from the user. \\
-        RATIONAL: This is considered the maximum reponse time of a user interface to ensure the user maintains their thought process and is not distracted by the interface.
+        TITLE: Response Time \\
+        DESCRIPTION: It will take a user at most one second longer to perform a supported task through \botname than it would take when using a keyboard and mouse. \\
+        RATIONALE: The user must feel that \botname enhances rather than slows their development speed.
         
     \subsection{Design Constraints}
         \botname will execute tasks in Fusion via the Fusion API. 
         Therefore supported tasks will constrained to those capable of being performed by the API.
         
-    \subsection{Software System Attributes}
-	   	\subsubsection{Reliability}
-	   	SCALE: \botname executes supported voice commands when they are given. 
-	   	METER: Measurements obtained from 10 trials per supported command.\\
-	   	MUST: Execute supported command in at least 70\% of trials.\\
-	   	PLAN: Execute supported command in at least 80\% of trials.\\
-        WISH: Execute supported command in at least 90\% of trials.\\
-   
 \section{Release Plan}
-	The develop of \botname is very sequential. Each step's development and success depends on how the previous step was implemented. For that reason, \CapstoneProjectName's release plan remains tentative. Below is a Gantt chart outlining \botname's development plan.
+
     \subsection{Release plan}
     	\begin{figure}[H]
-    		\includegraphics[width=1\textwidth]{ganttChart.eps}
-    		\centering
-    		\caption{\botname Development Schedule}
-   			\label{fig:developmentSchedule1}
+            \begin{center}
+                %\includegraphics[width=1\textwidth]{ganttChart.eps}
+                %Changed Gantt chart to be modifiable.
+                \begin{ganttchart}[
+                        y unit title=0.4cm,
+                        y unit chart=0.5cm,
+                        vgrid,
+                        hgrid,
+                        title left shift=.05, 
+                        title right shift=.05, 
+                        title height=1, 
+                        group right shift=0
+                    ]{1}{28}
+                    \gantttitle{Months}{28} \\
+                    \gantttitle{October}{4}
+                    \gantttitle{November}{4}
+                    \gantttitle{December}{4}
+                    \gantttitle{January}{4}
+                    \gantttitle{February}{4}
+                    \gantttitle{March}{4}
+                    \gantttitle{April}{4} \\
+
+                    \ganttbar{Problem Statement}{1}{2} \\
+                    \ganttbar{Requirements Document}{3}{4} \\
+                    \ganttbar{Technology Review}{5}{6} \\
+                    \ganttbar{Design \botname}{7}{8} \\
+                    \ganttbar{Fall Progress Report}{9}{9} \\
+                    \ganttbar{Speech-to-Task Pipeline}{10}{14} \\
+                    \ganttbar{Create Alpha Demo}{18}{18} \\
+                    \ganttbar{Train NLP Modules}{13}{25} \\
+                    \ganttbar{Performance Testing}{16}{25} \\
+                    \ganttbar{Create Beta Demo}{22}{22} \\
+                    \ganttbar{Smart Assistant Stretch Goal}{15}{23} \\
+                    \ganttbar{Engineering Expo}{26}{26} \\
+
+                \end{ganttchart}
+                \captionsetup{justification=centering}
+                \caption{\botname Development Schedule}
+                \label{fig:developmentSchedule1}
+            \end{center}
     	\end{figure}
 
 
