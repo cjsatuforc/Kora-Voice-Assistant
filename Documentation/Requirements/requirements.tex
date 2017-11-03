@@ -22,8 +22,7 @@
 \def \CapstoneProjectName{NLP For Digital Manufacturing}
 \def \CapstoneSponsorCompany{Autodesk}
 \def \CapstoneSponsorPerson{Patti Vrobel}
-\def \botname{Aviato }
-\def \totalMemoryRequirement{20 MB }
+\def \botname{Kora }
 
 % 2. Uncomment the appropriate line below so that the document type works
 \def \DocType{		%Problem Statement
@@ -91,9 +90,9 @@
         The introduction outlines the purpose and scope of the project. 
         This section is responsible for defining any prerequisite acronyms and terms used in the document. 
     \subsection{Purpose}
-        The purpose of this document is to lay out the requirements of \CapstoneTeamName. 
-        This document is a mutual agreement between both parties outlining what will be produced. 
-        The intended audience is those who will be working on \CapstoneTeamName and the client for whom \CapstoneTeamName is for.
+        The purpose of this document is to specify the exact requirements that \botname must meet to be considered a successful project. 
+        This document is a mutual agreement between both parties regarding result of this project.
+        The intended audience is composed of the team members developing \botname and the client that requested the project.
     \subsection{Scope}
         \botname will be a speech-based virtual assistant for Fusion 360 that lets users perform any one of a subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
         Workflows in Fusion 360 that are not suited for handling by a voice interface will not be supported by \botname.
@@ -138,25 +137,14 @@
             The user will interact with \botname via voice commands spoken in English. 
             In the case of the stretch goal, \botname will periodically speak back to the user to receive insights into the user's actions.
 
-        \subsubsection{Hardware Interfaces} %Included above in the User Interfaces section
+        \subsubsection{Hardware Interfaces} 
             \botname will be supported on desktop and laptop computers that support Fusion 360 and have microphones to receive the user's speech.
             For stretch goal support, devices will also need speakers through which \botname can speak back to the user.
-            %TODO: Any other devices? Is there anything else that supports Fusion?
 
         \subsubsection{Software Interfaces}               
-            %TODO: Should the API version/specific open source projects being used be added here?
             \botname needs to translate supported speech commands received from the user to the equivalent tasks within the user's Fusion project.
-            The Fusion source code will not be available for modification, thus the commands will need to be executed via the existing Fusion API.
-            To translate the commands, the audio recorded by the user interface will need to be processed by a speech-to-text application.
-            The resulting output will need to be parsed by another application that can derive meaning from natural language text.
-            Finally, the derived meaning will need to have a deterministic mapping to a Fusion API call and thus to a specific task inside of Fusion.
-            %TODO: Insert block diagram here.
-            %TODO: Describe software interfaces for stretch goal where UI communicates back to user then stores/uses responses
+            For this, a series of open source projects will be linked to derive meaning from text which will then be deterministically mapped to a Fusion API call.
         %\subsubsection{Communications Interfaces}                
-
-        \subsubsection{Memory} 
-            \botname will require at most \totalMemoryRequirement of memory to perform the work necessary to add its functionality to Fusion.
-            For the stretch goal of storing data related to user responses to questions from \botname, there are no memory caps at this time on the amount of data that can be stored.
 
         %\subsubsection{Operations}
             %TODO: I'm not sure what this section means.
