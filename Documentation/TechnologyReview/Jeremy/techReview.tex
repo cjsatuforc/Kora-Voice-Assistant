@@ -1,0 +1,423 @@
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\usepackage{url}
+\usepackage{setspace}
+
+\usepackage{alltt}                                           
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+
+\usepackage{geometry}
+\geometry{textheight=9.5in, textwidth=7in}
+\parindent = 0.0 in
+
+\usepackage{xspace}
+\usepackage{pgfgantt}
+\usepackage{subcaption}
+
+% 1. Fill in these details
+\def \CapstoneTeamNumber{8}
+\def \GroupMemberOne{James Stallkamp}
+\def \GroupMemberTwo{Jeremy Fischer}
+\def \GroupMemberThree{Austin Row}
+\def \CapstoneProjectName{Kora}
+\def \CapstoneSponsorCompany{Autodesk}
+\def \CapstoneSponsorPerson{Patti Vrobel}
+\def \botname{Kora\xspace}
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{		
+	%Problem Statement
+	%Requirements Document
+	Technology Review
+	%Design Document
+	%Progress Report
+}
+
+\newcommand{\NameSigPair}[1]{\par
+	\makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+	\par\vspace{-12pt} \textit{\tiny\noindent
+		\makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+	\begin{titlepage}
+		\pagenumbering{gobble}
+		\begin{singlespace}
+			\includegraphics[height=4cm]{coe.eps}
+			%\hfill 
+			% 4. If you have a logo, use this includegraphics command to put it on the coversheet.
+			\includegraphics[height=4cm]{autodesk.eps}   
+			\par\vspace{.2in}
+			\centering
+			\scshape{
+				\huge CS Capstone \DocType \par
+				{\large\today}\par
+				\vspace{.5in}
+				\textbf{\Huge\CapstoneProjectName}\par
+				\vfill
+				{\large Prepared for}\par
+				\Huge \CapstoneSponsorCompany\par
+				\vspace{5pt}
+				{\Large\NameSigPair{\CapstoneSponsorPerson}\par}
+				{\large Prepared by }\par
+				Group\CapstoneTeamNumber\par
+				% 5. comment out the line below this one if you do not wish to name your team
+				%\CapstoneTeamName\par 
+				\vspace{5pt}
+				{\Large
+					%\NameSigPair{\GroupMemberOne}\par
+					\NameSigPair{\GroupMemberTwo}\par
+					%\NameSigPair{\GroupMemberThree}\par
+				}
+				\vspace{20pt}
+			}
+			\begin{abstract}
+
+			\end{abstract}     
+		\end{singlespace}
+	\end{titlepage}
+	\newpage
+	\pagenumbering{arabic}
+	\tableofcontents
+	% 7. uncomment this (if applicable). Consider adding a page break.
+	%\listoffigures
+	%\listoftables
+	\clearpage
+
+
+	\section{Kora}
+		Kora is a proof of concept project that will integrate a natural language processing library into Autodesk's 3-D computer aided design software, Fusion.
+		Kora will be a speech-based virtual assistant for Fusion that lets users perform any subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
+		Workflows in Fusion that are not suited for handling by a voice interface will not be supported by Kora.
+		As a stretch goal, Kora will be capable of questioning the user and using responses to predict and automatically assist with future user behavior.
+		Kora will offer users a tool that decreases the time required to achieve their goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
+		If the stretch goal is achieved, Kora will further increase productivity by learning to predict and automate specific workflows within the product.
+		
+		
+	\section{My Role}
+		I have three main roles in Kora.
+		The first is creating the log file architecture.
+		This will include designing a storage system for the logs, and how each log will be structured.
+		The second is the mapping of voice commands to Fusion API commands.
+		After Kora understands the command she needs to know how to execute it.
+		The third is setting up an a model for awakening Kora.
+		There needs to be a way for a user to signal Kora that they are ready to execute a command.
+		
+		
+	\section{Log File Storage}
+		Kora will be storing log files describing interactions with users.
+		Storing user-Kora interactions has three main uses: debugging, feature additions, and machine learning possibilities.
+		It will be much easier to debug technical problems when a play-by-play of actions leading up to the crash is given to the developer.
+		Storing what commands users are asking Kora to execute allows for easy feature additions without the need to survey users for what commands Kora is lacking.
+		For instance, if a number of users are asking "Kora, convert the file to STL format" and Kora doesn't have that capability yet the logs will show that.
+		This allows developers to easily understand what users would like Kora to do.
+		Storing the commands users are asking Kora to execute as well as answers to Kora's interview questions allows for machine learning, because Kora can learn ways to better assist the user based off of previous patterns.
+
+		\subsection{MySQL: Relational Database}
+			A relational database is a rigid, structured way of storing data.
+			The relationship between tables and field types is called a schema. 
+			In a relational database, the schema must be clearly defined before any information can be added.
+			For a relational database to be effective, the data being stored has to be structured in a very organized way with all fields of the table filled, no more no less. 
+			Because relational databases are well structured they support the JOIN clause which allows developers to retrieve related data stored across multiple tables with a single command.
+			MySQL database tables must explicitly mention what other tables they rely on.
+			Due to this, It’s impossible for users to add, edit or remove records which could result in invalid data or orphan records \cite{SQLvsNoSQLsitepoint}.
+			
+			\textbf{Pros:}
+				\begin{itemize}
+					\item{
+						Referential data integrity}
+					\item{
+						Supports complex queries}
+				\end{itemize}
+			\textbf{Cons:}
+				\begin{itemize}
+				\item{
+					If the schema needs to change, then the entire database needs to be edited \cite{SQLvsNoSQLupwork} }
+				\item{
+					Challenging to scale}
+				
+				\end{itemize}
+			
+		\subsection{MongoDB: Non-Relational Database}
+			MongoDB is a NoSQL non-relational database.
+			Instead of tables, NoSQL databases are document-oriented.
+			Non-relational databases are more like file folders with key-value pairs, which assemble related information regardless of type. 
+			This means there is no enforced structure to the data, meaning all inserts don't have to be structured identically with the same keys.
+			This way, non-structured data can be stored in a single document that can be easily found but isn’t necessarily categorized into fields like a relational database is. 
+			MongoDB by default prefers high insert rate over transaction safety. 
+			Generally database scaling in hard.
+			However, if one needs to partition and shard the database, MongoDB has a built in easy solution for that \cite{SQLvsNoSQLupwork}.
+			
+			\textbf{Pros:}
+				\begin{itemize}
+					\item{
+						NoSQL databases offer ease of access to data.
+						Relational databases don't play well with applications written in object-oriented programming languages like Java, PHP, and Python. 
+						MongoDB is able to sidestep this problem through APIs, which allow developers to execute queries without having to learn SQL or understand the underlying architecture of their database system.}
+					\item{
+						Can store large volumes of data that have little to no structure} 
+					\item{
+						Designed to be scaled across multiple data centers and servers}
+					\item{ 
+						Rapid development. NoSQL data doesn’t need to be prepped ahead of time}
+				\end{itemize}
+			
+			\textbf{Cons:}
+				\begin{itemize}
+					\item{ 
+						Non-relational databases like MongoDB don't support the JOIN clause which allows developers to retrieve related data stored across multiple tables with a single command}
+					\item{
+						Generally, storing data in bulk like this requires extra processing effort and more storage than highly organized relational data}
+				\end{itemize}
+			All pros and cons were gathered from Upwork.com \cite{SQLvsNoSQLupwork}.
+			
+		\subsection{Local File System}
+			Storing log files locally would consist of a log folder which holds all the log files.
+			The log file would be made up of delimited rows where each row would contain data pertaining to a user-Kora interaction.
+			A new log file would be created when a certain circumstance is met, such as the beginning of a new day or X amount of entries.
+			
+			\textbf{Pros:}
+				\begin{itemize}
+					\item{
+						No database calls}
+					\item{
+						Direct access to logs}
+					\item{
+						No structure or language specific constraints}
+				\end{itemize}
+			\textbf{Cons:}
+				\begin{itemize}
+					\item{
+						Challenging to query}
+					\item{
+						Hard to scale}
+					\item{
+						Possibly not reader friendly}
+				\end{itemize}
+		\subsection{Conclusion}
+			Storing log files locally in a log folder isn't practicable to meet the goals log files are trying to achieve described above.
+			There isn't an easy way to query them for data and in the long term the file system would be covered in files since Kora needs to archive them for learning purposes.
+			The choice now comes down to MongoDB and MySQL.
+			MongoDB is chosen for the following reasons.
+			\begin{enumerate}
+				\item{
+					The data associated with user-Kora interactions is changing.
+					As Kora evolves more characteristics of the interaction will be stored.
+					MongoDB doesn't have a structured schema, so additions and subtractions of data fields is simple.
+					Whereas MySQL requires all predefined fields to be filled in, and additions and subtractions of fields requires an entire database update}
+				\item{
+					Non-relational databases are designed to be scaled.
+					As Kora evolves the amount of log files will only continue to increase, and they must be archived for machine learning reasons described above. 
+					MySQL on the other hand, doesn't scale well \cite{SQLvsNoSQLsitepoint}.}
+				\item{
+					MongoDB by default prefers high insert rate over transaction safety \cite{SQLvsNoSQLupwork}.
+					As Kora attracts more users the amount of writes to the database will increase tremendously.
+					Transaction safety isn't a factor that needs to be taken into account, as data here and there could be missing or corrupt and the overall goals of the log files could still be accomplished.}
+			\end{enumerate}
+			
+			It's possible to choose MongoDB and switch to MySQL later.
+			So, if the team discovers a MySQL database would better suit the project it's possible to migrate the data to one. 
+
+
+
+	
+	\section{Mapping Text to Fusion Command}
+			There are two components to executing a voice command. 
+			The first is understanding.
+			Kora must be able to listen and transcribe what the user is requesting.
+			The second is the actual execution of the command.
+			Kora needs to know how to execute the request. 
+			For example, if Kora hears "rotate the design 90 degrees", she needs to know to call the Fusion API's \textit{rotation} endpoint.
+			
+			
+			\subsection{Utterance Templates}
+				Utterance templates could be created to do this.
+				In this context, an utterance is a phrase that is spoken which signals a specific command.
+				A few example utterances for saving a design would be: "Save design as myDesign1", "Save design", and "Please save the current design as myDesign1."
+				All of these phrases should correspond to the Fusion API \textit{save} endpoint.
+				An utterance can have variables, called slots, throughout the phrase that can accept any slot predefined value or type.
+				For example, "save design as \{name\}" where \{name\} is a slot value that is set to accept any alphanumeric string.
+				A data structure would be constructed where the elements of the structure are the Fusion commands, and they are signaled if any of their utterances are met.
+			
+				\textbf{Pros:}
+					\begin{itemize}
+						\item{
+						Developer friendly to read and understand}
+					\item{
+						Structured (little uncertainty in what the outcome will be)}
+					\item{
+						Easy to add new commands and phrases}
+					\end{itemize}
+				
+				\textbf{Cons:}
+					\begin{itemize}
+						\item{
+							Have to create template architecture from scratch}
+						\item{
+							Time consuming to create utterances}
+						\item{
+							Challenging to verify that the most commonly used phrases to execute a command are stored as utterances}
+					\end{itemize}
+				
+				
+				
+				\subsection{Keywords}
+					The idea behind the keywords solution is to execute Fusion commands based off of keywords in the spoken command. 
+					This simple solution would create a key-value pair table where the first column is keywords that can show up in a command and the second column is the Fusion API call to make.
+					Kora would scan through the spoken command to see if there is a keyword that is stored in the command table.
+					If there is, then Kora would execute the mapped command.
+					Let's say \textit{save} is a keyword. 
+					If the user said "save the design", then Kora would scan through the sentence and notice the keyword "save."
+					Kora would realize that "save" is in the command table and execute the corresponding Fusion API call to save the design.
+				
+					\textbf{Pros:}
+						\begin{itemize}
+							\item{
+								Simpler to implement}
+						\end{itemize}
+					
+					\textbf{Cons:}
+						\begin{itemize}
+							\item{
+								Ambiguity in what command Kora should execute if there are multiple keywords in the spoken command}
+							\item{
+								No quantities or details of a command. Rotate, but by how much and which way? Save design, but by what name? }
+							\item{
+								Far less durable and scalable than other options}
+						\end{itemize}
+				
+				
+			\subsection{Amazon's Alexa Skills}
+				The Amazon's Alexa Skills solution is entirely dependent upon if Alexa is used as Kora's voice synthesizer.
+				Amazon's Alexa is a full-fledged voice command software that supports voice-to-text and text-to-voice software .
+				After Alexa synthesizes the voice command she checks her skills collection and sees if the request is something she can execute.
+				Her skills are called Alexa skills and they are roughly implemented in the way same way that the templates I described above are.
+				A command is executed if one of the utterances for it are met.
+				To teach Alexa a new skill is as simple as following the process outlined in Alexa's documentation.
+				The storage and implementation of the skill into Alexa's skill collection is taken care of behind the scenes by Alexa \cite{alexaSkills}.
+				
+				\textbf{Pros:}
+					\begin{itemize}
+						\item{
+						Architecture is already produced}
+					\item{
+						Easy to add new commands and phrases}
+					\item{
+						Back-end complexities such as adding the skill to the skill collection is taken care of behind the scenes by Alexa}
+					\end{itemize}
+				
+				\textbf{Cons:}
+					\begin{itemize}
+						\item{
+							Potentially tedious to create utterances}
+						\item{
+							Challenging to verify that the most commonly used phrases to execute a command are stored as utterances}
+					\end{itemize}
+	
+	
+		\subsection{Conclusion}
+			The keywords solution isn't practicable due to the ambiguity that can and will take place in figuring out which command to execute.
+			There is no durable solution to extracting quantities and specifics of a request using the keyword solution.
+			
+			The Alexa skills solutions is the best choice becuase \dots
+			\begin{enumerate}
+				\item{
+					The team wouldn't have to develop the skills architecture because it's already setup and thoroughly tested by Amazon.}
+				\item{
+					Alexa has an easy to use API for adding new skills.
+					This means that all of the complexities that come along with instructing the software to use the new skill is taken on by Alexa behind the scenes.}
+				\item{
+					There is a vast amount of documentation and helpful resources online}
+			\end{enumerate}
+			
+			If Alexa is not the chosen voice synthesizer than the next best choice would be the templates solution as it is more durable and scalable than the keywords solution.
+
+	
+	\section{Awakening Kora}
+		Voice controlled devices aren't always listening for commands to execute.
+		A user needs to signal the software if they would like to execute a command.
+		Industry examples of this have been Google's "Okay Google," and Microsoft's "Hey Cortana."
+		
+		\subsection{Wake Word}
+			Wake words must meet two conditions: they shouldn't be triggered by accident and they should be unique across all languages.
+			With that being said, the name Kora is uncommon and unique across all languages.
+			Amazon's Alexa's default wake word is simply "Alexa", and Apple's Siri's wake word is simply "Siri."
+			Amazon and Apple are big companies that most likely put a great deal of resources into figuring out a user friendly wake phrase.
+			So, I believe having Kora's wake word simply being "Kora" is a valid solution.
+			Examples of this are "Kora, rotate design 90 degrees to the left" and "Kora, save design as myDesign1"
+		
+			\textbf{Pros:}
+				\begin{itemize}
+					\item{
+						Hands free}
+					\item{
+						Used by big companies}
+				\end{itemize}
+				
+			\textbf{Cons:}
+				\begin{itemize}
+					\item{
+						Potentially not ideal if Kora commands are asked frequently}
+				\end{itemize}
+			
+			
+		\subsection{Button Press}
+			Since the user is interacting with Kora within Fusion, another viable solution would be to have a Kora button in the toolbar.
+			When the Kora button is pressed Kora awakens and begins listening for a command from the user.
+			Examples of this are \textit{press Kora button} "Rotate design 90 degrees" and  \textit{press Kora button} "Save design as myDesign1"
+			
+			\textbf{Pros:}
+				\begin{itemize}
+					\item{
+						No chance of accidentally executing a command}
+				\end{itemize}
+			
+			\textbf{Cons:}
+				\begin{itemize}
+					\item{
+						Time consuming to move the mouse up to press the Kora button each time a user wants to interact with Kora}
+					\item{
+						Annoying to repetitively do}
+				\end{itemize}
+			
+			
+		\subsection{Teammate Mode}
+			Teammate mode is similar to the button press option, except the Kora button doesn't signal Kora that a command is coming. 
+			Instead, it turns Kora on and puts her in teammate mode where she is constantly listening for commands until she is taken out of teammate mode.
+			When Kora is not in teammate mode commands don't execute because Kora isn't listening.
+			In teammate mode there is no need to say "Kora" at the beginning of the command, because she is already listening.
+			Examples of this are \textit{press Kora teammate mode button}\dots user working \dots "rotate design 90 degrees to the left" \dots user continues working \dots"save design as myDesign1."
+			
+			\textbf{Pros:}
+				\begin{itemize}
+					\item{
+						Less words}
+					\item{
+						No repetitive button presses}
+				\end{itemize}
+			
+			\textbf{Cons:}
+				\begin{itemize}
+					\item{
+						User must be in a quite area so background chatter doesn't execute a command}
+					\item{
+						Kora executing commands it hears from the background will annoy users}
+				\end{itemize}
+			
+			
+		\subsection{Conclusion}
+			Due to the Kora team not having access to the Fusion source code, the button press and teammate mode options may not be possible as they would require Fusion to communicate with the external voice control software, which may not be possible through the Fusion API.
+			For that reason, the wake word "Kora" will be used before each command to wake Kora up.
+			This is a good solution because it is hands free and most users are already used to interacting with voice control software via a wake word.
+		
+		
+	\bibliographystyle{IEEEtran}
+	\bibliography{techReview.bib}
+
+\end{document}
