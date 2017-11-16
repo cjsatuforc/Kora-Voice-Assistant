@@ -1,0 +1,220 @@
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+\usepackage{graphicx}
+\usepackage[hyphens,spaces,obeyspaces]{url}
+\usepackage{setspace}
+\usepackage{xspace}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{caption}
+
+\usepackage{geometry}
+\geometry{textheight=9.5in, textwidth=7in}
+
+\def \botname{Korra\xspace}
+\def \hasFeature{{\color{ForestGreen}\checkmark}}
+\def \lacksFeature{{\color{red}X}}
+
+% 1. Fill in these details
+%\def \CapstoneTeamName{         The Cleverly Named Team}
+\def \CapstoneTeamNumber{8}
+\def \GroupMemberOne{Austin Row}
+%\def \GroupMemberTwo{                   Thomas Kuhn}
+%\def \GroupMemberThree{                 Karl Popper}
+\def \CapstoneProjectName{NLP for Digital Manufacturing}
+\def \CapstoneSponsorCompany{Autodesk}
+\def \CapstoneSponsorPerson{Patti Vrobel}
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{          %Problem Statement
+                                %Requirements Document
+                                Technology Review
+                                %Design Document
+                                %Progress Report
+                                }
+
+\newcommand{\NameSigPair}[1]{\par
+\makebox[2.75in][r]{#1} \hfil   \makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill            \makebox[.75in]{\hrulefill}}
+\par\vspace{-12pt} \textit{\tiny\noindent
+\makebox[2.75in]{} \hfil                \makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill  \makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+%\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \pagenumbering{gobble}
+    \begin{singlespace}
+        \hfill 
+        % 4. If you have a logo, use this includegraphics command to put it on the coversheet.
+        %\includegraphics[height=4cm]{CompanyLogo}   
+        \par\vspace{.2in}
+        \centering
+        \scshape{
+            \huge CS Capstone \DocType \par
+            {\large\today}\par
+            \vspace{.5in}
+            \textbf{\Huge\CapstoneProjectName}\par
+            Group\CapstoneTeamNumber\par
+            % 5. comment out the line below this one if you do not wish to name your team
+            %\CapstoneTeamName\par 
+            {\Large
+                \GroupMemberOne\par
+                %\NameSigPair{\GroupMemberTwo}\par
+                %\NameSigPair{\GroupMemberThree}\par
+            }
+            \vspace{0.5in}
+        }
+        \begin{abstract}
+        % 6. Fill in your abstract    
+            \noindent Our project, \botname, will offer a voice interface to Autodesk's Fusion 360 3-D modelling software. 
+            As part of the stretch goal, \botname will also learn to predict commands coming from individual users before they are given. 
+            To accomplish these tasks, \botname, will need a natural language processor to derive intent from user commands, a machine learning library to implement the command prediction model, and a programming language to handle all of the interactions between the various libraries and APIs.
+            The tools that will satisfy each of the aforementioned project needs are Wit.ai, scikit-learn, and Python respectively. 
+            For a natural language processor, Wit.ai offers a feature-rich experience while still being free and easy to use.
+            Scikit-learn offers the most pre-built machine learning methods which is ideal for a project where the time to implement the prediction model will be limited.
+            Python is chosen primarily for its universal compatibility with the other tools being used to implement \botname and for its relatively high readability and development speed.
+            These tools will be used in the implementation of this project.
+        \end{abstract}     
+    \end{singlespace}
+\end{titlepage}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+% 7. uncomment this (if applicable). Consider adding a page break.
+%\listoffigures
+%\listoftables
+\clearpage
+
+% 8. now you write!
+\section{Natural Language Processor}
+    \subsection{Overview}
+        As a voice assistant, \botname will be required to receive and understand speech from a user. 
+        In order to do this, a natural language processor will be needed to translate either the user's speech, or a transcript of the user's speech, into a program-usable form. 
+        This section will review and compare existing natural language processors that could be used to do this.
+
+    \subsection{Criteria}
+        There are several important aspects to consider when deciding what \botname will use to parse the user's raw language. 
+        The primary consideration is cost. 
+        This project is a proof-of-concept and thus requires only a working prototype and may not be put into production. 
+        Ideally it should not cost any money create. 
+        Therefore, a free option that can accomplish everything that is required by \botname is ideal. 
+        Other things that are taken into account are the processor's accuracy, implementation difficulty, and comprehension flexibility. 
+        An ideal choice is accurate with its interpretations of intent, is easy to implement, maintain, and modify, and is capable of mapping multiple similar phrases to the same intent.
+        
+    \subsection{Options}
+        \subsubsection{Wit.ai}
+            Wit.ai is Facebook's free-to-use open-source project for natural language processing\cite{WitFAQ}. 
+            It is capable of deriving intent directly from audio of a user speaking and provides a graphical user interface for developers. 
+            Also supported are automatic intent triggers, comprehension flexibility, and entity roles. 
+            There is extensive documentation for Wit.ai, however, all official examples are given in the context of an app that is integrated with Facebook Messenger\cite{NLPComparisons}.
+        \subsubsection{Dialogflow}
+            Dialogflow, formerly Api.ai, is Google's solution for natural language processing. 
+            To use Dialogflow in a large-scale enterprise environment, one the pay-to-use Enterprise plan would need to be purchased\cite{DialogflowPricing}, thus this is considered an option that is not free. 
+            While not free to use, Dialogflow does offer a feature-rich language processing tool with a developer user interface. 
+            It supports automatic intent triggers and comprehension flexibility and comes with built-in functionality specifically for chat bots. 
+            It is capable of processing directly from speech audio and is even capable of automatically querying the user for missing information needed to accurately derive intent\cite{NLPComparisons}.
+        \subsubsection{Alexa}
+            Amazon has provided developers with free access to Alexa Skills Kit for implementing new functionality in Alexa-integrated apps and devices. 
+            The provided development kit offers speech-to-intent processing capabilities, but the accuracy and ability to learn new phrases are described as weak by some. 
+            While the kit offers language processing capabilities, it requires that all interactions and responses are handled manually in the business logic.
+            Alexa's diagnostic tools are also limited\cite{NLPComparisons}. 
+            
+    \subsection{Comparison}
+        \begin{table}[H]
+            \begin{centering}
+                \begin{tabular}{|c|c|c|c|c|c|}
+                    \hline
+                    & Processes Audio & Free & Automatic Interaction Handling & Comprehension Flexibility & Developer UI \\
+                    \hline
+                    Wit.ai & \hasFeature & \hasFeature & \hasFeature &  \hasFeature & \hasFeature \\
+                    \hline
+                    Dialogflow & \hasFeature & \lacksFeature & \hasFeature & \hasFeature & \hasFeature \\
+                    \hline
+                    Alexa & \hasFeature & \hasFeature & \lacksFeature & \lacksFeature & \lacksFeature \\
+                    \hline
+                \end{tabular}
+                \caption{NLP Feature Comparison Chart}\label{tab:NLPFeatCompare}
+            \end{centering}
+        \end{table}
+        
+        \noindent Wit.ai, Dialogflow, and Alexa all offer functionality that could be used to implement the natural language processing aspect of \botname. 
+        However, there are differences that separate them. 
+        Wit.ai and Dialogflow offer the best developer experience for ease of implementation and use. 
+        Both of these options have developer user interfaces, automatic interaction handling, and the ability to comprehend variations of the same phrases. 
+        The Alexa Skills Kit lacks all three of these features and thus would be more difficult to develop with. 
+        However, while Alexa may lack some usability features, it and Wit.ai are free to use while Dialogflow would require some level of spending. 
+        All three choices offer the ability to process audio directly which eliminates the need for \botname to transcribe a user's voice commands to text.
+    
+    \subsection{Conclusion}
+        Wit.ai is the clear best choice for \botname's natural language processing component. 
+        It is the only one of the three presented options that both offers rich usability features and is free. 
+        For this reason, Wit.ai will be the natural language processor used by \botname. 
+
+\section{User Action Prediction}
+    \subsection{Overview}
+        One aspect of the stretch goal for this project is adding the ability to predict the user's commands before they are given. 
+        To do this, \botname will need to incorporate some form of machine learning so that it can learn the use patterns of each individual user.
+        This section will review and compare available options for achieving this functionality.
+    \subsection{Criteria}
+        An ideal tool for implementing \botname's user action prediction functionality should be easy to learn and use and robust in its learning methods. 
+        Ease of use is a particularly important feature as the time frame for implementing this functionality will likely be short and none of the developers working on this project have prior experience in machine learning.
+    \subsection{Options}
+        \subsubsection{Self-Implemented Process}
+            There are many models that are used for predictive analysis and any of them could be implemented from scratch. 
+            This method would provide the ability to customize the smallest detail of the machine learning process to the project since the project developers would have to specify every aspect of the process. 
+            Implementing this option would require extra time for at least one developer to research implementation methods.
+        \subsubsection{Scikit-learn}
+            Scikit-learn is a robust machine learning library for Python that offers predefined processes for performing many learning techniques such as regression analysis, data clustering, and object classification\cite{ScikitLearnOrg}. 
+            The primary advantage of this option is that using it would minimize the amount of time spent researching by a developer since it comes with most of the necessary functionality. 
+            The one potential disadvantage of using scikit-learn is that the library does not support deep learning and thus that technique would not be available\cite{ScikitLearnDeepLearning}.
+        \subsubsection{Tensorflow}
+        Tensorflow is a library released by the Google Brain team that offers pre-built graph structures and methods to perform deep learning\cite{TensorflowOrg}. 
+            Using this option would offer the ability to implement the prediction model as a neural net which is considered a robust learning technique. 
+            The disadvantage of this library is that it restricts the learning methods to deep learning and requires more research to use effectively than scikit-learn.
+    \subsection{Comparison}
+        Self-implementing a prediction model from scratch would offer the most control over the process, however, it would be difficult and time-consuming to implement a process with learning capabilities equal to existing pre-built options. 
+        Scikit-learn offers the greatest ease of use of all the options and has more learning methods available than Tensorflow. 
+        Tensorflow's one advantage is that it offers the ability to do deep learning.
+    \subsection{Conclusion}
+        Scikit-learn fulfills the criteria best as it is the easiest to use without prior machine learning knowledge and offers a varied set of options that is only matched by self-implementing a predictive model which is itself unrealistic for the given time constraints. 
+        If in a late stage of the project it is realized that deep learning is needed for this component of the project, Tensorflow can be integrated and used in conjunction with scikit-learn.
+
+\section{Development Language}
+    \subsection{Overview}
+        The interactions between the various libraries and APIs being used in this project will need to be handled by some business logic implemented by the project developers.
+        With that in mind, it is necessary to decide what programming language will be used. 
+    \subsection{Criteria}
+        The chosen language should be supported by the various libraries and APIs being used in the project.
+        It should also be fast enough that there are no noticeable performance issues, i.e. runtime delays, as a result from using it.
+        Relative modifiability of code written in the language should be taken into account as well.
+    \subsection{Options}
+        \subsubsection{Python}
+            Python is supported by the Fusion API as well as the chosen speech processor, Wit.ai, and the selected machine learning library, scikit-learn. 
+            It is a language that is fast for prototyping and has highly readable syntax which often times makes it easier to make changes to existing code. 
+            The disadvantage to using Python is that it is often noted as being far slower to run than other languages\cite{PyCppSpeedBenchmarks} and therefore is often replaced between the prototyping and production stages with a language that is faster.
+        \subsubsection{C++}
+            C++ is supported by the Fusion API, however it is not supported by the chosen speech processor, Wit.ai, nor the selected machine learning library, scikit-learn.
+            Despite this, there are other speech processing and machine learning libraries that could be used with C++. 
+            The language is relatively low-level and requires developers to implement some functionality manually that already exists in other languages such as memory management. 
+            An advantage that stems from this is that C++ is a relatively fast language\cite{PyCppSpeedBenchmarks}.
+        \subsubsection{Other}
+            No other language is supported by the Fusion API.
+            However, there are advantages to other languages with respect to other parts of the project. 
+            For example, the R programming language is one of the most popular for data analytics and thus machine learning\cite{MLLang} while implementing speech recognition with Node.js would allow easy future integration of other Google libraries for additional functionality.
+        
+    \subsection{Comparison}
+        No languages other than Python and C++ are supported by the Fusion API\cite{AutodeskCreateScript}, a necessary part of the project, and therefore no others will be considered. 
+        Python is fast to develop in, highly modifiable, and feature-rich while using C++ results in reduced development speed, less modifiability, and fewer features to use in development. 
+        However, the use of C++ would make the application much faster than if it were implemented using Python.
+    
+    \subsection{Conclusion}
+        This project will be implemented using Python. 
+        The duties that will be handled in the business logic are small enough that the slower speed of Python should not result in any performance losses that are noticeable to the user. 
+        The access to the features that are supported with Python and the ability to write modifiable code quickly are aspects of the language that will be advantageous to the implementation of this project.
+
+\clearpage
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
