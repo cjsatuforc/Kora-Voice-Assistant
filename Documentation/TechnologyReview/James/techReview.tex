@@ -1,0 +1,235 @@
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{setspace}
+
+\usepackage{geometry}
+\geometry{textheight=9.5in, textwidth=7in}
+
+% 1. Fill in these details
+\def \CapstoneTeamName{		NLP For Digital Manufacturing}
+\def \CapstoneTeamNumber{		8}
+\def \GroupMemberOne{			Austin Row}
+\def \GroupMemberTwo{			Jeremy Fischer}
+\def \GroupMemberThree{			James Stallkamp}
+\def \CapstoneProjectName{		Korra For Digital Manufacturing}
+\def \CapstoneSponsorCompany{	AutoDesk, Inc}
+\def \CapstoneSponsorPerson{		Patti Vrobel}
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{		Problem Statement
+				%Requirements Document
+				Technology Review
+				%Design Document
+				%Progress Report
+				}
+			
+\newcommand{\NameSigPair}[1]{\par
+\makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+\par\vspace{-12pt} \textit{\tiny\noindent
+\makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+%\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \pagenumbering{gobble}
+    \begin{singlespace}
+    	%\includegraphics[height=4cm]{coe_v_spot1}
+        \hfill 
+        % 4. If you have a logo, use this includegraphics command to put it on the coversheet.
+        %\includegraphics[height=4cm]{CompanyLogo}   
+        \par\vspace{.2in}
+        \centering
+        \scshape{
+            \huge CS Capstone \DocType \par
+            {\large\today}\par
+            \vspace{.5in}
+            \textbf{\Huge\CapstoneProjectName}\par
+            \vfill
+            {\large Prepared for}\par
+            \Huge \CapstoneSponsorCompany\par
+            \vspace{5pt}
+            {\Large\NameSigPair{\CapstoneSponsorPerson}\par}
+            {\large Prepared by }\par
+            Group\CapstoneTeamNumber\par
+            % 5. comment out the line below this one if you do not wish to name your team
+            \CapstoneTeamName\par 
+            \vspace{5pt}
+            {\Large
+                \NameSigPair{\GroupMemberOne}\par
+                \NameSigPair{\GroupMemberTwo}\par
+                \NameSigPair{\GroupMemberThree}\par
+            }
+            \vspace{20pt}
+        }
+        \begin{abstract}
+        % 6. Fill in your abstract    
+        	This project is building a natural language interface, Korra, for AutoDesk's Fusion360.
+            Korra will be a collarborative assistent that will help users interact with Fusion360. 
+            The stretch goals for Korra include the system becoming more intelligent through machine learning.
+            The point of this learning would be to enable Korra to become more collaborative and offer design insight to the user.
+            There is a long work flow for Korra to understand natural language and respond with a meaningful response.
+            The first pieces of that work flow are the voice transcriber, synthesizer, and a model for when to ask questions.
+            These three pieces will reviewed here and the most promising of the researched technologies seems to be Amazon's Lex.
+        \end{abstract}     
+    \end{singlespace}
+\end{titlepage}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+% 7. uncomment this (if applicable). Consider adding a page break.
+%\listoffigures
+%\listoftables
+\clearpage
+
+% 8. now you write!
+\section{Voice Transcriber}
+	\subsection{Overview and Criteria}
+    A voice transcriber is a system that uses a digital sound file as an input and can produce text as an output.
+    The first step in the work flow for Korra is converting audio to text of what the user said. 
+    The only significant requirement for this module is that it must accept English.
+    The transcriber should be fast and work reasonably well with other technologies we find. 
+    The voice transcriber is largely independent, because it solely neede to pipe the text output to the next piece in the work flow.
+    The following covers three options for voice transcribers, a python speech recognition library the CMUSphinx project, and Amazon's Lex
+    
+    \subsection{Python Speech Recognition Library}
+    This first option for a voice transcriber is a library provided for python. 
+    This library provides a basic API to utilize the python audio and text recognition software library. 
+    The python library is completely open source and would allow one to essentially develop one’s own voice transcriber. 
+    Being a totally open source library this option would allow for the most customization and flexibility. 
+    This means almost any other subsequent technology could be used with this library because it is basically just python. 
+    The cost of this option is that we would have to basically develop the voice transcriber ourselves. 
+    The remaining options, and most I found while searching, are finished voice transcribers that could be hooked up into the workflow as is. 
+    In Short the python speech recognition library is the extreme of open source options; it allows for the most customization but would also require the most work. 
+    
+    \subsection{CMUSphinx}
+    CMUSphinx is a large open source research project that explores many aspects of natural language processing. 
+    This group provides a large toolkit that includes tools we might want to use. 
+    This project does provide a voice recognizer built in C and Java, as well as all the API support that the previous python library provided. 
+    CMUSphinx also provides tools for acoustic training, language base libraries and statistical models. 
+    CMUSphinx represents a more developed option than an open source project like a python library. 
+    This option provides numerous tools and support for developing products. Using CMUSphinx one would still have to largely build a voice transcriber themselves but all the necessary tools and ground work has been provided by CMUSphinx. 
+    CMUSphinx is in my opinion the middle ground; it provides the power and customization of an open source project but has more support than just a library.
+    
+    \subsection{Amazon Lex}
+    Amazon Lex’s is a tool kit from Amazon that is designed to help develop chat bots and other natural language interfaces[3]. 
+    Lex goes far beyond a voice transcriber; Lex could almost contain the entire workflow for the project we are trying to accomplish. 
+    Lex is structured like Amazon’s AWS where users pay based on volume and frequency of use. 
+    An important note here is that we would have to send requests to amazon in order for a Lex Chat bot to work; this is obviously a disadvantage as all others can work locally. 
+    Lex allows one to quickly and easily set up a basic natural language interface that can accept speech, transcribe it, recognize it, and respond to it. This is even more significant than its face value because it would enable us to spend more time on the machine learning aspect of this project rather than just the connecting of applications. 
+    Lex is a powerful option but it comes with costs. 
+    Using Lex we are locked into Amazon’s development, meaning it would be hard to use Lex with other open source projects mentioned in this document. In addition to Lex constraining alternatives, there are actual monetary costs for each interaction.  
+    In short Lex is the easiest to use and the most powerful but it comes at steep costs in flexibility and future expansion.
+    
+    \subsection{Conclusion}
+    Amazon's Lex provides a feature rich toolbox that will allow us as developers to quickly implement a basic chat bot. 
+    Lex provides a finished and integrated voice transcriber that is simple to use allows for output.
+    This means Lex can accomplish more than what we need and can be easily used with other technologies if we desired to not fully integrate with Amazon.
+    The only real cost is the financial cost of using Lex, which considering the small volume the cost is low and as students the cost to us is zero.
+\section{Voice Synthesizer}
+	\subsection{Overview and Criteria}
+    A Voice synthesizer is the opposite of a voice transcriber, this system takes in text input and can produce audio output.
+    Korra will need a voice synthesizer in it's work flow in order to be able to respond to the user with verbal responses.
+    The voice synthesizer must work in English and accept inputs from whatever other systems we choose to use. 
+    The following options were explored for a voice synthesizer the Festival Speech Synthesis System, MaryTTS and Amazon's Lex.
+    
+    \subsection{Festival Speech Synthesis System }
+    Festival Speech Synthesis System is a general framework for building speech synthesis systems.
+    The Festival system provides full text to speech through a number of API interfaces.
+    The system is developed in C++ and provides extensive libraries primarily for English and Spanish.
+    The Festival system does largely provide a complete voice synthesizer, however of the options this requires the most development.
+    This system would allow us to customize structure of the system as well as aspects of how to interact with the system. 
+    
+    \subsection{MaryTTS}
+    MaryTTS is an open source project for processing text and producing voice.
+    The project is composed of a manager program and a client.
+    The client sends text to and receives responses from the manager program.
+    This manager program can be run locally on the same machine or across a network.
+    The manager program includes multiple modules for processing text including NLP analysis.
+    MaryTTS only needs to be piped text as an input, meaning MaryTTS could work with most other technical options.
+    MaryTTS provides a largely finished product that could be connected into a work flow fairly easily.
+    This option is simpler than developing our own voice synthesizer but less restricting than something like Lex.
+    
+    \subsection{Amazon's Lex}
+    Amazon Lex. 
+    As discussed previously Lex is a product delivered by amazon that is an all in one took kit to develop chat bots.
+    This encompasses a voice synthesizer. Lex has support to take in natural input, either speech or text, and respond to it.
+    Lex is the simplest and quickest solution to getting a basic work flow running.
+    However using Lex’s voice synthesizer without using the rest of Lex’s natural language processing would be very difficult.
+    Developers are strongly encouraged to use Lex for most of the pipeline.
+    This is because of the technical hurdles of trying to port data into amazon’s system from outside systems.
+    
+    \subsection{Conclusion}
+    Amazon's Lex provides a feature rich tool box that will allow us as developers to quickly as easily implement a basic chat bot. 
+    The voice synthesizer in Lex is fully developed, supports multiple languages, and responds very fast.
+    The voice synthesizer can also be piped input from other systems meaning this part of Lex could be used with other technologies if desired. 
+    The only costs of using Lex is the financial costs of using the service, which again as a student is zero. 
+    Lex provides a feature rich package that will enable us to quickly develop a basic chat bot allowing for more complex work to be done.
+\section{Model For Interviewing User}
+
+ 	\subsection{Overview and Criteria}
+ 	A stretch goal for Korra is that the system eventually becomes a collaborative assistant. 
+    Korra will begin as a simple natural language interface and will hopefully learn to become much more powerful.
+    Korra will actually collect the same data that will eventually be used to train it.
+    In order to collect this information Korra must be able to prompt the user with a question.
+    This means Korra needs a model for formulating a question based on contextual information.
+    Unfortunately We will have to build the engine for generating questions, we do however have models to start from.
+    These question generators are usually either a retrieval system or a generative system
+    This document will cover three options, the first, a self implemented retrieval system. 
+    Second a self implemented generative system. 
+    Or last a generative system based on a meta model or similar theory.
+    
+    \subsection{Retrieval}
+    The first approach for generating questions is a retrieval based solution. 
+    This approach creates a question from pre-generated responses that are selected by rules defined by developers.
+    The input or context is mined for key words that trigger rules resulting in a pre-generated response.
+    The down side to this approach is that the system is very limited by the pre-generated rules and responses.
+    Anything that is not covered by these definitions will result in an erroneous response.
+    The advantage is that responses are almost always syntactically correct and understandable.
+    Because the responses are pre built, they are almost guaranteed to be correct or make sense.
+    This approach is iterative, because rules and definitions can start very simple and be expanded over time making.
+    This is likely the simplest solution, however it will also probably result in the least robust product.
+   
+    \subsection{Self Implemented Generative}
+    The next approach to generating responses or questions is a generative approach. 
+    This approach again relies on context or input for keywords, it then uses this information to compile a question.
+    This means both approaches work in a similar manner in that context is analyzed and a response is built using items stored in memory.
+    In a retrieval system the items are phrases or whole sentences, in a generative the items are individual words or punctuation.
+    The advantage of a generative approach is that the breadth of acceptable inputs that result in acceptable outputs is significantly larger.
+    This is because a generative approach is not limited by pre defined phrases.
+    The disadvantage of a generative approach is the complexity and potential for error.
+    Using a generative approach it is not guaranteed that the response will be syntactically correct or make sense, this is because an engine will be generating the syntax and could make a mistake.
+    Within this approach to generating questions there are also different models on how to generate questions.
+    This is usually context orientated meaning the next option is a self implemented vs an attempt at context free question generation.
+    A self implemented question generator is the most complicated solution but also provides the most power and flexibility.
+    This would probably result in the most understandable natural language interface as well fit context best.
+    
+    \subsection{Generative With Meta Model}
+    The last approach is a generative solution based on a context free model of generating questions called, The meta model. 
+    This model is a set of rules for asking questions or guiding a conversation. 
+    The last option explored here is a generative engine based on this meta model.
+    The advantage of basing our system on a developed model is that the rules are already written.
+    Adapting this approach to Korra would be relatively easy and quick.
+    The cost of using this model is that it doesn't take the context into account well.
+    This means the responses and questions will be very generic and not tailored to this situation.
+    
+    \subsection{Conclusion}
+    In conclusion a self implemented generative approach will fit our project best. Assuming we can implement the generative system, A generative approach is clearly superior to retrieval. A context based approach will provide a more natural feeling interaction than the meta model, meaning self implemented generative approach is the best option.
+\begin{thebibliography}{}
+\bibitem{MaryTTS}
+MaryTTS – Documentation [Online]. Available: http://mary.dfki.de/documentation/index.html. [Accessed: 14- Nov- 2017].
+\bibitem{CSTR}
+CSTR Home Page [Online]. Available: http://www.cstr.ed.ac.uk/. [Accessed: 14- Nov- 2017].
+\bibitem{Amazon Lex Product Details}
+Amazon Lex Product Details [Online]. Available: https://aws.amazon.com/lex/details/. [Accessed: 14- Nov- 2017].
+\bibitem{SpeechRecognition 3.7.1 : Python Package Index}
+SpeechRecognition 3.7.1 : Python Package Index [Online]. Available: https://pypi.python.org/pypi/SpeechRecognition/. [Accessed: 14- Nov- 2017].
+\bibitem{CMUSphinx Tutorial For Developers}
+CMUSphinx Tutorial For Developers [Online]. Available: https://cmusphinx.github.io/wiki/tutorial/. [Accessed: 14- Nov- 2017].
+\bibitem{Ultimate Guide to Leveraging NLP Machine Learning for your Chatbot}
+Ultimate Guide to Leveraging NLP Machine Learning for your Chatbot [Online]. Available: https://chatbotslife.com/ultimate-guide-to-leveraging-nlp-machine-learning-for-you-chatbot-531ff2dd870c. [Accessed: 14- Nov- 2017].
+\end{thebibliography}
+
+\end{document}
