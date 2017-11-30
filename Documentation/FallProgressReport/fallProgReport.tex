@@ -1,0 +1,251 @@
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\usepackage{url}
+\usepackage{setspace}
+ 
+\usepackage{alltt}                                           
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{geometry}
+\geometry{textheight=9.5in, textwidth=7in}
+\setlength\parindent{0pt}
+
+\usepackage{tabu}
+\usepackage{longtable}
+
+\usepackage{xspace}
+\usepackage{pgfgantt}
+\usepackage{subcaption}
+
+% 1. Fill in these details
+\def \CapstoneTeamName{\textbf{Insert Team Name Here} }
+\def \CapstoneTeamNumber{8}
+\def \GroupMemberOne{James Stallkamp}
+\def \GroupMemberTwo{Jeremy Fischer}
+\def \GroupMemberThree{Austin Row}
+\def \CapstoneProjectName{Kora}
+\def \CapstoneSponsorCompany{Autodesk}
+\def \CapstoneSponsorPerson{Patti Vrobel}
+\def \botname{Kora\xspace}
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{		%Problem Statement
+				%Requirements Document
+				%Technology Review
+				%Design Document
+				Progress Report
+				}
+			
+\newcommand{\NameSigPair}[1]{\par
+\makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+\par\vspace{-12pt} \textit{\tiny\noindent
+\makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \pagenumbering{gobble}
+    \begin{singlespace}
+    	\includegraphics[height=4cm]{coe_v_spot1}
+        %\hfill 
+        % 4. If you have a logo, use this includegraphics command to put it on the coversheet.
+        \par\vspace{.2in}
+        \centering
+        \scshape{
+            \huge CS Capstone \DocType \par
+            {\large\today}\par
+            \vspace{.5in}
+            \textbf{\Huge\CapstoneProjectName}\par
+            \vfill
+            {\large Prepared for}\par
+            \Huge \CapstoneSponsorCompany\par
+            \vspace{5pt}
+            {\Large\NameSigPair{\CapstoneSponsorPerson}\par}
+            {\large Prepared by }\par
+            Group\CapstoneTeamNumber\par
+            % 5. comment out the line below this one if you do not wish to name your team
+            %\CapstoneTeamName\par 
+            \vspace{5pt}
+            {\Large
+                \NameSigPair{\GroupMemberOne}\par
+                \NameSigPair{\GroupMemberTwo}\par
+                \NameSigPair{\GroupMemberThree}\par
+            }
+            \vspace{20pt}
+        }
+        \begin{abstract}
+			This document outlines the production progress of Kora in Fall 2017, including obstacles and steps moving forward.
+        \end{abstract}     
+    \end{singlespace}
+\end{titlepage}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+% 7. uncomment this (if applicable). Consider adding a page break.
+%\listoffigures
+%\listoftables
+\clearpage
+
+% 8. now you write!
+
+\section{Purpose}
+	Kora is a proof of concept project that will integrate a natural language processing library into Autodesk's 3-D computer aided design software, Fusion.
+	Kora will be a speech-based virtual assistant for Fusion that lets users perform any subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
+	As a stretch goal, Kora will be capable of questioning the user and using responses to predict and automatically assist with future user behavior.
+	
+	Kora will offer users a tool that decreases the time required to achieve their goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
+	If the stretch goal is achieved, Kora will further increase productivity by learning to automate specific workflows within the product.
+
+\section{Goals}
+	\subsection{Main Goals}
+		\begin{itemize}
+			 \item{
+			 	Kora will allow the user to perform tasks in Fusion via a voice interface.
+				Each voice command given by the user will be mapped to a specific task which will then be performed in the open Fusion design.}
+			\item{
+				All interactions with Kora will be logged for debugging and future development purposes.}
+		\end{itemize}
+	\subsection{Stretch Goals}
+		\begin{itemize}
+			\item{
+				Kora will periodically ask the user questions regarding why they have performed specific tasks.
+				The questions asked by Kora will pertain to specific predefined contexts.}
+			\item{
+			Kora will record user responses and save a transcript along with contextual information.}
+			\item{
+				User responses to interview questions will be used to try to predict and assist with future user actions.}
+		\end{itemize}
+\section{Project Progress}
+	This term the group was introduced to Kora and what Autodesk wants to get out of this project.
+	The group wrote the problem statement document which consisted of a high level definition of Kora and a description of the problem Kora will be solving.
+	Afterwards, the requirements document was created which outlined "what" Kora should be able to do.
+	The requirements document is the contract between the group and Patti that details what we will produce.
+	From there we wrote the technology review documents, which outline "how" we are going to develop Kora.
+	This document includes what specific technologies and platforms we will use.
+	We ended the term by writing the design document, which represents the roadmap for the rest of the year.
+	
+
+\section{Obstacles}
+	The biggest obstacle this group is facing and will continue to face throughout Kora's development is not having access to the Fusion source code.
+	This obstacle constrains Kora's success, because Kora can only provide services which the Fusion API offers.
+	With that being said, the services offered by Fusion's API is extensive, so we are hoping it does not become too big of an issue.
+	From what we have seen so far, the API does not provide a clear solution for creating a pop-up.
+	This may be a problem we are going to have to face when implementing the on-screen Kora widget.
+	
+	
+\section{Retrospective}
+		\begin{center}
+	\begin{longtabu} to \textwidth {|
+			X[2,l]|
+			X[5,l]|
+			X[5,c]|
+			X[5,l]|}
+		\hline
+		\textbf{Week} & \textbf{Positives} & \textbf{Deltas} & \textbf{Actions} \\ \hline
+		
+		Week 1 
+		& 
+		{We found an intro to Natural Language Processing (NLP) video series taught by a Stanford Professor on YouTube.}
+		& 
+		{We have not met with Patii yet, so we are unsure what the project is about. Thus far we only know NLP is involved.}
+		& 
+		{Scheduled a 30 minute "Get to know each other" meeting with Patti}
+		\\ \hline
+		
+		Week 2 
+		&  
+		{We got an overview of what Autodesk does, as well as Patti's role. We touched on the project and what she's hoping to get out of it.}
+		&
+		{Are meeting wasn't long enough to get a full understanding of the project.}
+		&  
+		{We scheduled an hour long follow up meeting for Monday October 9th to dive deeper into the project.}  
+		\\ \hline
+		
+		Week 3 
+		&
+		{We met with Patti for an hour Monday afternoon and got a better understanding of the project.} 
+		& 
+		{We won't be getting the Fusion source code, we will have to use the Fusion API instead.} 
+		&
+		{We started examining the breadth and depth of the Fusion API.} 
+		\\ \hline
+		
+		Week 4 
+		&
+		{Met with our TA, Juneki, and discussed our GitHub repo structure.
+		We also met with Patti, and got constructive criticism on our problem statement documents} 
+		& 
+		{We need to add a Documentation folder in our GitHub repository, and make minor tweaks to our problem statement documents.} 
+		& 
+		{Added the Documentation folder and added the critiques made by Patti to our problem statements.} 
+		\\ \hline
+		
+		Week 5 
+		&
+		{We got open source NLP project suggestions from Juneki} 
+		& 
+		{Our weekly meeting with Patti got canceled because she was traveling.} 
+		& 
+		{We began researching the project suggestions given by Juneki, and editing our requirements document rough draft.} 
+		\\ \hline
+		
+		Week 6 
+		&
+		{The group finished the requirements document.} 
+		& 
+		{There was confusion about whether this project should be considered research based.} 
+		& 
+		{We went to the class regarding research based projects to determine whether our project should be considered research based.} 
+		\\ \hline
+		
+		Week 7 
+		&
+		{Jeremy, Austin, and James met and brainstormed the nine technology components of the project. These components were used for the tech review documents.} 
+		& 
+		{The group came across the obstacle that certain technologies are operating system dependent.}
+		& 
+		{We ran the nine components by Patti, and began working on our individual technology reviews} 
+		\\ \hline
+		
+		Week 8 
+		&
+		{We finalized our individual technology reviews.} 
+		& 
+		{Our weekly meeting with Patti got canceled because she was traveling.} 
+		& 
+		{The technology review documents will be peer reviewed in class this week, and the edits will be added afterwards.}  
+		\\ \hline
+		
+		Week 9 
+		&
+		{Thanksgiving Break} 
+		& 
+		{Thanksgiving Break} 
+		& 
+		{Thanksgiving Break} 
+		\\ \hline
+		
+		Week 10 
+		&
+		{The group finished the design document.}
+		& 
+		{Our weekly meeting with Patti got canceled because she was traveling.} 
+		& 
+		{We will turn in the design document, progress report, and progress report presentation.}  
+		\\ \hline
+		
+		
+	\end{longtabu}
+\end{center}
+
+\section{Moving Forward}
+	This term consisted of planning and writing documents.
+	Now that the group fully understands Kora's purpose and devised a plan for developing Kora, including which technologies and platforms will be used, the next term will consist of the project's actual implementation.
+	The group is hopeful that by the end of next term Kora's voice-to-action pipeline will be connected. This means Kora will be able to execute a command such as "save this design as myDesign1."
+
+\end{document}
