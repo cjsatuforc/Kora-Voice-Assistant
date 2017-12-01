@@ -26,6 +26,7 @@
 \def \CapstoneProjectName{Kora}
 \def \CapstoneSponsorCompany{Autodesk}
 \def \CapstoneSponsorPerson{Patti Vrobel}
+\def \botname{Kora\xspace}
 
 % 2. Uncomment the appropriate line below so that the document type works
 \def \DocType{		%Problem Statement
@@ -34,7 +35,25 @@
 				Design Document
 				%Progress Report
 				}
-			
+
+\newcommand{\designConcernRef}[2][]{
+    #2 #1
+}
+\newcommand{\designElementDef}[5]{
+    \subsubsection{#1}
+    \begin{tabular}[t]{r p{6in}}
+        Type: & #2 \\
+        Purpose: & #3 \\
+        Author: & #4 \\
+        Description: & #5 \\ %TODO:Does this actually belong here?
+    \end{tabular}
+}
+\newcommand{\designElementRef}[2]{
+    \subsubsection{#1}
+    \begin{tabular}[t]{r p{6in}}
+        See #2 & \\ %#2 should be element identifier (section where it's defined or ID that can be used to find it)
+    \end{tabular}
+}
 \newcommand{\NameSigPair}[1]{\par
 \makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
 \par\vspace{-12pt} \textit{\tiny\noindent
@@ -121,7 +140,9 @@
 	\subsection{Scope}
 		This document focuses on the relationships between Kora's components and their individual processes, and how they work together to satisfy the project's requirements.
 	
-	
+    \subsection{Context}
+        TODO: FILL THIS IN
+
 	\subsection{Summary}
 		Kora will be a speech-based virtual assistant for Fusion that lets users perform any one of a subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
 		Workflows in Fusion that are not suited for handling by a voice interface will not be supported by Kora.
@@ -130,7 +151,7 @@
 		
 		Kora will offer users a tool that decreases the time required to achieve their goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
 		If the stretch goal is achieved, Kora will further increase productivity by learning to predict and automate specific workflows within the product.
-
+    
 \section{References}
 
 
@@ -155,11 +176,97 @@
 		\end{tabular}
 	\end{table}
 
+\section{Design Stakeholders and Concerns}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%                                           ***NOTES***
+%
+% Addressed Design Concerns:
+%    1) Should specify by ID each of the concerns from the "Design Stakeholders and Concerns"
+%       that are being addressed or discussed in that particular viewpoint.
+%
+% Design Elements: 
+%    1) If element is not previously defined in other viewpoint, then offer definition. 
+%       Otherwise reference definition in other viewpoint (e.g. "See 4.5.2")
+%
+% Design Rationale:
+%    1) There won't be a single section for design rationale. As per the IEEE standards doc,
+%       the design rationale should be justification for decisions made in the desing and
+%       it doesn't need a dedicated section. Just make sure to include justification for 
+%       why we chose to do something in a certain way (e.g. "Use of the Mediator design pattern
+%       allows the application to...")
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\section{Design Viewpoint: Composition}
+    \subsection{Addressed Design Concerns}
+        \begin{itemize}
+            \item \designConcernRef[Optional-Arg]{Concern-Identifier}
+        \end{itemize}
+
+    \subsection{Design Elements} 
+        \designElementDef{Element-Name}{Element-Type}{Element-Purpose}{Element-Author}{Element-Definition/Reference}
+        \designElementDef{Speech-to-Intent Worker Module}
+                         {Module}
+                         {To encapsulate the natural language processing functionality of \botname.}
+                         {Element-Author}
+                         {}
+    \subsection{Design View: Modules}
 
 
-%\bibliography{requirementsBib} 
+\section{Design Viewpoint: Information}
+    \subsection{Addressed Design Concerns}
+        \begin{itemize}
+            \item
+        \end{itemize}
+
+    \subsection{Design Elements} 
+
+    \subsection{Design View: }
+
+
+\section{Design Viewpoint: Patterns}
+    \subsection{Addressed Design Concerns}
+        \begin{itemize}
+            \item
+        \end{itemize}
+
+    \subsection{Design Elements}
+
+    \subsection{Design View: }
+
+
+\section{Design Viewpoint: Interfaces}
+    \subsection{Addressed Design Concerns}
+        \begin{itemize}
+            \item
+        \end{itemize}
+
+    \subsection{Design Elements}
+
+    \subsection{Design View: }
+
+
+\section{Design Viewpoint: Interactions}
+    \subsection{Addressed Design Concerns}
+        \begin{itemize}
+            \item
+        \end{itemize}
+
+    \subsection{Design Elements}
+
+    \subsection{Design View: }
+
+
+\section{Design Viewpoint: State Dynamics}
+    \subsection{Addressed Design Concerns}
+        \begin{itemize}
+            \item
+        \end{itemize}
+
+    \subsection{Design Elements}
+
+    \subsection{Design View: }
+bibliography{requirementsBib} 
 %\bibliographystyle{ieeetr}
 
 \end{document}
