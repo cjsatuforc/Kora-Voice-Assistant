@@ -26,7 +26,6 @@
 \def \CapstoneProjectName{Kora}
 \def \CapstoneSponsorCompany{Autodesk}
 \def \CapstoneSponsorPerson{Patti Vrobel}
-\def \botname{Kora\xspace}
 
 % 2. Uncomment the appropriate line below so that the document type works
 \def \DocType{		%Problem Statement
@@ -90,27 +89,73 @@
 
 % 8. now you write!
 
-\section{Identification of the SDD}
+
+\section{Frontspiece}
+	\subsection{Date of Issue and Status}
+		This document was issued November 30, 2017 and is the first draft of the design document.
+	
+	\subsection{Issuing Organization}
+		This document has been issued by Oregon State University and Autodesk via the senior design capstone class.
+	
+	\subsection{Authorship}
+		Jeremy Fischer, Austin Row, and James Stallkamp are the authors of this document and the developers of Kora.
+		
+	\subsection{Change History}
+		\begin{table}[H]
+			\centering
+			\caption{Change History}
+			\label{my-label}
+			\begin{tabular}{|l|l|}
+				\hline
+				\textbf{Date}     & \textbf{Change Description}   \\ \hline
+				November 30, 2017 & {First design document draft} \\ \hline
+			\end{tabular}
+		\end{table}
+
+\section{Introduction}
+	\subsection{Purpose}
+		The purpose of this design document is to outline how Kora's workflows will be completed and connected.
+		More generally, this document describes how the client's requirements will be met.
+		Kora's developers will use this document as a roadmap during implementation.
+
+	\subsection{Scope}
+		This document focuses on the relationships between Kora's components and their individual processes, and how they work together to satisfy the project's requirements.
+	
+	
+	\subsection{Summary}
+		Kora will be a speech-based virtual assistant for Fusion that lets users perform any one of a subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
+		Workflows in Fusion that are not suited for handling by a voice interface will not be supported by Kora.
+		As a stretch goal, Kora will be capable of questioning the user and using responses to predict and automatically assist with future user behavior.
+		It will be a plugin that is bundled with Fusion and will be part of the product's standard download. 
+		
+		Kora will offer users a tool that decreases the time required to achieve their goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
+		If the stretch goal is achieved, Kora will further increase productivity by learning to predict and automate specific workflows within the product.
+
+\section{References}
 
 
+\section{Glossary}
+	\begin{table}[H]
+		\centering
+		\caption{Glossary}
+		\label{my-label}
+		\begin{tabular}{|l|l|}
+			\hline
+			\textbf{Term} & \textbf{Definition} \\ \hline
+			Kora & The virtual assistant that is the focus of this project \\ \hline
+			NLP & Natural Language Processing \\ \hline
+			API & Application Programing Interface \\ \hline
+			CAD & Computer Aided Design \\ \hline
+			CAM & Computer Aided Manufacturing \\ \hline
+			Fusion & An Autodesk Cloud-based 3D CAD/CAM tool/product \\ \hline
+			Task & In the context of Fusion, a function or operation that can be performed in Fusion \\ \hline
+			Plugin & Software that adds specific new functionlity to another piece of software \\ \hline
+			User & A person that interacts with Kora or Fusion depending on the context \\ \hline
+			Workflow & A sequence of related tasks \\ \hline
+		\end{tabular}
+	\end{table}
 
 
-\section{Identified design stakeholders}
-
-
-\section{Identified design concerns}
-
-
-\section{Selected design viewpoints, each with type definitions of its allowed design elements and design languages}
-
-
-\section{Design views}
-
-
-\section{Design overlays}
-
-
-\section{Design rationale}
 
 
 
