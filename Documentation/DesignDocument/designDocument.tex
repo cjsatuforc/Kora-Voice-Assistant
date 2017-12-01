@@ -39,13 +39,12 @@
 \newcommand{\designConcernRef}[2][]{
     #2 #1
 }
-\newcommand{\designElementDef}[5]{
+\newcommand{\designElementDef}[4]{
     \subsubsection{#1}
     \begin{tabular}[t]{r p{6in}}
         Type: & #2 \\
         Purpose: & #3 \\
         Author: & #4 \\
-        Description: & #5 \\ %TODO:Does this actually belong here?
     \end{tabular}
 }
 \newcommand{\designElementRef}[2]{
@@ -204,12 +203,11 @@
         \end{itemize}
 
     \subsection{Design Elements} 
-        \designElementDef{Element-Name}{Element-Type}{Element-Purpose}{Element-Author}{Element-Definition/Reference}
+        \designElementDef{Element-Name}{Element-Type}{Element-Purpose}{Element-Author}
         \designElementDef{Speech-to-Intent Worker Module}
                          {Module}
                          {To encapsulate the natural language processing functionality of \botname.}
                          {Element-Author}
-                         {}
     \subsection{Design View: Modules}
 
 
