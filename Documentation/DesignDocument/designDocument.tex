@@ -36,6 +36,13 @@
 				%Progress Report
 				}
 
+\newcommand{\designConcernDef}[3]{
+    \subsection{#1}
+        \begin{tabular}[t]{r p{6in}}
+            Stakeholder(s): & #2 \\
+            Concern: & #3 \\
+        \end{tabular}
+}
 \newcommand{\designConcernRef}[2][]{
     #2 #1
 }
@@ -176,6 +183,7 @@
 	\end{table}
 
 \section{Design Stakeholders and Concerns}
+    \designConcernDef{Module Interactions}{Client, Developers}{}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -247,7 +255,7 @@
 \section{Design Viewpoint: Interactions}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item
+            \item concernid-WhichModulesInteract
         \end{itemize}
 
     \subsection{Design Elements}
