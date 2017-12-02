@@ -12,6 +12,11 @@
 \usepackage{textcomp}
 \usepackage{tgpagella}
  
+%For Gantt Chart
+\usepackage{xspace}
+\usepackage{pgfgantt}
+\usepackage{subcaption}
+ 
 \usepackage{alltt}                                           
 \usepackage{float}
 \usepackage{color}
@@ -157,9 +162,7 @@
 	\subsection{Scope}
 		This document focuses on the relationships between Kora's components and their individual processes, and how they work together to satisfy the project's requirements.
 	
-    \subsection{Context}
-        TODO: FILL THIS IN
-
+	
 	\subsection{Summary}
 		Kora will be a speech-based virtual assistant for Fusion that lets users perform any one of a subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
 		Workflows in Fusion that are not suited for handling by a voice interface will not be supported by Kora.
@@ -168,9 +171,6 @@
 		
 		Kora will offer users a tool that decreases the time required to achieve their goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
 		If the stretch goal is achieved, Kora will further increase productivity by learning to predict and automate specific workflows within the product.
-    
-\section{References}
-
 
 \section{Glossary}
 	\begin{table}[H]
@@ -516,8 +516,56 @@
 		\end{itemize}
 	\end{itemize}
 
+\section{Gantt Chart}
+   	\begin{figure}[H]
+		\begin{center}
+			%\includegraphics[width=1\textwidth]{ganttChart.eps}
+			%Changed Gantt chart to be modifiable.
+			\begin{ganttchart}[
+				y unit title=0.4cm,
+				y unit chart=0.5cm,
+				vgrid,
+				hgrid,
+				title left shift=.05, 
+				title right shift=.05, 
+				title height=1, 
+				group right shift=0
+				]{1}{24}
+				\gantttitle{Months}{24} \\
+				\gantttitle{January}{4} 
+				\gantttitle{February}{4} 
+				\gantttitle{March}{4} 
+				\gantttitle{April}{4} 
+				\gantttitle{May}{4} 
+				\gantttitle{June}{4} \\
 
+				
+				\ganttbar{MongoDB Creation}{1}{2} \\
+				\ganttbar{Module Skeletons Creation}{1}{2} \\
+				\ganttbar{Speech-To-Intent Working}{2}{3} \\
+				\ganttbar{Text-To-Speech Working}{3}{3} \\
+				\ganttbar{Fusion API Mapping}{2}{5} \\
+				\ganttbar{Pipeline Connected}{4}{9} \\
+				\ganttbar{Create Alpha Demo}{9}{11} \\	
+				\ganttbar{Performance Testing}{9}{12} \\
+				\ganttbar{Train NLP Modules}{13}{20} \\
+				\ganttbar{Create Beta Demo}{17}{24} \\
+				\ganttbar{Smart Assistant Stretch Goal}{15}{23} \\
+				\ganttbar{Engineering Expo}{24}{24}
+				
+			\end{ganttchart}
+			\captionsetup{justification=centering}
+			\caption{\botname Development Schedule}
+			\label{fig:developmentSchedule1}
+		\end{center}
+	\end{figure}
 
+			
+\section{Conclusion}
+	This document has described Kora's development roadmap.
+	This document explains the components Kora is broken up in to, and what each are responsible for.
+	Above is a Gantt chart which holds a loose development schedule that the Kora developers will abide by.
+	There is a change history table at the beginning of this document which will tell the story of any modifications made to the design in this document.
 
 
 
