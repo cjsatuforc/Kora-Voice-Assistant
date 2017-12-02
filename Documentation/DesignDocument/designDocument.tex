@@ -184,11 +184,12 @@
 		\begin{tabular}{|l|l|}
 			\hline
 			\textbf{Term} & \textbf{Definition} \\ \hline
-			Kora & The virtual assistant that is the focus of this project \\ \hline
+			\botname & The virtual assistant that is the focus of this project \\ \hline
 			NLP & Natural Language Processing \\ \hline
 			API & Application Programing Interface \\ \hline
 			CAD & Computer Aided Design \\ \hline
 			CAM & Computer Aided Manufacturing \\ \hline
+            UI & User Interface \\ \hline
 			Fusion & An Autodesk Cloud-based 3D CAD/CAM tool/product \\ \hline
 			Task & In the context of Fusion, a function or operation that can be performed in Fusion \\ \hline
 			Plugin & Software that adds specific new functionality to another piece of software \\ \hline
@@ -363,23 +364,167 @@
         \designElementDef{Text-to-Speech Module Interface}{Internal Interface}{Defines rules governing interactions with the Text-to-Speech module.}{Austin Row}
         \designElementDef{Fusion Module Interface}{Internal Interface}{Defines rules governing interactions with the Fusion module.}{Austin Row}
         \designElementDef{Action Prediction Module Interface}{Internal Interface}{Defines rules governing interactions with the Action Prediction module.}{Austin Row}
-        \designElementDef{Runtime Data Store Interface}{Internal Interface}{Defines rules governing interactions with the global Runtime Data Store.}{Austin Row}
+        \designElementDef{Global Data Store Interface}{Internal Interface}{Defines rules governing interactions with the Global Data Store.}{Austin Row}
     \subsection{Design View: Module Interfaces}
-        The interfaces to each module are driven by a method, \textit{handle}, that takes a JSON variable, \textit{data}, as an argument.
-        The required data transmitted in \textit{data} is specific to each module. 
-        The following interface definitions describe the required contents of \textit{data} for each module.
-
+        The interfaces to each module are driven by a single method that takes a JSON as an argument and returns JSON back to the caller.
+        Both the JSON passed to the function and that which is returned contain the same two keys with values that are specific to each module and to whether it is an arugment to the driver method or is a return value.
+        One of the required keys is "dataIDs" which maps to an object containing key-value pairs where the key is a name specific to the target module and the value is an ID used by the global data store to identify some stored data entity.
+        The second required key is "values" which maps to an object containing key-value pairs where each key is a name specific to the target module and the value is some stringified data that is to be used in the target module.
+        \\[0.1in]
+        For JSON that is passed as an argument to the driver method, the data IDs map to data that is stored in the global data store that is needed by the module to perform its specific functionality. 
+        Also for this JSON, the "values" key-value pairs are stringified parameters that the target module uses in to accomplish its specific responsibilities.
+        For returned JSON, the data IDs map to data that was stored in the global data store by the target module during the execution of its responsibilities.
+        Also for returned JSON, the "values" key-value pairs are stringified return values that are used by modules later in the application logic flow.
+        The following interface definitions describe which key-value pairs are defined for each module. 
+        \\[0.1in]
+        The INPUT section defines the expected format of the JSON that is passed to the module's driver function.
+        The OUTPUT section defines the expected format of the JSON that is returned from the module's driver function.
         \subsubsection{UI Module Interface}
-            \begin{tabular}[t]{r p{6in}}
-                INPUT: & \\
-                OUTPUT: & \\
+            \begin{tabular}[t]{r l p{4.5in}}
+                INPUT: \{ & & \\
+                & dataIDs: \{ & \\
+                & & voiceResponseAudioFile: $<$dataStoreID or empty$>$ \\
+                & \} & \\
+                & values: \{ & \\
+                & & UIActionCode: $<$number encoding what should be communicated to user through the UI$>$ \\
+                & \} & \\
+                \} & & \\
+                OUTPUT: \{ & & \\
+                & dataIDs: \{ \} & \\
+                & values: \{ & \\
+                & & errorOccurred: $<$0 if no errors else 1$>$ \\
+                & \} & \\
+                \} & & \\
             \end{tabular}
 
         \subsubsection{Speech-to-Intent Module Interface}
-            \begin{tabular}[t]{r p{6in}}
-                INPUT: &  \{ dataIDs: \}\\
-                OUTPUT: & This module returns a \\
+            \begin{tabular}[t]{r l p{4.5in}}
+                INPUT: \{ & & \\
+                & dataIDs: \{ & \\
+                & & userSpeechAudioFile: $<$dataStoreID$>$ \\
+                & \} & \\
+                & values: \{ \} & \\
+                \} & & \\
+                OUTPUT: \{ & & \\
+                & dataIDs: \{ & \\
+                & \} & \\
+                & values: \{ & \\
+                & & errorOccurred: $<$0 if no errors else 1$>$ \\
+                & & userCommandIntent: $<$intent JSON from Wit.ai API$>$ \\
+                & \} & \\
+                \} & & \\
             \end{tabular}
+
+        \subsubsection{Speech-to-Intent Module Interface}
+            \begin{tabular}[t]{r l p{4.5in}}
+                INPUT: \{ & & \\
+                & dataIDs: \{ & \\
+                & & userSpeechAudioFile: $<$dataStoreID$>$ \\
+                & \} & \\
+                & values: \{ \} & \\
+                \} & & \\
+                OUTPUT: \{ & & \\
+                & dataIDs: \{ \} & \\
+                & values: \{ & \\
+                & & errorOccurred: $<$0 if no errors else 1$>$ \\
+                & & userCommandIntent: $<$intent JSON from Wit.ai API$>$ \\
+                & \} & \\
+                \} & & \\
+            \end{tabular}
+
+        \subsubsection{Logging Module Interface}
+            \begin{tabular}[t]{r l p{4.5in}}
+                INPUT: \{ & & \\
+                & dataIDs: \{ \} & \\
+                & values: \{ & \\
+                & & logMessage: $<$message$>$ \\
+                & & messageType: $<$error or warning or info$>$ \\
+                & \} & \\
+                \} & & \\
+                OUTPUT: \{ & & \\
+                & dataIDs: \{ \} & \\
+                & values: \{ & \\
+                & & errorOccurred: $<$0 if no errors else 1$>$ \\
+                & \} & \\
+                \} & & \\
+            \end{tabular}
+
+         \subsubsection{Text-to-Speech Module Interface}
+            \begin{tabular}[t]{r l p{4.5in}}
+                INPUT: \{ & & \\
+                & dataIDs: \{ \} & \\
+                & values: \{ & \\
+                & & text: $<$text to be transcribed to speech$>$ \\
+                & \} & \\
+                \} & & \\
+                OUTPUT: \{ & & \\
+                & dataIDs: \{ & \\
+                & & speechAudioFile: $<$dataStoreID$>$ \\
+                & \} & \\
+                & values: \{ & \\
+                & & errorOccurred: $<$0 if no errors else 1$>$ \\
+                & \} & \\
+                \} & & \\
+            \end{tabular}
+
+        \subsubsection{Fusion Module Interface}
+            \begin{tabular}[t]{r l p{4.5in}}
+                INPUT: \{ & & \\
+                & dataIDs: \{ \} & \\
+                & values: \{ & \\
+                & & userCommandIntent: $<$intent JSON from Wit.ai API$>$ \\
+                & \} & \\
+                \} & & \\
+                OUTPUT: \{ & & \\
+                & dataIDs: \{ & \\
+                & \} & \\
+                & values: \{ & \\
+                & & errorOccurred: $<$0 if no errors else 1$>$ \\
+                & \} & \\
+                \} & & \\
+            \end{tabular}
+
+        \subsubsection{Action Prediction Module Interface}
+            \begin{tabular}[t]{r l p{4.5in}}
+                INPUT: \{ & & \\
+                & dataIDs: \{ & \\
+                & & userSpeechAudioFile: $<$dataStoreID$>$ \\
+                & \} & \\
+                & values: \{ & \\
+                & & get: $<$0 if not trying to get prediction for next user command else 1$>$ \\
+                & & userCommandIntent: $<$intent JSON from Wit.ai API$>$ \\
+                & \} & \\
+                \} & & \\
+                OUTPUT: \{ & & \\
+                & dataIDs: \{ \} & \\
+                & values: \{ & \\
+                & & errorOccurred: $<$0 if no errors else 1$>$ \\
+                & & prediction: $<$empty if get=0 in input else user prediction in same format as intent data from Wit.ai API$>$ \\
+                & \} & \\
+                \} & & \\
+            \end{tabular}
+
+    \subsection{Design View: Data Store Interface}
+        The global data store has the following methods: \\
+        \begin{tabular}[t]{r p{6in}}
+            Name: & Get \\
+            Parameters: & dataID: The unique identifier for the data being retrieved.\\
+            Return Value: & The data associated with dataID.\\
+            Description: & Returns the data associated with the dataID parameter in the data store. \\
+            & \\
+            Name: & Store \\
+            Parameters: & data: any kind of data \\
+            Return Value: & The ID generated for and associated with data.\\
+            Description: & Generates a unique ID and stores data associated with the ID then returns the generated. \\
+            & \\
+            Name: & Delete \\
+            Parameters: & dataID: The unique identifier for the data being deleted.\\
+            Return Value: & 0 if data was not found, 1 if data was found and deleted, 2 if data was found but not successfully deleted. \\
+            Description: & Deletes the data associated with the dataID parameter in the data store. \\
+        \end{tabular}
+
+    \subsection{Design View: User Interface}
+        Placeholder
 
 \section{Design Viewpoint: Interactions}
     \subsection{Addressed Design Concerns}
