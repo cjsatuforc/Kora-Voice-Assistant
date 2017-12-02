@@ -365,6 +365,7 @@
         \designElementDef{Fusion Module Interface}{Internal Interface}{Defines rules governing interactions with the Fusion module.}{Austin Row}
         \designElementDef{Action Prediction Module Interface}{Internal Interface}{Defines rules governing interactions with the Action Prediction module.}{Austin Row}
         \designElementDef{Global Data Store Interface}{Internal Interface}{Defines rules governing interactions with the Global Data Store.}{Austin Row}
+        \designElementDef{User Interface}{External Interface}{Defines rules governing how the human user can interact with \botname.}{Austin Row}
     \subsection{Design View: Module Interfaces}
         The interfaces to each module are driven by a single method that takes a JSON as an argument and returns JSON back to the caller.
         Both the JSON passed to the function and that which is returned contain the same two keys with values that are specific to each module and to whether it is an arugment to the driver method or is a return value.
@@ -524,7 +525,9 @@
         \end{tabular}
 
     \subsection{Design View: User Interface}
-        Placeholder
+        The user interface can be divided into two interaction types: the user giving \botname a command and \botname replying to the user with the application status. 
+        %talk about how user can give Kora a command (wake word vs wake button)
+        %talk about how Kora will update user with command status/feedback
 
 \section{Design Viewpoint: Interactions}
     \subsection{Addressed Design Concerns}
