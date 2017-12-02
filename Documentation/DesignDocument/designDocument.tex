@@ -240,7 +240,7 @@
                          {Module}
                          {Provides input to \botname and expresses the state of \botname to the user.}
                          {James Stallkamp}
-        \designElementDef{Speech-To-Intent Module}
+        \designElementDef{Speech-to-Intent Module}
                          {Module}
                          {Anaylzes speech input and produces a intent object in JSON format.}
                          {James Stallkamp}
@@ -270,18 +270,18 @@
 			\end{indentItem}
 		\subsubsection{User Interface}
 			\begin{indentItem}
-				The User interface is the module responsible for all interaction with the user.
-				This module will collect input and communicate it to the master module as well output regular feedback to the user.
+				The User Interface is the module responsible for all interaction with the user.
+				This module will collect input and communicate it to the Master module as well output regular feedback to the user.
 			\end{indentItem}
-		\subsubsection{Speed-To-Intent Module}
+		\subsubsection{Speed-to-Intent Module}
 			\begin{indentItem}
-				The speech-to-intent module will take in audio input and output a JSON object containing information on the spoken input.
+				The Speech-to-Intent module will take in audio input and output a JSON object containing information on the spoken input.
 				This intent module will construct the JSON object and return it to master.
 			\end{indentItem}
 		\subsubsection{Logger Module}
 			\begin{indentItem}
-				The Logger module will initialize a persist able data object containing runtime information from \botname.
-				Data logged will be used to help train and improve \botname.
+				The Logger Module will create a persist-able data object that will be loaded with run time information from \botname.
+				These data objects will be analyzed and used to help train \botname for future development.
 			\end{indentItem}
 		\subsubsection{Fusion API Module}
 			\begin{indentItem}
@@ -368,6 +368,7 @@
         \designElementDef{Fusion Module Interface}{Internal Interface}{Defines rules governing interactions with the Fusion module.}{Austin Row}
         \designElementDef{Action Prediction Module Interface}{Internal Interface}{Defines rules governing interactions with the Action Prediction module.}{Austin Row}
         \designElementDef{Global Data Store Interface}{Internal Interface}{Defines rules governing interactions with the Global Data Store.}{Austin Row}
+        \designElementDef{User Interface}{External Interface}{Defines rules governing how the human user can interact with \botname.}{Austin Row}
     \subsection{Design View: Module Interfaces}
         The interfaces to each module are driven by a single method that takes a JSON object as an argument and returns a JSON object back to the caller.
         Both the JSON object passed to the function and that which is returned contain the same two keys with values that are specific to each module and to whether it is an argument to the driver method or is a return value.
@@ -393,7 +394,9 @@
                 & \} & \\
                 \} & & \\
                 OUTPUT: \{ & & \\
-                & dataIDs: \{ \} & \\
+                & dataIDs: \{ \\
+                & & userSpeechAudioFile: $<$dataStoreID or empty$>$ \\  
+                & \} & \\
                 & values: \{ & \\
                 & & errorOccurred: $<$0 if no errors else 1$>$ \\
                 & \} & \\
@@ -411,23 +414,6 @@
                 OUTPUT: \{ & & \\
                 & dataIDs: \{ & \\
                 & \} & \\
-                & values: \{ & \\
-                & & errorOccurred: $<$0 if no errors else 1$>$ \\
-                & & userCommandIntent: $<$intent JSON from Wit.ai API$>$ \\
-                & \} & \\
-                \} & & \\
-            \end{tabular}
-
-        \subsubsection{Speech-to-Intent Module Interface}
-            \begin{tabular}[t]{r l p{4.5in}}
-                INPUT: \{ & & \\
-                & dataIDs: \{ & \\
-                & & userSpeechAudioFile: $<$dataStoreID$>$ \\
-                & \} & \\
-                & values: \{ \} & \\
-                \} & & \\
-                OUTPUT: \{ & & \\
-                & dataIDs: \{ \} & \\
                 & values: \{ & \\
                 & & errorOccurred: $<$0 if no errors else 1$>$ \\
                 & & userCommandIntent: $<$intent JSON from Wit.ai API$>$ \\
@@ -527,7 +513,9 @@
         \end{tabular}
 
     \subsection{Design View: User Interface}
-        Placeholder
+        The user interface can be divided into two interaction types: the user giving \botname a command and \botname replying to the user with the application status. 
+        %talk about how user can give Kora a command (wake word vs wake button)
+        %talk about how Kora will update user with command status/feedback
 
 \section{Design Viewpoint: Interactions}
     \subsection{Addressed Design Concerns}
@@ -539,8 +527,14 @@
     \subsection{Design Elements}
 
 
-    \subsection{Design View: }
-
+    \subsection{Design View: Module Interactions}
+        The diagram below specifies the interactions that occur between modules within the application: 
+		\begin{figure}[H]
+			\includegraphics[width=1\textwidth, height=1\textheight]{ModuleInteractionsUML.eps}
+			\centering
+			\caption{The interactions that occur between the system's software modules.}
+			\label{fig::moduleInteractions}
+		\end{figure}
 
 \section{Design Viewpoint: State Dynamics}
 	\subsection{Addressed Design Concerns}
