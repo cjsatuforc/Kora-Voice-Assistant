@@ -36,11 +36,12 @@
 \def \GroupMemberOne{James Stallkamp}
 \def \GroupMemberTwo{Jeremy Fischer}
 \def \GroupMemberThree{Austin Row}
-\def \CapstoneProjectName{Kora}
+\def \CapstoneProjectName{\botname}
 \def \CapstoneSponsorCompany{Autodesk}
 \def \CapstoneSponsorPerson{Patti Vrobel}
 \def \botname{Kora\xspace}
-\def \speechToText{WIT.ai\xspace}
+\def \speechToText{Wit.ai\xspace}
+
 
 \newenvironment{indentItem}[1][1cm]{\begin{adjustwidth}{#1}{}}{\end{adjustwidth}}
 
@@ -132,15 +133,12 @@
 \clearpage
 
 % 8. now you write!
-
-
 \section{Document Details}
 	\subsection{Date of Issue and Status}
-		This document was issued November 30, 2017 and is the first draft of the design document.
-	
-	
+		This document was issued December 1, 2017 and is the first draft of the design document.
+
 	\subsection{Authorship}
-		Jeremy Fischer, Austin Row, and James Stallkamp are the authors of this document and the developers of Kora.
+		Jeremy Fischer, Austin Row, and James Stallkamp are the authors of this document and the developers of \botname.
 		
 	\subsection{Change History}
 		\begin{table}[H]
@@ -156,22 +154,22 @@
 
 \section{Introduction}
 	\subsection{Purpose}
-		The purpose of this design document is to outline how Kora's workflows will be completed and connected.
+		The purpose of this design document is to outline how \botname's workflows will be completed and connected.
 		More generally, this document describes how the client's requirements will be met.
-		Kora's developers will use this document as a roadmap during implementation.
+		\botname's developers will use this document as a roadmap during implementation.
 
 	\subsection{Scope}
-		This document focuses on the relationships between Kora's components and their individual processes, and how they work together to satisfy the project's requirements.
+		This document focuses on the relationships between \botname's components and their individual processes, and how they work together to satisfy the project's requirements.
 	
 	
 	\subsection{Summary}
-		Kora will be a speech-based virtual assistant for Fusion that lets users perform any one of a subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
-		Workflows in Fusion that are not suited for handling by a voice interface will not be supported by Kora.
-		As a stretch goal, Kora will be capable of questioning the user and using responses to predict and automatically assist with future user behavior.
+		\botname will be a speech-based virtual assistant for Fusion that lets users perform any one of a subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
+		Workflows in Fusion that are not suited for handling by a voice interface will not be supported by \botname.
+		As a stretch goal, \botname will be capable of questioning the user and using responses to predict and automatically assist with future user behavior.
 		It will be a plugin that is bundled with Fusion and will be part of the product's standard download. 
 		
-		Kora will offer users a tool that decreases the time required to achieve their goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
-		If the stretch goal is achieved, Kora will further increase productivity by learning to predict and automate specific workflows within the product.
+		\botname will offer users a tool that decreases the time required to achieve their goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
+		If the stretch goal is achieved, \botname will further increase productivity by learning to predict and automate specific workflows within the product.
 
 \section{Glossary}
 	\begin{table}[H]
@@ -190,7 +188,7 @@
 			Fusion & An Autodesk Cloud-based 3D CAD/CAM tool/product \\ \hline
 			Task & In the context of Fusion, a function or operation that can be performed in Fusion \\ \hline
 			Plugin & Software that adds specific new functionality to another piece of software \\ \hline
-			User & A person that interacts with Kora or Fusion depending on the context \\ \hline
+			User & A person that interacts with \botname or Fusion depending on the context \\ \hline
 			Workflow & A sequence of related tasks \\ \hline
 		\end{tabular}
 	\end{table}
@@ -201,7 +199,14 @@
     \designConcernDef{Component Interactions}{Developers}{Which components of the software system will interact?}
     \designConcernDef{Component Interaction Responsibilities}{Developers}{What are the responsibilities of each component of the software system in the context of interactions?}
 	\designConcernDef{Architecture}{Developers}{How is the system structured?}
-
+	\designConcernDef{System States}{Developers}{What are the possible states the system can be in?}
+	\designConcernDef{State Activities}{Developers}{What activity takes place in each state?}
+	\designConcernDef{State Transitions}{Developers}{When does the system transition from one state to another?}
+	\designConcernDef{Log Files}{Developers}{Where will user-\botname interactions be stored?}
+	\designConcernDef{Log File Content}{Developers}{What will be stored in the user-\botname log files?}
+	\designConcernDef{Log File Access}{Developers}{How will \botname interact with the storage system?}
+	
+	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %                                           ***NOTES***
 %
@@ -223,11 +228,11 @@
 \section{Design Viewpoint: Composition}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item \designConcernRef[]{Component Interaction Responsibilities}
+            \item \designConcernRef[4.4]{Component Interaction Responsibilities}
         \end{itemize}
 
     \subsection{Design Elements} 
-        \designElementDef{Manager Module}
+        \designElementDef{Master Module}
                          {Module}
                          {Manages what state \botname is in and executes other modules.}
                          {James Stallkamp}
@@ -237,7 +242,7 @@
                          {James Stallkamp}
         \designElementDef{Speech-To-Intent Module}
                          {Module}
-                         {Anaylzes speech input and produces an intent.json object.}
+                         {Anaylzes speech input and produces a intent object in JSON format.}
                          {James Stallkamp}
         \designElementDef{Logger Module}
                          {Module}
@@ -251,16 +256,16 @@
                          {Module}
                          {Synthesizes an audio output from a given text input.}
                          {James Stallkamp}
-        \designElementDef{Machine Learning Module}
+        \designElementDef{Action Prediction Module}
                          {Module}
                          {Trains \botname to become a more powerful assistant.}
                          {James Stallkamp}
 						 
     \subsection{Design View: Modules}
 		\botname is composed of seven primary modules.
-		\subsubsection{Manager Module}
+		\subsubsection{Master Module}
 			\begin{indentItem}
-				The first module is the master module, this module is responsible for coordinating all other modules.
+				The Master module, this module is responsible for coordinating all other modules.
 				The master module will contain definitions for functions needed to process data objects, other modules will inherit this from master.
 			\end{indentItem}
 		\subsubsection{User Interface}
@@ -270,49 +275,51 @@
 			\end{indentItem}
 		\subsubsection{Speed-To-Intent Module}
 			\begin{indentItem}
-				The speech-to-intent module will take in audio input and output a json object containing information on the spoken input.
-				This intent module will construct the json object and return it to master.
+				The speech-to-intent module will take in audio input and output a JSON object containing information on the spoken input.
+				This intent module will construct the JSON object and return it to master.
 			\end{indentItem}
 		\subsubsection{Logger Module}
 			\begin{indentItem}
 				The Logger module will initialize a persist able data object containing runtime information from \botname.
 				Data logged will be used to help train and improve \botname.
 			\end{indentItem}
-		\subsubsection{}
+		\subsubsection{Fusion API Module}
 			\begin{indentItem}
-				The next module is the Fusion API, this module will handle executing Fusion commands.
-				The Fusion module will translate information in the json data object to construct and execute a Fusion command.
+				The next module is the Fusion API module, this module will handle executing Fusion commands.
+				The Fusion module will parse information from the JSON intent object to construct and execute a Fusion command.
 			\end{indentItem}
 		\subsubsection{Voice Synthesizer Module}
 			\begin{indentItem}
-				In order for \botname to output speed to the user it will need a voice synthesizer module.
+				In order for \botname to speak to the user it will need a voice synthesizer module.
 				This module will receive text input and produce an audio output that can be played to the user.
 			\end{indentItem}		
-		\subsubsection{Machine Learning Module}
+		\subsubsection{Action Prediction Module}
 			\begin{indentItem}
-				The last module is the machine learning module, this module is responsible for training \botname to recognize patters and improve functionality.
+				The Action Prediction module is responsible for training \botname to recognize patterns and improve functionality.
 			\end{indentItem}
 		
 \section{Design Viewpoint: Information}
 	\subsection{Addressed Design Concerns}
 		\begin{itemize}
-			\item
+			\item \designConcernRef[4.9]{Log Files}
+			\item \designConcernRef[4.10]{Log File Content}
+			\item \designConcernRef[4.11]{Log File Access}
 		\end{itemize}
 
 
 	\subsection{Design Elements}
 		\designElementDef{MongoDB}{Database}{Database to hold the log files}{Jeremy}
-		\designElementDef{JSON object}{Storage structure}{The structure the information will be store in}{Jeremy}
+		\designElementDef{JSON object}{Storage structure}{The structure the information will be stored in}{Jeremy}
 		\designElementDef{HTTP calls}{Access mechanism}{How the data will be posted and accessed}{Jeremy}
 	
 	\subsection{Design View: Contents}
 		The contents of the data will be:
 		\begin{itemize}
-			\item the intent generated by the Speech-to-Intent
-			\item the context generated by the Speech-to-Intent such as quantities
+			\item the intent generated by the Speech-to-Intent module
+			\item the context generated by the Speech-to-Intent module such as quantities
 			\item whether the user's request was successfully processed
-			\item the date
-			\item the time
+			\item the posting date
+			\item the posting time
 			\item the user identification
 		\end{itemize}
 	
@@ -328,33 +335,32 @@
 \section{Design Viewpoint: Patterns}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item \designConcernRef[]{Architecture}
+            \item \designConcernRef[4.5]{Architecture}
         \end{itemize}
 
     \subsection{Design Elements}
-		\designElementDef{Mediator Framework}
-						 {System Framework}
+		\designElementDef{Mediator Design Framework}
+						 {System Architecture}
 						 {\botname has a simple mediator that coordinates all interactions between all other components.}
 						 {James Stallkamp}
-		\designElementDef{Worker Class}
-						 {Class}
-						 {A inheritable class providing functionality to handle the json object}
+		\designElementDef{Worker Module}
+						 {Module}
+						 {An inheritable module providing basic functionality to interact with the Master module.}
 						 {James Stallkamp}				 
     \subsection{Design View: }
-		\botname is structured in a mediator format. 
-		\botname will have a master module that coordinates interactions between itself and all other modules.
-		This master module will provide basic functionality needed to process data objects, other modules will inherit this from master. 
+		\botname is structured according to a mediator design pattern. 
+		\botname will have a Master module that coordinates interactions between itself and all other modules.
+		The Master module controls Kora's flow and ensures that the correct data gets to the correct module.
 
 
 \section{Design Viewpoint: Interfaces}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item \designConcernRef[User-Application Interface]{ID}
-            \item \designConcernRef[Internal Interfaces]{ID}
+            \item \designConcernRef[4.1]{User-Application Interface}
+            \item \designConcernRef[4.2]{Internal Interfaces}
         \end{itemize}
 
     \subsection{Design Elements}
-        \designElementDef{Element-Name}{Element-Type}{Element-Purpose}{Element-Author}
         \designElementDef{UI Module Interface}{Internal Interface}{Defines rules governing interactions with the UI module.}{Austin Row}
         \designElementDef{Speech-to-Intent Module Interface}{Internal Interface}{Defines rules governing interactions with the Speech-to-Intent module.}{Austin Row}
         \designElementDef{Logging Module Interface}{Internal Interface}{Defines rules governing interactions with the Logging module.}{Austin Row}
@@ -363,15 +369,15 @@
         \designElementDef{Action Prediction Module Interface}{Internal Interface}{Defines rules governing interactions with the Action Prediction module.}{Austin Row}
         \designElementDef{Global Data Store Interface}{Internal Interface}{Defines rules governing interactions with the Global Data Store.}{Austin Row}
     \subsection{Design View: Module Interfaces}
-        The interfaces to each module are driven by a single method that takes a JSON as an argument and returns JSON back to the caller.
-        Both the JSON passed to the function and that which is returned contain the same two keys with values that are specific to each module and to whether it is an arugment to the driver method or is a return value.
+        The interfaces to each module are driven by a single method that takes a JSON object as an argument and returns a JSON object back to the caller.
+        Both the JSON object passed to the function and that which is returned contain the same two keys with values that are specific to each module and to whether it is an argument to the driver method or is a return value.
         One of the required keys is "dataIDs" which maps to an object containing key-value pairs where the key is a name specific to the target module and the value is an ID used by the global data store to identify some stored data entity.
-        The second required key is "values" which maps to an object containing key-value pairs where each key is a name specific to the target module and the value is some stringified data that is to be used in the target module.
+        The second required key is "values" which maps to an object containing key-value pairs where each key is a name specific to the target module and the value is some piece of data that is to be used in the target module.
         \\[0.1in]
         For JSON that is passed as an argument to the driver method, the data IDs map to data that is stored in the global data store that is needed by the module to perform its specific functionality. 
-        Also for this JSON, the "values" key-value pairs are stringified parameters that the target module uses in to accomplish its specific responsibilities.
+        Also for this JSON, the "values" key-value pairs are parameters that the target module uses in to accomplish its specific responsibilities.
         For returned JSON, the data IDs map to data that was stored in the global data store by the target module during the execution of its responsibilities.
-        Also for returned JSON, the "values" key-value pairs are stringified return values that are used by modules later in the application logic flow.
+        Also for returned JSON, the "values" key-value pairs are return values that are used by modules later in the application logic flow.
         The following interface definitions describe which key-value pairs are defined for each module. 
         \\[0.1in]
         The INPUT section defines the expected format of the JSON that is passed to the module's driver function.
@@ -514,10 +520,10 @@
             Return Value: & The ID generated for and associated with data.\\
             Description: & Generates a unique ID and stores data associated with the ID then returns the generated. \\
             & \\
-            Name: & Delete \\
-            Parameters: & dataID: The unique identifier for the data being deleted.\\
-            Return Value: & 0 if data was not found, 1 if data was found and deleted, 2 if data was found but not successfully deleted. \\
-            Description: & Deletes the data associated with the dataID parameter in the data store. \\
+            Name: & Remove \\
+            Parameters: & dataID: The unique identifier for the data being removed.\\
+            Return Value: & 0 if data was not found, 1 if data was found and deleted, 2 if data was found but not successfully removed. \\
+            Description: & Removes the data associated with the dataID parameter in the data store. \\
         \end{tabular}
 
     \subsection{Design View: User Interface}
@@ -526,12 +532,12 @@
 \section{Design Viewpoint: Interactions}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item \designConcernRef[Component Interactions]{ID}
-            \item \designConcernRef[Component Interaction Responsibilities]{ID}
+            \item \designConcernRef[4.3]{Component Interactions}
+            \item \designConcernRef[4.4]{Component Interaction Responsibilities}
         \end{itemize}
 
     \subsection{Design Elements}
-        \designElementDef{Element-Name}{Element-Type}{Element-Purpose}{Element-Author}
+
 
     \subsection{Design View: }
 
@@ -539,19 +545,19 @@
 \section{Design Viewpoint: State Dynamics}
 	\subsection{Addressed Design Concerns}
 		\begin{itemize}
-			\item What are the possible states the system can be in?
-			\item What activity takes place in each state?
-			\item When does the system transition from one state to another?
+			\item \designConcernRef[4.6]{System States}
+			\item \designConcernRef[4.7]{State Activities}
+			\item \designConcernRef[4.8]{State Transitions}
 		\end{itemize}
 		
 	\subsection{Design Elements}
-		\designElementDef{Idle Listen}{State}{Represents a state Kora can be in}{Jeremy}
-		\designElementDef{Active Listen}{State}{Represents a state Kora can be in}{Jeremy}
-		\designElementDef{Process Speech}{State}{Represents a state Kora can be in}{Jeremy}
-		\designElementDef{Endpoint Mapping}{State}{Represents a state Kora can be in}{Jeremy}
-		\designElementDef{Fusion Action}{State}{Represents a state Kora can be in}{Jeremy}
-		\designElementDef{UI Feedback}{State}{Represents a state Kora can be in}{Jeremy}
-		\designElementDef{Error}{State}{Represents a state Kora can be in}{Jeremy}
+		\designElementDef{Idle Listen}{State}{Kora is waiting for a wake action to take place}{Jeremy}
+		\designElementDef{Active Listen}{State}{Kora begins listening to the user}{Jeremy}
+		\designElementDef{Process Speech}{State}{Kora is deriving intent from the user's verbal request}{Jeremy}
+		\designElementDef{Endpoint Mapping}{State}{Kora is discerning which API endpoint to call}{Jeremy}
+		\designElementDef{Fusion Action}{State}{Kora makes the Fusion API call}{Jeremy}
+		\designElementDef{UI Feedback}{State}{Kora is verbalizing the state of the latest request to the user}{Jeremy}
+		\designElementDef{Error}{State}{Kora is in a state of error}{Jeremy}
 	
 	
 	\subsection{Design View:  States} 
@@ -559,7 +565,7 @@
 			\begin{figure}[H]
 				\includegraphics[width=1\textwidth, height=.35\textheight]{stateDynamics.eps}
 				\centering
-				\caption{The possible states Kora can be in, as well as the states the system can transfer to from within a given state.}
+				\caption{The possible states \botname can be in, as well as the states the system can transfer to from within a given state.}
 				\label{fig::stateD}
 			\end{figure}
 	
@@ -582,107 +588,105 @@
 	
 	\subsubsection{Endpoint Mapping}
 		\begin{indentItem}
-			Kora is attempting to discern the correct Fusion API endpoint based off of the intent and context variables in the JSON received from the Speech-to-Intent module.
+			\botname is attempting to discern the correct Fusion API endpoint based off of the intent and context variables in the JSON received from the Speech-to-Intent module.
 		\end{indentItem}
 		
 	\subsubsection{Fusion Action}
 		\begin{indentItem}
-			Kora is making the call to the Fusion API and then waiting for the API to return an error code.
+			\botname is making the call to the Fusion API and then waiting for the API to return an error code.
 		\end{indentItem}
 	
 	\subsubsection{UI Feedback}
 		\begin{indentItem}
-			Kora is signally feedback regarding the latest transaction to the user.
+			\botname is signally feedback regarding the latest transaction to the user.
 		\end{indentItem}
 	
 	\subsubsection{Error}
 		\begin{indentItem}
-			The system is in a state of failure and is clearing all system sub-states so Kora can attempt another request.
+			The system is in a state of failure and is clearing all system sub-states so \botname can attempt another request.
 		\end{indentItem}
 	
 	
-	\subsection{Design View: State Transitions}
-		\begin{itemize}	
-			\item \textbf{Idle Listen}
+	\subsection{Design View: State Transitions}	
+		\subsubsection{Idle Listen}
 			\begin{itemize}
 				\item \textit{Idle Listen \textrightarrow{}  Active Listen}
 				\begin{indentItem}
-					Kora moves from the Idle Listen state to the Active listen state when a wake action takes place.
+					\botname moves from the Idle Listen state to the Active listen state when a wake action takes place.
 				\end{indentItem}
 			\end{itemize}
 		
-		\item Active Listen
+		\subsubsection{Active Listen}
 		\begin{itemize}
 			\item \textit{Active Listen \textrightarrow{}  Process Speech}
 			\begin{indentItem}
-				Kora moves from the Active Listen state to the Process Speech state when the Speech-to-Intent module doesn't receive speech for a half second.
+				\botname moves from the Active Listen state to the Process Speech state when the Speech-to-Intent module does not receive speech for a half second.
 			\end{indentItem}
 			\item \textit{Active Listen \textrightarrow{}  Error}
 			\begin{indentItem}
-				Kora moves from the Active Listen state to the Error state when an internal failure occurs when Kora is in the Active Listen state.
+				\botname moves from the Active Listen state to the Error state when an internal failure occurs when \botname is in the Active Listen state.
 			\end{indentItem}
 		\end{itemize}
 		
-		\item Process Speech
+		\subsubsection{Process Speech}
 		\begin{itemize}
 			\item \textit{Process Speech \textrightarrow{} Endpoint Mapping}
 			\begin{indentItem}
-				Kora moves from the Process Speech state to the Endpoint Mapping state when the Speech-to-Intent module returns the JSON object holding the processed speech's intent and arguments.
+				\botname moves from the Process Speech state to the Endpoint Mapping state when the Speech-to-Intent module returns the JSON object holding the processed speech's intent and arguments.
 			\end{indentItem}
 			\item \textit{Process Speech \textrightarrow{} Error}
 			\begin{indentItem}
-				Kora moves from the Process Speech state to the Error state when an internal failure occurs when Kora is in the Process Speech state.
+				\botname moves from the Process Speech state to the Error state when an internal failure occurs when \botname is in the Process Speech state.
 			\end{indentItem}
 		\end{itemize}
 		
-		\item Endpoint Mapping
+		\subsubsection{Endpoint Mapping}
 		\begin{itemize}
 			\item \textit{Endpoint Mapping \textrightarrow{} Fusion Action}
 			\begin{indentItem}
-				Kora moves from the Endpoint Mapping state to the Fusion Action state when the Mapping module successfully maps the intent to a Fusion API command.
+				\botname moves from the Endpoint Mapping state to the Fusion Action state when the Mapping module successfully maps the intent to a Fusion API command.
 			\end{indentItem}
 			\item \textit{Endpoint Mapping \textrightarrow{} UI Feedback}
 			\begin{indentItem}
-				Kora moves from the Endpoint Mapping state to the UI Feedback state when the Mapping module fails to map the intent to a Fusion API command.
+				\botname moves from the Endpoint Mapping state to the UI Feedback state when the Mapping module fails to map the intent to a Fusion API command.
 			\end{indentItem}
 			\item \textit{Endpoint Mapping \textrightarrow{} Error}
 			\begin{indentItem}
-				Kora moves from the Endpoint Mapping state to the Error state when an internal failure occurs when Kora is in the Process Speech state.
+				\botname moves from the Endpoint Mapping state to the Error state when an internal failure occurs when \botname is in the Process Speech state.
 			\end{indentItem}
 		\end{itemize}
 		
-		\item Fusion Action
+		\subsubsection{Fusion Action}
 		\begin{itemize}
 			\item \textit{Fusion Action \textrightarrow{} UI Feedback}
 			\begin{indentItem}
-				Kora moves from the Fusion Action state to the UI Feedback state when the Fusion API returns the error code indicating whether the API call was successful or not.
+				\botname moves from the Fusion Action state to the UI Feedback state when the Fusion API returns the error code indicating whether the API call was successful or not.
 			\end{indentItem}
 			\item \textit{Fusion Action \textrightarrow{} Error}
 			\begin{indentItem}
-				Kora moves from the Fusion Action state to the Error state when an internal failure occurs when Kora is in the Fusion Action state.
+				\botname moves from the Fusion Action state to the Error state when an internal failure occurs when \botname is in the Fusion Action state.
 			\end{indentItem}
 		\end{itemize}
 		
-		\item UI Feedback
+		\subsubsection{UI Feedback}
 		\begin{itemize}
 			\item \textit{UI Feedback \textrightarrow{} Idle Listen}
 			\begin{indentItem}
-				Kora moves from the UI Feedback state to the Idle Listen state after it indicates to the user the outcome of processing the request.
+				\botname moves from the UI Feedback state to the Idle Listen state after it indicates to the user the outcome of processing the request.
 			\end{indentItem}
 			\item \textit{UI Feedback \textrightarrow{} Error}
 			\begin{indentItem}
-				Kora moves from the UI Feedback state to the Error state when an internal failure occurs when Kora is in the UI Feedback state.
+				\botname moves from the UI Feedback state to the Error state when an internal failure occurs when \botname is in the UI Feedback state.
 			\end{indentItem}
 		\end{itemize}
 		
-		\item Error
+		\subsubsection{Error}
 		\begin{itemize}
 			\item \textit{Error \textrightarrow{} Idle Listen}
 			\begin{indentItem}
-				Kora moves from the Error state to the UI Feedback state after it resets all internal variables to their initial state.
+				\botname moves from the Error state to the UI Feedback state after it resets all internal variables to their initial state.
 			\end{indentItem}
 		\end{itemize}
-	\end{itemize}
 
 \section{Gantt Chart}
    	\begin{figure}[H]
@@ -710,14 +714,14 @@
 				
 				\ganttbar{MongoDB Creation}{1}{2} \\
 				\ganttbar{Module Skeletons Creation}{1}{2} \\
-				\ganttbar{Speech-To-Intent Working}{2}{3} \\
-				\ganttbar{Text-To-Speech Working}{3}{3} \\
+				\ganttbar{Speech-to-Intent Working}{2}{3} \\
+				\ganttbar{Text-to-Speech Working}{3}{3} \\
 				\ganttbar{Fusion API Mapping}{2}{5} \\
 				\ganttbar{Pipeline Connected}{4}{9} \\
-				\ganttbar{Create Alpha Demo}{9}{11} \\	
+				\ganttbar{Alpha Demo Creation}{9}{11} \\	
 				\ganttbar{Performance Testing}{9}{12} \\
 				\ganttbar{Train NLP Modules}{13}{20} \\
-				\ganttbar{Create Beta Demo}{17}{24} \\
+				\ganttbar{Beta Demo Creation}{17}{24} \\
 				\ganttbar{Smart Assistant Stretch Goal}{15}{23} \\
 				\ganttbar{Engineering Expo}{24}{24}
 				
@@ -730,9 +734,9 @@
 
 			
 \section{Conclusion}
-	This document has described Kora's development roadmap.
-	This document explains the components Kora is broken up in to, and what each component is responsible for.
-	Above is a Gantt chart that holds a loose development schedule which the Kora developers will abide by.
+	This document has described \botname's development roadmap.
+	This document explains the components \botname is broken up in to, and what each component is responsible for.
+	Above is a Gantt chart that holds a loose development schedule which the \botname developers will abide by.
 	There is a change history table at the beginning of this document which will explain any modifications made to the design described in this document.
 
 
