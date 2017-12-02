@@ -116,7 +116,11 @@
             \vspace{20pt}
         }
         \begin{abstract}
-
+			This Document describes the design views and components of \botname.
+			The document begins by introducing definitions, purpose, scope, context, and a summary for the overall project.
+			After the introduction the document lists stakeholders and their concerns.
+			The rest of the document is divided into sections which each provide a different design viewpoint.
+			These different viewpoints show how the specified design addresses the concerned laid out previously. 
         \end{abstract}     
     \end{singlespace}
 \end{titlepage}
@@ -253,22 +257,44 @@
                          {Module}
                          {Trains \botname to become a more powerful assistant.}
                          {James Stallkamp}
+						 
     \subsection{Design View: Modules}
 		\botname is composed of seven primary modules.
-		The first module is the manager module, this module is responsible for coordinating all other modules.
-		The master module will contain definitions for functions needed to process data objects, other modules will inherit this from master.
-		The next module is the User interface and is the module responsible for all interaction with the user.
-		This module will collect input and communicate it to master as well output regular feedback to the user.
-		The speech-to-intent module will take in audio input and output a json object containing information on the spoken input.
-		This intent module will construct the json object and return it to master.
-		The Logger module will initialize a persist able data object containing runtime information from \botname.
-		Data logged will be used to help train and improve \botname.
-		The next module is the Fusion API, this module will handle executing Fusion commands.
-		The Fusion module will translate information in the json data object to construct and execute a Fusion command.
-		In order for \botname to output speed to the user it will need a voice synthesizer module.
-		This module will receive text input and produce an audio output that can be played to the user.
-		The last module is the machine learning module, this module is responsible for training \botname to recognize patters and improve functionality.
-
+		\subsubsection{Manager Module}
+			\begin{indentItem}
+				The first module is the master module, this module is responsible for coordinating all other modules.
+				The master module will contain definitions for functions needed to process data objects, other modules will inherit this from master.
+			\end{indentItem}
+		\subsubsection{User Interface}
+			\begin{indentItem}
+				The User interface is the module responsible for all interaction with the user.
+				This module will collect input and communicate it to the master module as well output regular feedback to the user.
+			\end{indentItem}
+		\subsubsection{Speed-To-Intent Module}
+			\begin{indentItem}
+				The speech-to-intent module will take in audio input and output a json object containing information on the spoken input.
+				This intent module will construct the json object and return it to master.
+			\end{indentItem}
+		\subsubsection{Logger Module}
+			\begin{indentItem}
+				The Logger module will initialize a persist able data object containing runtime information from \botname.
+				Data logged will be used to help train and improve \botname.
+			\end{indentItem}
+		\subsubsection{}
+			\begin{indentItem}
+				The next module is the Fusion API, this module will handle executing Fusion commands.
+				The Fusion module will translate information in the json data object to construct and execute a Fusion command.
+			\end{indentItem}
+		\subsubsection{Voice Synthesizer Module}
+			\begin{indentItem}
+				In order for \botname to output speed to the user it will need a voice synthesizer module.
+				This module will receive text input and produce an audio output that can be played to the user.
+			\end{indentItem}		
+		\subsubsection{Machine Learning Module}
+			\begin{indentItem}
+				The last module is the machine learning module, this module is responsible for training \botname to recognize patters and improve functionality.
+			\end{indentItem}
+		
 \section{Design Viewpoint: Information}
 	\subsection{Addressed Design Concerns}
 		\begin{itemize}
