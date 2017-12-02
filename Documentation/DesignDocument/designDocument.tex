@@ -43,8 +43,6 @@
 \def \speechToText{Wit.ai\xspace}
 
 
-\newenvironment{indentItem}[1][1cm]{\begin{adjustwidth}{#1}{}}{\end{adjustwidth}}
-
 % 2. Uncomment the appropriate line below so that the document type works
 \def \DocType{		%Problem Statement
 				%Requirements Document
@@ -53,29 +51,28 @@
 				%Progress Report
 				}
 
+\newenvironment{indentItem}[1][1cm]{\begin{adjustwidth}{#1}{}}{\end{adjustwidth}}
 \newcommand{\designConcernDef}[3]{
-    \subsection{#1}
+    \subsection{#1}\label{#1}
         \begin{tabular}[t]{r p{6in}}
             Stakeholder(s): & #2 \\
             Concern: & #3 \\
         \end{tabular}
 }
-\newcommand{\designConcernRef}[2][]{
-    #2 #1
+\newcommand{\designConcernRef}[1]{
+    #1 (defined in section \ref{#1})
 }
 \newcommand{\designElementDef}[4]{
-    \subsubsection{#1}
+    \subsubsection{#1}\label{#1}
     \begin{tabular}[t]{r p{6in}}
         Type: & #2 \\
         Purpose: & #3 \\
         Author: & #4 \\
     \end{tabular}
 }
-\newcommand{\designElementRef}[2]{
+\newcommand{\designElementRef}[1]{
     \subsubsection{#1}
-    \begin{tabular}[t]{r p{6in}}
-        See #2 & \\ %#2 should be element identifier (section where it's defined or ID that can be used to find it)
-    \end{tabular}
+        See section \ref{#1} for element definition.
 }
 \newcommand{\NameSigPair}[1]{\par
 \makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
@@ -194,6 +191,8 @@
 	\end{table}
 
 \section{Design Stakeholders and Concerns}
+    \designConcernDef{System Decomposition}{Developers}{How is the software system decomposed into components?}
+    \designConcernDef{Component Functional Responsibilities}{Developers}{What functionality is each component responsible for?}
     \designConcernDef{User-Application Interface}{Client, Developers}{What interfaces will exist for users to communicate to the application and for the application to communicate to users?}
     \designConcernDef{Internal Interfaces}{Developers}{What internal interfaces will exist in the software system?}
     \designConcernDef{Component Interactions}{Developers}{Which components of the software system will interact?}
@@ -228,7 +227,8 @@
 \section{Design Viewpoint: Composition}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item \designConcernRef[4.4]{Component Interaction Responsibilities}
+            \item \designConcernRef{System Decomposition}
+            \item \designConcernRef{Component Functional Responsibilities}
         \end{itemize}
 
     \subsection{Design Elements} 
@@ -236,7 +236,7 @@
                          {Module}
                          {Manages what state \botname is in and executes other modules.}
                          {James Stallkamp}
-        \designElementDef{User Interface Module}
+        \designElementDef{UI Module}
                          {Module}
                          {Provides input to \botname and expresses the state of \botname to the user.}
                          {James Stallkamp}
@@ -248,7 +248,7 @@
                          {Module}
                          {Stores runtime and contextual information to be used for training \botname.}
                          {James Stallkamp}
-        \designElementDef{Fusion API Module}
+        \designElementDef{Fusion Module}
                          {Module}
                          {Translates intent into Fusion API commands and executes them.}
                          {James Stallkamp}
@@ -268,12 +268,12 @@
 				The Master module, this module is responsible for coordinating all other modules.
 				The master module will contain definitions for functions needed to process data objects, other modules will inherit this from master.
 			\end{indentItem}
-		\subsubsection{User Interface}
+		\subsubsection{UI}
 			\begin{indentItem}
-				The User Interface is the module responsible for all interaction with the user.
+				The UI module is responsible for all interaction with the user.
 				This module will collect input and communicate it to the Master module as well output regular feedback to the user.
 			\end{indentItem}
-		\subsubsection{Speed-to-Intent Module}
+		\subsubsection{Speech-to-Intent Module}
 			\begin{indentItem}
 				The Speech-to-Intent module will take in audio input and output a JSON object containing information on the spoken input.
 				This intent module will construct the JSON object and return it to master.
@@ -283,9 +283,9 @@
 				The Logger Module will create a persist-able data object that will be loaded with run time information from \botname.
 				These data objects will be analyzed and used to help train \botname for future development.
 			\end{indentItem}
-		\subsubsection{Fusion API Module}
+		\subsubsection{Fusion Module}
 			\begin{indentItem}
-				The next module is the Fusion API module, this module will handle executing Fusion commands.
+				The next module is the Fusion module, this module will handle executing Fusion commands.
 				The Fusion module will parse information from the JSON intent object to construct and execute a Fusion command.
 			\end{indentItem}
 		\subsubsection{Voice Synthesizer Module}
@@ -301,16 +301,16 @@
 \section{Design Viewpoint: Information}
 	\subsection{Addressed Design Concerns}
 		\begin{itemize}
-			\item \designConcernRef[4.9]{Log Files}
-			\item \designConcernRef[4.10]{Log File Content}
-			\item \designConcernRef[4.11]{Log File Access}
+			\item \designConcernRef{Log Files}
+			\item \designConcernRef{Log File Content}
+			\item \designConcernRef{Log File Access}
 		\end{itemize}
 
 
 	\subsection{Design Elements}
-		\designElementDef{MongoDB}{Database}{Database to hold the log files}{Jeremy}
-		\designElementDef{JSON object}{Storage structure}{The structure the information will be stored in}{Jeremy}
-		\designElementDef{HTTP calls}{Access mechanism}{How the data will be posted and accessed}{Jeremy}
+		\designElementDef{MongoDB}{Database}{Database to hold the log files}{Jeremy Fischer}
+		\designElementDef{JSON object}{Storage structure}{The structure the information will be stored in}{Jeremy Fischer}
+		\designElementDef{HTTP calls}{Access mechanism}{How the data will be posted and accessed}{Jeremy Fischer}
 	
 	\subsection{Design View: Contents}
 		The contents of the data will be:
@@ -335,7 +335,7 @@
 \section{Design Viewpoint: Patterns}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item \designConcernRef[4.5]{Architecture}
+            \item \designConcernRef{Architecture}
         \end{itemize}
 
     \subsection{Design Elements}
@@ -350,14 +350,14 @@
     \subsection{Design View: }
 		\botname is structured according to a mediator design pattern. 
 		\botname will have a Master module that coordinates interactions between itself and all other modules.
-		The Master module controls Kora's flow and ensures that the correct data gets to the correct module.
+		The Master module controls \botname's flow and ensures that the correct data gets to the correct module.
 
 
 \section{Design Viewpoint: Interfaces}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item \designConcernRef[4.1]{User-Application Interface}
-            \item \designConcernRef[4.2]{Internal Interfaces}
+            \item \designConcernRef{User-Application Interface}
+            \item \designConcernRef{Internal Interfaces}
         \end{itemize}
 
     \subsection{Design Elements}
@@ -514,18 +514,23 @@
 
     \subsection{Design View: User Interface}
         The user interface can be divided into two interaction types: the user giving \botname a command and \botname replying to the user with the application status. 
-        %talk about how user can give Kora a command (wake word vs wake button)
-        %talk about how Kora will update user with command status/feedback
+        There are two use patterns for a user when they give \botname a command. The first way to give a command is to say the wake word followed by the command.
+        When the user says the wake word, it signals to \botname that it should be actively listening for a command.
+        The other method is to click the wake button that acts as an alternative to the wake word then say the command.  
+        \\[0.1in]
+
+        Through the user interface, the application responds back to the user with the status of the previous command.
+        If the command succeeds, the application uses a voice synthesizer to alert  user that the previous command command succeeded.
+        If the command fails, the voice synthesizer uses the voice synthesizer to alert the user that the previous command failed.
 
 \section{Design Viewpoint: Interactions}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item \designConcernRef[4.3]{Component Interactions}
-            \item \designConcernRef[4.4]{Component Interaction Responsibilities}
+            \item \designConcernRef{Component Interactions}
+            \item \designConcernRef{Component Interaction Responsibilities}
         \end{itemize}
 
     \subsection{Design Elements}
-
 
     \subsection{Design View: Module Interactions}
         The diagram below specifies the interactions that occur between modules within the application: 
@@ -539,19 +544,19 @@
 \section{Design Viewpoint: State Dynamics}
 	\subsection{Addressed Design Concerns}
 		\begin{itemize}
-			\item \designConcernRef[4.6]{System States}
-			\item \designConcernRef[4.7]{State Activities}
-			\item \designConcernRef[4.8]{State Transitions}
+			\item \designConcernRef{System States}
+			\item \designConcernRef{State Activities}
+			\item \designConcernRef{State Transitions}
 		\end{itemize}
 		
 	\subsection{Design Elements}
-		\designElementDef{Idle Listen}{State}{Kora is waiting for a wake action to take place}{Jeremy}
-		\designElementDef{Active Listen}{State}{Kora begins listening to the user}{Jeremy}
-		\designElementDef{Process Speech}{State}{Kora is deriving intent from the user's verbal request}{Jeremy}
-		\designElementDef{Endpoint Mapping}{State}{Kora is discerning which API endpoint to call}{Jeremy}
-		\designElementDef{Fusion Action}{State}{Kora makes the Fusion API call}{Jeremy}
-		\designElementDef{UI Feedback}{State}{Kora is verbalizing the state of the latest request to the user}{Jeremy}
-		\designElementDef{Error}{State}{Kora is in a state of error}{Jeremy}
+		\designElementDef{Idle Listen}{State}{\botname is waiting for a wake action to take place}{Jeremy Fischer}
+		\designElementDef{Active Listen}{State}{\botname begins listening to the user}{Jeremy Fischer}
+		\designElementDef{Process Speech}{State}{\botname is deriving intent from the user's verbal request}{Jeremy Fischer}
+		\designElementDef{Endpoint Mapping}{State}{\botname is discerning which API endpoint to call}{Jeremy Fischer}
+		\designElementDef{Fusion Action}{State}{\botname makes the Fusion API call}{Jeremy Fischer}
+		\designElementDef{UI Feedback}{State}{\botname is verbalizing the state of the latest request to the user}{Jeremy Fischer}
+		\designElementDef{Error}{State}{\botname is in a state of error}{Jeremy Fischer}
 	
 	
 	\subsection{Design View:  States} 
