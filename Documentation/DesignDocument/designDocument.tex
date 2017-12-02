@@ -238,7 +238,7 @@
                          {Module}
                          {Provides input to \botname and expresses the state of \botname to the user.}
                          {James Stallkamp}
-        \designElementDef{Speech-To-Intent Module}
+        \designElementDef{Speech-to-Intent Module}
                          {Module}
                          {Anaylzes speech input and produces an intent.json object.}
                          {James Stallkamp}
@@ -263,22 +263,22 @@
 		\botname is composed of seven primary modules.
 		\subsubsection{Manager Module}
 			\begin{indentItem}
-				The first module is the master module, this module is responsible for coordinating all other modules.
-				The master module will contain definitions for functions needed to process data objects, other modules will inherit this from master.
+				The first module is the Master module, this module is responsible for coordinating all other modules.
+				The Master module will contain definitions for functions needed to process data objects, other modules will inherit this from master.
 			\end{indentItem}
 		\subsubsection{User Interface}
 			\begin{indentItem}
-				The User interface is the module responsible for all interaction with the user.
-				This module will collect input and communicate it to the master module as well output regular feedback to the user.
+				The User Interface is the module responsible for all interaction with the user.
+				This module will collect input and communicate it to the Master module as well output regular feedback to the user.
 			\end{indentItem}
-		\subsubsection{Speed-To-Intent Module}
+		\subsubsection{Speed-to-Intent Module}
 			\begin{indentItem}
-				The speech-to-intent module will take in audio input and output a json object containing information on the spoken input.
-				This intent module will construct the json object and return it to master.
+				The Speech-to-Intent module will take in audio input and output a json object containing information on the spoken input.
+				This intent module will construct the json object and return it to Master.
 			\end{indentItem}
 		\subsubsection{Logger Module}
 			\begin{indentItem}
-				The logger Module will create a persist-able data object that will be loaded with run time information from \botname.
+				The Logger Module will create a persist-able data object that will be loaded with run time information from \botname.
 				These data objects will be analyzed and used to help train \botname for future development.
 			\end{indentItem}
 		\subsubsection{}
@@ -288,12 +288,12 @@
 			\end{indentItem}
 		\subsubsection{Voice Synthesizer Module}
 			\begin{indentItem}
-				In order for \botname to output speed to the user it will need a voice synthesizer module.
+				In order for \botname to output speed to the user it will need a Voice Synthesizer module.
 				This module will receive text input and produce an audio output that can be played to the user.
 			\end{indentItem}		
 		\subsubsection{Machine Learning Module}
 			\begin{indentItem}
-				The last module is the machine learning module, this module is responsible for training \botname to recognize patters and improve functionality.
+				The last module is the Machine Learning module, this module is responsible for training \botname to recognize patters and improve functionality.
 			\end{indentItem}
 		
 \section{Design Viewpoint: Information}
@@ -345,8 +345,8 @@
 						 {James Stallkamp}				 
     \subsection{Design View: }
 		\botname is structured in a mediator format. 
-		\botname will have a master module that coordinates interactions between itself and all other modules.
-		This master module will provide basic functionality needed to process data objects, other modules will inherit this from master. 
+		\botname will have a Master module that coordinates interactions between itself and all other modules.
+		This Master module will provide basic functionality needed to process data objects, other modules will inherit this from the Master module. 
 
 
 \section{Design Viewpoint: Interfaces}
@@ -722,8 +722,8 @@
 				
 				\ganttbar{MongoDB Creation}{1}{2} \\
 				\ganttbar{Module Skeletons Creation}{1}{2} \\
-				\ganttbar{Speech-To-Intent Working}{2}{3} \\
-				\ganttbar{Text-To-Speech Working}{3}{3} \\
+				\ganttbar{Speech-to-Intent Working}{2}{3} \\
+				\ganttbar{Text-to-Speech Working}{3}{3} \\
 				\ganttbar{Fusion API Mapping}{2}{5} \\
 				\ganttbar{Pipeline Connected}{4}{9} \\
 				\ganttbar{Create Alpha Demo}{9}{11} \\	
