@@ -176,7 +176,7 @@
 			CAM & Computer Aided Manufacturing \\ \hline
 			Fusion & An Autodesk Cloud-based 3D CAD/CAM tool/product \\ \hline
 			Task & In the context of Fusion, a function or operation that can be performed in Fusion \\ \hline
-			Plugin & Software that adds specific new functionlity to another piece of software \\ \hline
+			Plugin & Software that adds specific new functionality to another piece of software \\ \hline
 			User & A person that interacts with Kora or Fusion depending on the context \\ \hline
 			Workflow & A sequence of related tasks \\ \hline
 		\end{tabular}
@@ -186,7 +186,7 @@
     \designConcernDef{User-Application Interface}{Client, Developers}{What interfaces will exist for users to communicate to the application and for the application to communicate to users?}
     \designConcernDef{Internal Interfaces}{Developers}{What internal interfaces will exist in the software system?}
     \designConcernDef{Component Interactions}{Developers}{Which components of the software system will interact?}
-    \designConcernDef{Component Interaction Resposibilities}{Developers}{What are the reponsibilities of each component of the software system in the context of interactions?}
+    \designConcernDef{Component Interaction Responsibilities}{Developers}{What are the responsibilities of each component of the software system in the context of interactions?}
 	\designConcernDef{Architecture}{Developers}{How is the system structured?}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -210,7 +210,7 @@
 \section{Design Viewpoint: Composition}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item \designConcernRef[Optional-Arg]{Module Composition}
+            \item \designConcernRef[]{Component Interaction Responsibilities}
         \end{itemize}
 
     \subsection{Design Elements} 
@@ -248,14 +248,14 @@
 		The master module will contain definitions for functions needed to process data objects, other modules will inherit this from master.
 		The next module is the User interface and is the module responsible for all interaction with the user.
 		This module will collect input and communicate it to master as well output regular feedback to the user.
-		The speech-to-intent module will take in audio input and ouput a json object containing information on the spoken input.
+		The speech-to-intent module will take in audio input and output a json object containing information on the spoken input.
 		This intent module will construct the json object and return it to master.
-		The Logger module will initialize a persistable data object containing runtime information from \botname.
+		The Logger module will initialize a persist able data object containing runtime information from \botname.
 		Data logged will be used to help train and improve \botname.
 		The next module is the Fusion API, this module will handle executing Fusion commands.
-		The Fusion module will translate information in the json data object to constuct and execute a Fusion comman.
+		The Fusion module will translate information in the json data object to construct and execute a Fusion command.
 		In order for \botname to output speed to the user it will need a voice synthesizer module.
-		This module will recieve text input and produce an audio output that can be played to the user.
+		This module will receive text input and produce an audio output that can be played to the user.
 		The last module is the machine learning module, this module is responsible for training \botname to recognize patters and improve functionality.
 
 \section{Design Viewpoint: Information}
@@ -273,7 +273,7 @@
 \section{Design Viewpoint: Patterns}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item \designConcernRef[Optional-Arg]{Architecture}
+            \item \designConcernRef[]{Architecture}
         \end{itemize}
 
     \subsection{Design Elements}
@@ -288,7 +288,7 @@
     \subsection{Design View: }
 		\botname is structured in a mediator format. 
 		\botname will have a master module that coordinates interactions between itself and all other modules.
-		This master module will provide basic funtionality needed to process data objects, other modules will inherit this from master. 
+		This master module will provide basic functionality needed to process data objects, other modules will inherit this from master. 
 
 
 \section{Design Viewpoint: Interfaces}
