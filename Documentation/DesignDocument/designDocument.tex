@@ -43,8 +43,6 @@
 \def \speechToText{Wit.ai\xspace}
 
 
-\newenvironment{indentItem}[1][1cm]{\begin{adjustwidth}{#1}{}}{\end{adjustwidth}}
-
 % 2. Uncomment the appropriate line below so that the document type works
 \def \DocType{		%Problem Statement
 				%Requirements Document
@@ -53,29 +51,28 @@
 				%Progress Report
 				}
 
+\newenvironment{indentItem}[1][1cm]{\begin{adjustwidth}{#1}{}}{\end{adjustwidth}}
 \newcommand{\designConcernDef}[3]{
-    \subsection{#1}
+    \subsection{#1}\label{#1}
         \begin{tabular}[t]{r p{6in}}
             Stakeholder(s): & #2 \\
             Concern: & #3 \\
         \end{tabular}
 }
-\newcommand{\designConcernRef}[2][]{
-    #2 #1
+\newcommand{\designConcernRef}[1]{
+    #1 (defined in section \ref{#1})
 }
 \newcommand{\designElementDef}[4]{
-    \subsubsection{#1}
+    \subsubsection{#1}\label{#1}
     \begin{tabular}[t]{r p{6in}}
         Type: & #2 \\
         Purpose: & #3 \\
         Author: & #4 \\
     \end{tabular}
 }
-\newcommand{\designElementRef}[2]{
+\newcommand{\designElementRef}[1]{
     \subsubsection{#1}
-    \begin{tabular}[t]{r p{6in}}
-        See #2 & \\ %#2 should be element identifier (section where it's defined or ID that can be used to find it)
-    \end{tabular}
+        See section \ref{#1} for element definition.
 }
 \newcommand{\NameSigPair}[1]{\par
 \makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
@@ -228,7 +225,7 @@
 \section{Design Viewpoint: Composition}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item \designConcernRef[4.4]{Component Interaction Responsibilities}
+            \item \designConcernRef{Component Interaction Responsibilities}
         \end{itemize}
 
     \subsection{Design Elements} 
@@ -335,7 +332,7 @@
 \section{Design Viewpoint: Patterns}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item \designConcernRef[4.5]{Architecture}
+            \item \designConcernRef{Architecture}
         \end{itemize}
 
     \subsection{Design Elements}
@@ -356,8 +353,8 @@
 \section{Design Viewpoint: Interfaces}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item \designConcernRef[4.1]{User-Application Interface}
-            \item \designConcernRef[4.2]{Internal Interfaces}
+            \item \designConcernRef{User-Application Interface}
+            \item \designConcernRef{Internal Interfaces}
         \end{itemize}
 
     \subsection{Design Elements}
@@ -520,12 +517,11 @@
 \section{Design Viewpoint: Interactions}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item \designConcernRef[4.3]{Component Interactions}
-            \item \designConcernRef[4.4]{Component Interaction Responsibilities}
+            \item \designConcernRef{Component Interactions}
+            \item \designConcernRef{Component Interaction Responsibilities}
         \end{itemize}
 
     \subsection{Design Elements}
-
 
     \subsection{Design View: Module Interactions}
         The diagram below specifies the interactions that occur between modules within the application: 
