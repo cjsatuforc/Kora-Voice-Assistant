@@ -132,7 +132,7 @@
 % 8. now you write!
 \section{Document Details}
 	\subsection{Date of Issue and Status}
-		This document was issued December 1, 2017 and is the first draft of the design document.
+		This document was issued December 1, 2017 and is the first complete iteration of the design document.
 
 	\subsection{Authorship}
 		Jeremy Fischer, Austin Row, and James Stallkamp are the authors of this document and the developers of \botname.
@@ -151,7 +151,7 @@
 
 \section{Introduction}
 	\subsection{Purpose}
-		The purpose of this design document is to outline how \botname's workflows will be completed and connected.
+		The purpose of this design document is to outline how \botname's functionality will be achieved.
 		More generally, this document describes how the client's requirements will be met.
 		\botname's developers will use this document as a roadmap during implementation.
 
@@ -163,8 +163,8 @@
 		\botname will be a speech-based virtual assistant for Fusion that lets users perform any one of a subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
 		Workflows in Fusion that are not suited for handling by a voice interface will not be supported by \botname.
 		As a stretch goal, \botname will be capable of questioning the user and using responses to predict and automatically assist with future user behavior.
-		It will be a plugin that is bundled with Fusion and will be part of the product's standard download. 
-		
+		This functionality will be implemented as a plugin that is bundled with Fusion and will be part of the product's standard download. 
+        \\[0.1in]		
 		\botname will offer users a tool that decreases the time required to achieve their goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
 		If the stretch goal is achieved, \botname will further increase productivity by learning to predict and automate specific workflows within the product.
 
@@ -192,18 +192,18 @@
 
 \section{Design Stakeholders and Concerns}
     \designConcernDef{System Decomposition}{Developers}{How is the software system decomposed into components?}
-    \designConcernDef{Component Functional Responsibilities}{Developers}{What functionality is each component responsible for?}
-    \designConcernDef{User-Application Interface}{Client, Developers}{What interfaces will exist for users to communicate to the application and for the application to communicate to users?}
-    \designConcernDef{Internal Interfaces}{Developers}{What internal interfaces will exist in the software system?}
+    \designConcernDef{Component Functional Responsibilities}{Developers}{What functionality is each software component responsible for?}
+    \designConcernDef{User-Application Interface}{Client, Developers}{What interfaces will exist for users to interact with the application and for the application to communicate with users?}
+    \designConcernDef{Internal Interfaces}{Developers}{What internal interfaces will exist between software components?}
     \designConcernDef{Component Interactions}{Developers}{Which components of the software system will interact?}
     \designConcernDef{Component Interaction Responsibilities}{Developers}{What are the responsibilities of each component of the software system in the context of interactions?}
-	\designConcernDef{Architecture}{Developers}{How is the system structured?}
-	\designConcernDef{System States}{Developers}{What are the possible states the system can be in?}
-	\designConcernDef{State Activities}{Developers}{What activity takes place in each state?}
+	\designConcernDef{Architecture}{Developers}{What architecture defines the software system?}
+	\designConcernDef{System States}{Developers}{What are the possible states the software system can be in?}
+	\designConcernDef{State Activities}{Developers}{What defines each of the states of the system?}
 	\designConcernDef{State Transitions}{Developers}{When does the system transition from one state to another?}
-	\designConcernDef{Log Files}{Developers}{Where will user-\botname interactions be stored?}
-	\designConcernDef{Log File Content}{Developers}{What will be stored in the user-\botname log files?}
-	\designConcernDef{Log File Access}{Developers}{How will \botname interact with the storage system?}
+	\designConcernDef{Log File Location}{Developers}{Where will data regarding user interactions be logged?}
+	\designConcernDef{Log File Content}{Developers}{What will be stored in log files?}
+	\designConcernDef{Log File Access}{Developers}{How will stored log files be accessed?}
 	
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -234,11 +234,11 @@
     \subsection{Design Elements} 
         \designElementDef{Master Module}
                          {Module}
-                         {Manages what state \botname is in and executes other modules.}
+                         {Facilitates communication between modules and manages application state.}
                          {James Stallkamp}
         \designElementDef{UI Module}
                          {Module}
-                         {Provides input to \botname and expresses the state of \botname to the user.}
+                         {Provides user a way to interact with \botname and expresses the application state to the user.}
                          {James Stallkamp}
         \designElementDef{Speech-to-Intent Module}
                          {Module}
@@ -252,7 +252,7 @@
                          {Module}
                          {Translates intent into Fusion API commands and executes them.}
                          {James Stallkamp}
-        \designElementDef{Voice Synthesizer Module}
+        \designElementDef{Text-to-Speech Module}
                          {Module}
                          {Synthesizes an audio output from a given text input.}
                          {James Stallkamp}
@@ -260,15 +260,18 @@
                          {Module}
                          {Trains \botname to become a more powerful assistant.}
                          {James Stallkamp}
+        \designElementDef{Global Data Store}
+                         {Data Store}
+                         {Stores data that for that can be accessed by any module.}
+                         {James Stallkamp}
 						 
     \subsection{Design View: Modules}
 		\botname is composed of seven primary modules.
 		\subsubsection{Master Module}
 			\begin{indentItem}
-				The Master module, this module is responsible for coordinating all other modules.
-				The master module will contain definitions for functions needed to process data objects, other modules will inherit this from master.
+				The Master module is responsible for coordinating all other modules.
 			\end{indentItem}
-		\subsubsection{UI}
+		\subsubsection{UI Module}
 			\begin{indentItem}
 				The UI module is responsible for all interaction with the user.
 				This module will collect input and communicate it to the Master module as well output regular feedback to the user.
@@ -288,7 +291,7 @@
 				The next module is the Fusion module, this module will handle executing Fusion commands.
 				The Fusion module will parse information from the JSON intent object to construct and execute a Fusion command.
 			\end{indentItem}
-		\subsubsection{Voice Synthesizer Module}
+		\subsubsection{Text-to-Speech Module}
 			\begin{indentItem}
 				In order for \botname to speak to the user it will need a voice synthesizer module.
 				This module will receive text input and produce an audio output that can be played to the user.
@@ -296,6 +299,11 @@
 		\subsubsection{Action Prediction Module}
 			\begin{indentItem}
 				The Action Prediction module is responsible for training \botname to recognize patterns and improve functionality.
+			\end{indentItem}
+		\subsubsection{Global Data Store}
+			\begin{indentItem}
+                The Global Data Store is responsible for storing data that will be needed in multiple parts of the application.
+                The data that is stored there only persists until the application is closed or the data is explicitly deleted.
 			\end{indentItem}
 		
 \section{Design Viewpoint: Information}
@@ -328,7 +336,7 @@
 	
 	\subsection{Design View: Structure}
 		The data will be stored in a MongoDB database.
-		Each entry in the database will resemble the JSON object that is returned from the Speech-to-Intent module driver function.
+		Each entry in the database will resemble the JSON object that is returned from the Speech-to-Intent module driver method.
 		
 		
 
@@ -343,11 +351,7 @@
 						 {System Architecture}
 						 {\botname has a simple mediator that coordinates all interactions between all other components.}
 						 {James Stallkamp}
-		\designElementDef{Worker Module}
-						 {Module}
-						 {An inheritable module providing basic functionality to interact with the Master module.}
-						 {James Stallkamp}				 
-    \subsection{Design View: }
+    \subsection{Design View: Software Architecture}
 		\botname is structured according to a mediator design pattern. 
 		\botname will have a Master module that coordinates interactions between itself and all other modules.
 		The Master module controls \botname's flow and ensures that the correct data gets to the correct module.
@@ -381,8 +385,8 @@
         Also for returned JSON, the "values" key-value pairs are return values that are used by modules later in the application logic flow.
         The following interface definitions describe which key-value pairs are defined for each module. 
         \\[0.1in]
-        The INPUT section defines the expected format of the JSON that is passed to the module's driver function.
-        The OUTPUT section defines the expected format of the JSON that is returned from the module's driver function.
+        The INPUT section defines the expected format of the JSON that is passed to the module's driver method.
+        The OUTPUT section defines the expected format of the JSON that is returned from the module's driver method.
         \subsubsection{UI Module Interface}
             \begin{tabular}[t]{r l p{4.5in}}
                 INPUT: \{ & & \\
@@ -504,11 +508,11 @@
             Name: & Store \\
             Parameters: & data: any kind of data \\
             Return Value: & The ID generated for and associated with data.\\
-            Description: & Generates a unique ID and stores data associated with the ID then returns the generated. \\
+            Description: & Generates a unique ID and stores data associated with the ID then returns the ID. \\
             & \\
             Name: & Remove \\
             Parameters: & dataID: The unique identifier for the data being removed.\\
-            Return Value: & 0 if data was not found, 1 if data was found and deleted, 2 if data was found but not successfully removed. \\
+            Return Value: & 0 if data was not found, 1 if data was found and removed, 2 if data was found but not successfully removed. \\
             Description: & Removes the data associated with the dataID parameter in the data store. \\
         \end{tabular}
 
@@ -520,8 +524,8 @@
         \\[0.1in]
 
         Through the user interface, the application responds back to the user with the status of the previous command.
-        If the command succeeds, the application uses a voice synthesizer to alert  user that the previous command command succeeded.
-        If the command fails, the voice synthesizer uses the voice synthesizer to alert the user that the previous command failed.
+        If the command succeeds, the application uses a voice synthesizer to alert the user that the previous command succeeded.
+        If the command fails, the application uses the voice synthesizer to alert the user that the previous command failed.
 
 \section{Design Viewpoint: Interactions}
     \subsection{Addressed Design Concerns}
@@ -531,9 +535,16 @@
         \end{itemize}
 
     \subsection{Design Elements}
+        \designElementRef{Master Module}
+        \designElementRef{UI Module}
+        \designElementRef{Speech-to-Intent Module}
+        \designElementRef{Logger Module}
+        \designElementRef{Fusion Module}
+        \designElementRef{Text-to-Speech Module}
+        \designElementRef{Action Prediction Module}
 
     \subsection{Design View: Module Interactions}
-        The diagram below specifies the interactions that occur between modules within the application: 
+        The following diagram specifies the interactions that occur between modules within the application: 
 		\begin{figure}[H]
 			\includegraphics[width=1\textwidth, height=.6\textheight]{ModuleInteractionsUML.eps}
 			\centering
@@ -597,12 +608,12 @@
 	
 	\subsubsection{UI Feedback}
 		\begin{indentItem}
-			\botname is signally feedback regarding the latest transaction to the user.
+			\botname is signaling feedback regarding the latest transaction to the user.
 		\end{indentItem}
 	
 	\subsubsection{Error}
 		\begin{indentItem}
-			The system is in a state of failure and is clearing all system sub-states so \botname can attempt another request.
+			The system is in a state of failure and is resetting the application so \botname can attempt another request.
 		\end{indentItem}
 	
 	
@@ -734,11 +745,9 @@
 			
 \section{Conclusion}
 	This document has described \botname's development roadmap.
-	This document explains the components \botname is broken up in to, and what each component is responsible for.
-	Above is a Gantt chart that holds a loose development schedule which the \botname developers will abide by.
+	This document explains how \botname's underlying system is decomposed into components and what each component is responsible for.
+	Above is a Gantt chart that details the development schedule which the \botname developers will abide by.
 	There is a change history table at the beginning of this document which will explain any modifications made to the design described in this document.
-
-
 
 %\bibliographystyle{IEEEtran}
 %\bibliography{references.bib}
