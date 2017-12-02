@@ -391,7 +391,9 @@
                 & \} & \\
                 \} & & \\
                 OUTPUT: \{ & & \\
-                & dataIDs: \{ \} & \\
+                & dataIDs: \{ \\
+                & & userSpeechAudioFile: $<$dataStoreID or empty$>$ \\  
+                & \} & \\
                 & values: \{ & \\
                 & & errorOccurred: $<$0 if no errors else 1$>$ \\
                 & \} & \\
@@ -409,23 +411,6 @@
                 OUTPUT: \{ & & \\
                 & dataIDs: \{ & \\
                 & \} & \\
-                & values: \{ & \\
-                & & errorOccurred: $<$0 if no errors else 1$>$ \\
-                & & userCommandIntent: $<$intent JSON from Wit.ai API$>$ \\
-                & \} & \\
-                \} & & \\
-            \end{tabular}
-
-        \subsubsection{Speech-to-Intent Module Interface}
-            \begin{tabular}[t]{r l p{4.5in}}
-                INPUT: \{ & & \\
-                & dataIDs: \{ & \\
-                & & userSpeechAudioFile: $<$dataStoreID$>$ \\
-                & \} & \\
-                & values: \{ \} & \\
-                \} & & \\
-                OUTPUT: \{ & & \\
-                & dataIDs: \{ \} & \\
                 & values: \{ & \\
                 & & errorOccurred: $<$0 if no errors else 1$>$ \\
                 & & userCommandIntent: $<$intent JSON from Wit.ai API$>$ \\
@@ -539,14 +524,14 @@
     \subsection{Design Elements}
         \designElementDef{Element-Name}{Element-Type}{Element-Purpose}{Element-Author}
 
-    \subsection{Design View: }
+    \subsection{Design View: Module Interactions}
+        The diagram below specifies the interactions that occur between modules within the application: 
 		\begin{figure}[H]
-			\includegraphics[width=1\textwidth, height=.35\textheight]{ModuleInteractionsUML.eps}
+			\includegraphics[width=1\textwidth, height=1\textheight]{ModuleInteractionsUML.eps}
 			\centering
 			\caption{The interactions that occur between the system's software modules.}
 			\label{fig::moduleInteractions}
 		\end{figure}
-
 
 \section{Design Viewpoint: State Dynamics}
 	\subsection{Addressed Design Concerns}
