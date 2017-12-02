@@ -183,7 +183,10 @@
 	\end{table}
 
 \section{Design Stakeholders and Concerns}
-    \designConcernDef{Module Interactions}{Client, Developers}{}
+    \designConcernDef{User-Application Interface}{Client, Developers}{What interfaces will exist for users to communicate to the application and for the application to communicate to users?}
+    \designConcernDef{Internal Interfaces}{Developers}{What internal interfaces will exist in the software system?}
+    \designConcernDef{Component Interactions}{Developers}{Which components of the software system will interact?}
+    \designConcernDef{Component Interaction Resposibilities}{Developers}{What are the reponsibilities of each component of the software system in the context of interactions?}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -244,21 +247,45 @@
 \section{Design Viewpoint: Interfaces}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item
+            \item \designConcernRef[User-Application Interface]{ID}
+            \item \designConcernRef[Internal Interfaces]{ID}
         \end{itemize}
 
     \subsection{Design Elements}
+        \designElementDef{Element-Name}{Element-Type}{Element-Purpose}{Element-Author}
+        \designElementDef{UI Module Interface}{Internal Interface}{Defines rules governing interactions with the UI module.}{Austin Row}
+        \designElementDef{Speech-to-Intent Module Interface}{Internal Interface}{Defines rules governing interactions with the Speech-to-Intent module.}{Austin Row}
+        \designElementDef{Logging Module Interface}{Internal Interface}{Defines rules governing interactions with the Logging module.}{Austin Row}
+        \designElementDef{Text-to-Speech Module Interface}{Internal Interface}{Defines rules governing interactions with the Text-to-Speech module.}{Austin Row}
+        \designElementDef{Fusion Module Interface}{Internal Interface}{Defines rules governing interactions with the Fusion module.}{Austin Row}
+        \designElementDef{Action Prediction Module Interface}{Internal Interface}{Defines rules governing interactions with the Action Prediction module.}{Austin Row}
+        \designElementDef{Runtime Data Store Interface}{Internal Interface}{Defines rules governing interactions with the global Runtime Data Store.}{Austin Row}
+    \subsection{Design View: Module Interfaces}
+        The interfaces to each module are driven by a method, \textit{handle}, that takes a JSON variable, \textit{data}, as an argument.
+        The required data transmitted in \textit{data} is specific to each module. 
+        The following interface definitions describe the required contents of \textit{data} for each module.
 
-    \subsection{Design View: }
+        \subsubsection{UI Module Interface}
+            \begin{tabular}[t]{r p{6in}}
+                INPUT: & \\
+                OUTPUT: & \\
+            \end{tabular}
 
+        \subsubsection{Speech-to-Intent Module Interface}
+            \begin{tabular}[t]{r p{6in}}
+                INPUT: &  \{ dataIDs: \}\\
+                OUTPUT: & This module returns a \\
+            \end{tabular}
 
 \section{Design Viewpoint: Interactions}
     \subsection{Addressed Design Concerns}
         \begin{itemize}
-            \item concernid-WhichModulesInteract
+            \item \designConcernRef[Component Interactions]{ID}
+            \item \designConcernRef[Component Interaction Responsibilities]{ID}
         \end{itemize}
 
     \subsection{Design Elements}
+        \designElementDef{Element-Name}{Element-Type}{Element-Purpose}{Element-Author}
 
     \subsection{Design View: }
 
