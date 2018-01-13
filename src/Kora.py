@@ -73,11 +73,11 @@ def is_silent(block):
 def returnUpTo(iterator, values, returnNum):
     if iterator+returnNum < len(values):
         return (iterator + returnNum,
-                "".join(values[iterator:iterator + returnNum]))
+                b"".join(values[iterator:iterator + returnNum]))
 
     else:
         temp = len(values) - iterator
-        return (iterator + temp + 1, "".join(values[iterator:iterator + temp]))
+        return (iterator + temp + 1, b"".join(values[iterator:iterator + temp]))
 
 
 # Python generator- yields roughly 512k to generator.
