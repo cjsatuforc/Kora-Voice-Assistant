@@ -64,11 +64,11 @@
 }
 \newcommand{\designElementDef}[4]{
     \subsubsection{#1}\label{#1}
-    \begin{tabular}[t]{r p{6in}}
-        Type: & #2 \\
-        Purpose: & #3 \\
-        Author: & #4 \\
-    \end{tabular}
+        \begin{tabular}[t]{r p{6in}}
+            Type: & #2 \\
+            Purpose: & #3 \\
+            Author: & #4 \\
+        \end{tabular}
 }
 \newcommand{\designElementRef}[1]{
     \subsubsection{#1}
@@ -260,10 +260,6 @@
                          {Module}
                          {Trains \botname to become a more powerful assistant.}
                          {James Stallkamp}
-        \designElementDef{Global Data Store}
-                         {Data Store}
-                         {Stores data that for that can be accessed by any module.}
-                         {James Stallkamp}
 						 
     \subsection{Design View: Modules}
 		\botname is composed of seven primary modules.
@@ -299,11 +295,6 @@
 		\subsubsection{Action Prediction Module}
 			\begin{indentItem}
 				The Action Prediction module is responsible for training \botname to recognize patterns and improve functionality.
-			\end{indentItem}
-		\subsubsection{Global Data Store}
-			\begin{indentItem}
-                The Global Data Store is responsible for storing data that will be needed in multiple parts of the application.
-                The data that is stored there only persists until the application is closed or the data is explicitly deleted.
 			\end{indentItem}
 		
 \section{Design Viewpoint: Information}
@@ -371,150 +362,97 @@
         \designElementDef{Text-to-Speech Module Interface}{Internal Interface}{Defines rules governing interactions with the Text-to-Speech module.}{Austin Row}
         \designElementDef{Fusion Module Interface}{Internal Interface}{Defines rules governing interactions with the Fusion module.}{Austin Row}
         \designElementDef{Action Prediction Module Interface}{Internal Interface}{Defines rules governing interactions with the Action Prediction module.}{Austin Row}
-        \designElementDef{Global Data Store Interface}{Internal Interface}{Defines rules governing interactions with the Global Data Store.}{Austin Row}
         \designElementDef{User Interface}{External Interface}{Defines rules governing how the human user can interact with \botname.}{Austin Row}
     \subsection{Design View: Module Interfaces}
-        The interfaces to each module are driven by a single method that takes a JSON object as an argument and returns a JSON object back to the caller.
-        Both the JSON object passed to the function and that which is returned contain the same two keys with values that are specific to each module and to whether it is an argument to the driver method or is a return value.
-        One of the required keys is "dataIDs" which maps to an object containing key-value pairs where the key is a name specific to the target module and the value is an ID used by the global data store to identify some stored data entity.
-        The second required key is "values" which maps to an object containing key-value pairs where each key is a name specific to the target module and the value is some piece of data that is to be used in the target module.
-        \\[0.1in]
-        For JSON that is passed as an argument to the driver method, the data IDs map to data that is stored in the global data store that is needed by the module to perform its specific functionality. 
-        Also for this JSON, the "values" key-value pairs are parameters that the target module uses in to accomplish its specific responsibilities.
-        For returned JSON, the data IDs map to data that was stored in the global data store by the target module during the execution of its responsibilities.
-        Also for returned JSON, the "values" key-value pairs are return values that are used by modules later in the application logic flow.
-        The following interface definitions describe which key-value pairs are defined for each module. 
-        \\[0.1in]
-        The INPUT section defines the expected format of the JSON that is passed to the module's driver method.
-        The OUTPUT section defines the expected format of the JSON that is returned from the module's driver method.
+        The various modules that compose the project each have an interface defined by functions that are unique to that module.
+        Following is documentation for the functions that define the interface to each module.
         \subsubsection{UI Module Interface}
-            \begin{tabular}[t]{r l p{4.5in}}
-                INPUT: \{ & & \\
-                & dataIDs: \{ & \\
-                & & voiceResponseAudioFile: $<$dataStoreID or empty$>$ \\
-                & \} & \\
-                & values: \{ & \\
-                & & UIActionCode: $<$number encoding what should be communicated to user through the UI$>$ \\
-                & \} & \\
-                \} & & \\
-                OUTPUT: \{ & & \\
-                & dataIDs: \{ \\
-                & & userSpeechAudioFile: $<$dataStoreID or empty$>$ \\  
-                & \} & \\
-                & values: \{ & \\
-                & & errorOccurred: $<$0 if no errors else 1$>$ \\
-                & \} & \\
-                \} & & \\
+            \begin{tabular}[t]{l p{6in}}
+                \hline
+                Function: & notify \\
+                Description: & Shows a notification to the user in the Fusion editor. \\
+                Parameters: & notification -- a KoraNotification object that contains members to specify visual characteritics and content for notification that is shown to user. \\
+                Return: & 1 on successful showing of notification, 0 otherwise. \\
+                \hline
+                Function: & listen \\
+                Description: & Listens through microphone until user voice command is given then returns data about the command. \\
+                Parameters: & N/A \\
+                Return: & Wit.ai JSON response object with data from user command. \\
+                \hline
+                Function: & voicePrompt \\
+                Description: & Asks user a question via a voice sythesizer and records and interprets response. \\
+                Parameters: & text -- the text manuscript for the question that the user should be asked. \\
+                            & timeout (optional) -- the amount of time that \botname should wait for a response before giving up. \\
+                Return: & Wit.ai JSON response object with data from user response. \\
+                \hline
             \end{tabular}
 
         \subsubsection{Speech-to-Intent Module Interface}
-            \begin{tabular}[t]{r l p{4.5in}}
-                INPUT: \{ & & \\
-                & dataIDs: \{ & \\
-                & & userSpeechAudioFile: $<$dataStoreID$>$ \\
-                & \} & \\
-                & values: \{ \} & \\
-                \} & & \\
-                OUTPUT: \{ & & \\
-                & dataIDs: \{ & \\
-                & \} & \\
-                & values: \{ & \\
-                & & errorOccurred: $<$0 if no errors else 1$>$ \\
-                & & userCommandIntent: $<$intent JSON from Wit.ai API$>$ \\
-                & \} & \\
-                \} & & \\
+            \begin{tabular}[t]{l p{6in}}
+                \hline
+                Function: &  streamAudioToWit \\
+                Description: & Streams audio data to Wit.ai via provided audio stream and returns Wit.ai JSON response object. \\
+                Parameters: & audioStream -- an Pyaudio input stream. \\
+                Return: & Wit.ai JSON response object for streamed audio. \\
+                \hline
             \end{tabular}
-
+            
         \subsubsection{Logging Module Interface}
-            \begin{tabular}[t]{r l p{4.5in}}
-                INPUT: \{ & & \\
-                & dataIDs: \{ \} & \\
-                & values: \{ & \\
-                & & logMessage: $<$message$>$ \\
-                & & messageType: $<$error or warning or info$>$ \\
-                & \} & \\
-                \} & & \\
-                OUTPUT: \{ & & \\
-                & dataIDs: \{ \} & \\
-                & values: \{ & \\
-                & & errorOccurred: $<$0 if no errors else 1$>$ \\
-                & \} & \\
-                \} & & \\
+            \begin{tabular}[t]{l p{6in}}
+                \hline
+                Function: & debug \\
+                Description: & Logs data to log file with DEBUG tag. \\
+                Parameters: & message -- string with message to be logged. \\
+                Return: & 1 on message successfully being added to log file, 0 otherwise. \\
+                \hline
+                Function: & warn \\
+                Description: & Logs data to log file with WARN tag. \\
+                Parameters: & message -- string with message to be logged. \\
+                Return: & 1 on message successfully being added to log file, 0 otherwise. \\
+                \hline
+                Function: & error \\
+                Description: & Logs data to log file with ERROR tag. \\
+                Parameters: & message -- string with message to be logged. \\
+                Return: & 1 on message successfully being added to log file, 0 otherwise. \\
+                \hline
             \end{tabular}
-
-         \subsubsection{Text-to-Speech Module Interface}
-            \begin{tabular}[t]{r l p{4.5in}}
-                INPUT: \{ & & \\
-                & dataIDs: \{ \} & \\
-                & values: \{ & \\
-                & & text: $<$text to be transcribed to speech$>$ \\
-                & \} & \\
-                \} & & \\
-                OUTPUT: \{ & & \\
-                & dataIDs: \{ & \\
-                & & speechAudioFile: $<$dataStoreID$>$ \\
-                & \} & \\
-                & values: \{ & \\
-                & & errorOccurred: $<$0 if no errors else 1$>$ \\
-                & \} & \\
-                \} & & \\
+            
+        \subsubsection{Text-to-Speech Module Interface}
+            \begin{tabular}[t]{l p{6in}}
+                \hline
+                Function: & textToSpeech \\
+                Description: & Converts message given as text to raw audio and returns audio. \\
+                Parameters: & text -- the text to be converted to audio. \\
+                Return: & List object containing raw audio data for text. \\
+                \hline
             \end{tabular}
-
+ 
         \subsubsection{Fusion Module Interface}
-            \begin{tabular}[t]{r l p{4.5in}}
-                INPUT: \{ & & \\
-                & dataIDs: \{ \} & \\
-                & values: \{ & \\
-                & & userCommandIntent: $<$intent JSON from Wit.ai API$>$ \\
-                & \} & \\
-                \} & & \\
-                OUTPUT: \{ & & \\
-                & dataIDs: \{ & \\
-                & \} & \\
-                & values: \{ & \\
-                & & errorOccurred: $<$0 if no errors else 1$>$ \\
-                & \} & \\
-                \} & & \\
-            \end{tabular}
+            \begin{tabular}[t]{l p{6in}}
+                \hline
+                Function: & executeCommand \\
+                Description: & Uses Fusion API to execute command(s) specified in Wit.ai JSON response object passed as argument. \\
+                Parameters: & command -- a Wit.ai JSON response object with data needed to interpret user's command. \\
+                            & callback (optional) -- a function that accepts an integer associated with a command execution status to be called at the finish of executeCommand. \\
+                Return: & An integer code associated with a particular status (e.g. success, runtime failure, unrecognized command, etc.). \\
+                \hline
+            \end{tabular}    
 
         \subsubsection{Action Prediction Module Interface}
-            \begin{tabular}[t]{r l p{4.5in}}
-                INPUT: \{ & & \\
-                & dataIDs: \{ & \\
-                & & userSpeechAudioFile: $<$dataStoreID$>$ \\
-                & \} & \\
-                & values: \{ & \\
-                & & get: $<$0 if not trying to get prediction for next user command else 1$>$ \\
-                & & userCommandIntent: $<$intent JSON from Wit.ai API$>$ \\
-                & \} & \\
-                \} & & \\
-                OUTPUT: \{ & & \\
-                & dataIDs: \{ \} & \\
-                & values: \{ & \\
-                & & errorOccurred: $<$0 if no errors else 1$>$ \\
-                & & prediction: $<$empty if get=0 in input else user prediction in same format as intent data from Wit.ai API$>$ \\
-                & \} & \\
-                \} & & \\
+            \begin{tabular}[t]{r p{6in}}
+                \hline
+                Function: & predict \\
+                Description: & Uses a Wit.ai JSON response object to predict what user's next command will be. \\
+                Parameters: & command -- a Wit.ai JSON response object with data derived from a user voice command. \\
+                Return: & A JSON object containing prediction for next user voice command and unique integer ID to identify prediction. \\
+                \hline
+                Function: & learn \\
+                Description: & Gives feedback to \botname's prediction model so that it can improve. \\
+                Parameters: & predictionID -- unique integer identifier for a previous prediction made by the model. \\
+                            & actual -- JSON with data regarding what the user actually did after the model made its prediction. \\
+                Return: & N/A \\
+                \hline
             \end{tabular}
-
-    \subsection{Design View: Data Store Interface}
-        The global data store has the following methods: \\
-        \begin{tabular}[t]{r p{6in}}
-            Name: & Get \\
-            Parameters: & dataID: The unique identifier for the data being retrieved.\\
-            Return Value: & The data associated with dataID.\\
-            Description: & Returns the data associated with the dataID parameter in the data store. \\
-            & \\
-            Name: & Store \\
-            Parameters: & data: any kind of data \\
-            Return Value: & The ID generated for and associated with data.\\
-            Description: & Generates a unique ID and stores data associated with the ID then returns the ID. \\
-            & \\
-            Name: & Remove \\
-            Parameters: & dataID: The unique identifier for the data being removed.\\
-            Return Value: & 0 if data was not found, 1 if data was found and removed, 2 if data was found but not successfully removed. \\
-            Description: & Removes the data associated with the dataID parameter in the data store. \\
-        \end{tabular}
 
     \subsection{Design View: User Interface}
         The user interface can be divided into two interaction types: the user giving \botname a command and \botname replying to the user with the application status. 
@@ -576,7 +514,7 @@
 		\designElementDef{Error}{State}{\botname is in a state of error}{Jeremy Fischer}
 	
 	
-	\subsection{Design View:  States} 
+	\subsection{Design View: States} 
 		\subsubsection{State Diagram}
 			\begin{figure}[H]
 				\includegraphics[width=1\textwidth, height=.35\textheight]{stateDynamics.eps}
