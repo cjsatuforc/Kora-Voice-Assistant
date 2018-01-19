@@ -41,8 +41,8 @@ showps: $(PSF)
 	@for i in $(PSF) ; do $(GH) $$i & done
 
 all:
-	make
-	make pdf
+	make -f mkForLocal
+	make -f mkForLocal
 
 clean:
 	rm -f *.pdf *.ps *.dvi *.out *.log *.aux *.bbl *.blg *.pyg *.toc *.synctex.gz
