@@ -12,6 +12,6 @@ class Interaction(mongoengine.Document):
     execTime       = mongoengine.DecimalField(min_value=0.00)
     
     meta = {
-        'db_alias': 'logs',
-        'collection': 'interactions'
+        'db_alias': 'core',
+        'collection': 'interaction'
     }
