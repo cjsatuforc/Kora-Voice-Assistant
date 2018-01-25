@@ -19,8 +19,8 @@ def run(context):
         # test.tester()
         witResponse = nlp.streamAudio(ui) #returns wit response json
         ui.messageBox('Executing: ' + str(witResponse))
-        # executionResultCode = fusion_execute_intent.executeCommand(witResponse, ui)
-        # ui.messageBox('Execution Result Code: ' + str(executionResultCode))
+        executionResultCode = fusion_execute_intent.executeCommand(witResponse, ui)
+        ui.messageBox('Execution Result Code: ' + str(executionResultCode))
     except:
         if ui:
             ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
