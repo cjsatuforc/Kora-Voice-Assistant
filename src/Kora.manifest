@@ -1,9 +1,9 @@
 {
 	"autodeskProduct":	"Fusion360",
-	"type":	"script",
+	"type":	"addin",
 	"author":	"",
 	"description":	{
-		"":	""
+		"":	"Kora voice control for Fusion 360"
 	},
 	"supportedOS":	"windows|mac",
 	"editEnabled":	true,

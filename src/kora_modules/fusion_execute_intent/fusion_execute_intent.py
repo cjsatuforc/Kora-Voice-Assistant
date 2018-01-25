@@ -5,7 +5,7 @@ import json
 import requests
 import math
 
-def executeCommand(command, ui, callback=None):
+def executeCommand(command, callback=None):
     distilledCommand = _distillCommand(command)
     thresholdConfidence = 0.79
     intents = _getFromCommand(distilledCommand, ['intent'])
@@ -21,7 +21,7 @@ def executeCommand(command, ui, callback=None):
     if shouldExecute('rotate'):
         executionStatus = _rotate(_getFromCommand(distilledCommand, ['rotation_quantity', 'direction', 'value']),
                 _getFromCommand(distilledCommand, ['rotation_quantity', 'number', 'value']),
-                _getFromCommand(distilledCommand, ['rotation_quantity', 'units', 'value']), ui
+                _getFromCommand(distilledCommand, ['rotation_quantity', 'units', 'value'])
                 )
     if shouldExecute('save'):
         executionStatus = _save(_getFromCommand(distilledCommand, ['file_name']))
@@ -42,7 +42,7 @@ class executionStatusCodes(object):
 ##########################################################################
 ##########################################################################
 
-def _rotate(direction, magnitude=None, units='degrees', ui=None):
+def _rotate(direction, magnitude=None, units='degrees'):
     if not direction:
         return executionStatusCodes.NONFATAL_ERROR
     if units == 'degrees':
@@ -109,8 +109,8 @@ def _rotate(direction, magnitude=None, units='degrees', ui=None):
 
     return executionStatusCodes.SUCCESS
 
-def _save(fileName=None):
-    if fileName:
+def _save(saveAsFileName=None):
+    if saveAsFileName:
         pass #TODO: Call FusionDocument.saveAs method from API
     else:
         pass #TODO: Call FusionDocument.save method from API

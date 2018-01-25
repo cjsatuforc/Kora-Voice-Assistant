@@ -20,7 +20,7 @@ WIT_AI_CLIENT_ACCESS_TOKEN = witConfig.WIT_AI_CLIENT_ACCESS_TOKEN
 if sys.platform == 'darwin':
     CHANNELS = 1
 
-def streamAudio(ui):
+def streamAudio():
     """
     :param ui:
     :return:
@@ -34,8 +34,7 @@ def streamAudio(ui):
                                ' rate=8000; endian=little', 'Transfer-Encoding': 'chunked'}
     url = 'https://api.wit.ai/speech'
 
-    postResponse = requests.post(url, headers=headers, data=_gen(stream, ui))
-
+    postResponse = requests.post(url, headers=headers, data=_gen(stream))
     stream.stop_stream()
     stream.close()
     pAudio.terminate()
@@ -83,7 +82,7 @@ def _returnUpTo(iterator, values, returnNum):
 
 
 # Python generator- yields roughly 512k to generator.
-def _gen(stream, ui):
+def _gen(stream):
     """
     :param stream:
     :param ui:
@@ -92,7 +91,7 @@ def _gen(stream, ui):
     num_silent = 0
     snd_started = False
     counter = 0
-    ui.messageBox("Kora will begin listening when you click 'Okay'!")
+    #ui.messageBox("Kora will begin listening when you click 'Okay'!")
     i = 0
     data = []
 
@@ -119,11 +118,11 @@ def _gen(stream, ui):
             num_silent = 0
 
         if snd_started and num_silent > 10:
-            ui.messageBox("Command finish detected. Kora stopped listening.")
+            #ui.messageBox("Command finish detected. Kora stopped listening.")
             break
 
         if counter > 75:  # Slightly less than 10 seconds.
-            ui.messageBox("Kora stopped listening, you have reached command time limit (~10 seconds).")
+            #ui.messageBox("Kora stopped listening, you have reached command time limit (~10 seconds).")
             break
 
         if snd_started:
