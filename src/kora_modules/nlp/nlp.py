@@ -1,17 +1,24 @@
 import adsk.core, adsk.fusion, adsk.cam, traceback
 from array import array
 import struct
+import sys
 import json
 import requests
 import math
 from ...packages import pyaudio
+from ... import witConfig
 
 THRESHOLD = .05
-CHUNK_SIZE = 1024
+CHUNK_SIZE = 2048
 FORMAT = pyaudio.paInt16
+CHANNELS = 2
 RATE = 8000
 SHORT_NORMALIZE = (1.0/32768.0)
-WIT_AI_CLIENT_ACCESS_TOKEN = 'Q6QP5OFCOQRS65KEIQZO3OPD47XFLGUE'
+WIT_AI_CLIENT_ACCESS_TOKEN = witConfig.WIT_AI_CLIENT_ACCESS_TOKEN
+
+
+if sys.platform == 'darwin':
+    CHANNELS = 1
 
 def streamAudio(ui):
     """
@@ -19,16 +26,16 @@ def streamAudio(ui):
     :return:
     """
     pAudio = pyaudio.PyAudio()
-    stream = pAudio.open(format=FORMAT, channels=1, rate=RATE,
-                    input=True, output=True,
-                    frames_per_buffer=CHUNK_SIZE)
-
+    stream = pAudio.open(format=FORMAT, channels=CHANNELS, rate=RATE,
+                    input=True, frames_per_buffer=CHUNK_SIZE)
+   
     headers = {'Authorization': 'Bearer ' + WIT_AI_CLIENT_ACCESS_TOKEN,
                'Content-Type': 'audio/raw; encoding=signed-integer; bits=16;' +
                                ' rate=8000; endian=little', 'Transfer-Encoding': 'chunked'}
     url = 'https://api.wit.ai/speech'
 
     postResponse = requests.post(url, headers=headers, data=_gen(stream, ui))
+
     stream.stop_stream()
     stream.close()
     pAudio.terminate()
@@ -90,7 +97,7 @@ def _gen(stream, ui):
     data = []
 
     while 1:
-        rms_data = stream.read(CHUNK_SIZE)
+        rms_data = stream.read(CHUNK_SIZE, exception_on_overflow=False)
         snd_data = array('i', rms_data)
         for d in snd_data:
             data.append(struct.pack('<i', d))

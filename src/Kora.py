@@ -5,6 +5,7 @@ import json
 import requests
 import math
 from .packages import pyaudio
+# from .packages import test
 from .kora_modules import nlp
 from .kora_modules import fusion_execute_intent
 from .kora_modules import text_to_speech
@@ -15,11 +16,11 @@ def run(context):
     try:
         app = adsk.core.Application.get()
         ui = app.userInterface
-        ui.messageBox('Kora has started. Not listening right now.')
+        # test.tester()
         witResponse = nlp.streamAudio(ui) #returns wit response json
         ui.messageBox('Executing: ' + str(witResponse))
-        executionResultCode = fusion_execute_intent.executeCommand(witResponse, ui)
-        ui.messageBox('Execution Result Code: ' + str(executionResultCode))
+        # executionResultCode = fusion_execute_intent.executeCommand(witResponse, ui)
+        # ui.messageBox('Execution Result Code: ' + str(executionResultCode))
     except:
         if ui:
             ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))

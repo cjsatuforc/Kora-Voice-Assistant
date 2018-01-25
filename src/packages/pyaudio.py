@@ -106,14 +106,14 @@ Overview
 """
 
 __author__ = "Hubert Pham"
-__version__ = "0.2.11"
+__version__ = "0.2.9"
 __docformat__ = "restructuredtext en"
 
 import sys
 
 # attempt to import PortAudio
 try:
-    from . import _portaudio as pa
+    import _portaudio as pa
 except ImportError:
     print("Could not import the PyAudio C module '_portaudio'.")
     raise
@@ -471,7 +471,7 @@ class Stream:
 
     def get_output_latency(self):
         """
-        Return the output latency.
+        Return the input latency.
 
         :rtype: float
         """
