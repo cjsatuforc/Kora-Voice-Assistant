@@ -2,7 +2,7 @@ def __bootstrap__():
     global __bootstrap__, __loader__, __file__
     import sys, pkg_resources, imp
     #Windows PortAudio Inlude
-    if sys.platform == 'win32' || sys.platform == 'cygwin':
+    if sys.platform == 'win32' or sys.platform == 'cygwin':
         __file__ = pkg_resources.resource_filename(__name__, 'portAudioWin/_portaudio.cp35-win_amd64.pyd')
     #Mac PortAudio Include    
     elif sys.platform == 'darwin':
