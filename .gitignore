@@ -6,3 +6,8 @@
 .aux
 .toc
 .log
+
+#holds out client access token
+witConfig.py
+
+
