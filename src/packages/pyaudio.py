@@ -604,8 +604,17 @@ class Stream:
         if not self._is_input:
             raise IOError("Not input stream",
                           paCanNotReadFromAnOutputOnlyStream)
-
-        return pa.read_stream(self._stream, num_frames, exception_on_overflow)
+        """
+        (Jeremy)
+        Try-execpt block added for Mac compatibility. Mac requires exception_on_overflow
+        to be turned to Off. So, we check to make sure no other exceptions are thrown
+        """
+       try:
+           aux =  pa.read_stream(self._stream, num_frames, exception_on_overflow)
+        except IOError as ex:
+            if ex[1] != pa.paInputOverflowed:
+	            raise
+        aux = None
 
     def get_read_available(self):
         """

@@ -91,7 +91,7 @@ def _gen(stream):
     num_silent = 0
     snd_started = False
     counter = 0
-    #ui.messageBox("Kora will begin listening when you click 'Okay'!")
+    # ui.messageBox("Kora will begin listening when you click 'Okay'!")
     i = 0
     data = []
 
