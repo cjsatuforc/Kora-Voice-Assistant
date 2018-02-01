@@ -7,27 +7,27 @@ import pprint
 import re
 import warnings
 
-from bson import SON, json_util
-from bson.code import Code
-import pymongo
-import pymongo.errors
-from pymongo.common import validate_read_preference
-import six
+from ...bson import SON, json_util
+from ...bson.code import Code
+from ... import pymongo
+from ...pymongo import errors
+from ...pymongo.common import validate_read_preference
+from ... import six
 
-from mongoengine import signals
-from mongoengine.base import get_document
-from mongoengine.common import _import_class
-from mongoengine.connection import get_db
-from mongoengine.context_managers import switch_db
-from mongoengine.errors import (InvalidQueryError, LookUpError,
+from .. import signals
+from ..base import get_document
+from ..common import _import_class
+from ..connection import get_db
+from ..context_managers import switch_db
+from ..errors import (InvalidQueryError, LookUpError,
                                 NotUniqueError, OperationError)
-from mongoengine.python_support import IS_PYMONGO_3
-from mongoengine.queryset import transform
-from mongoengine.queryset.field_list import QueryFieldList
-from mongoengine.queryset.visitor import Q, QNode
+from ..python_support import IS_PYMONGO_3
+from . import transform
+from .field_list import QueryFieldList
+from .visitor import Q, QNode
 
 if IS_PYMONGO_3:
-    from pymongo.collection import ReturnDocument
+    from ...pymongo.collection import ReturnDocument
 
 
 __all__ = ('BaseQuerySet', 'DO_NOTHING', 'NULLIFY', 'CASCADE', 'DENY', 'PULL')

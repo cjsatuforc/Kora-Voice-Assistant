@@ -2,15 +2,15 @@ import operator
 import warnings
 import weakref
 
-from bson import DBRef, ObjectId, SON
-import pymongo
-import six
+from ...bson import DBRef, ObjectId, SON
+from ... import pymongo
+from ... import six
 
-from mongoengine.base.common import UPDATE_OPERATORS
-from mongoengine.base.datastructures import (BaseDict, BaseList,
+from ..base.common import UPDATE_OPERATORS
+from ..base.datastructures import (BaseDict, BaseList,
                                              EmbeddedDocumentList)
-from mongoengine.common import _import_class
-from mongoengine.errors import ValidationError
+from ..common import _import_class
+from ..errors import ValidationError
 
 
 __all__ = ('BaseField', 'ComplexBaseField', 'ObjectIdField',

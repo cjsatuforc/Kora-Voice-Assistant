@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-import six
+from .. import six
 
 __all__ = ('NotRegistered', 'InvalidDocumentError', 'LookUpError',
            'DoesNotExist', 'MultipleObjectsReturned', 'InvalidQueryError',

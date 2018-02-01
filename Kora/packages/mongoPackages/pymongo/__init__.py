@@ -74,26 +74,26 @@ def get_version_string():
 __version__ = version = get_version_string()
 """Current version of PyMongo."""
 
-from pymongo.collection import ReturnDocument
-from pymongo.common import (MIN_SUPPORTED_WIRE_VERSION,
+from .collection import ReturnDocument
+from .common import (MIN_SUPPORTED_WIRE_VERSION,
                             MAX_SUPPORTED_WIRE_VERSION)
-from pymongo.cursor import CursorType
-from pymongo.mongo_client import MongoClient
-from pymongo.mongo_replica_set_client import MongoReplicaSetClient
-from pymongo.operations import (IndexModel,
+from .cursor import CursorType
+from .mongo_client import MongoClient
+from .mongo_replica_set_client import MongoReplicaSetClient
+from .operations import (IndexModel,
                                 InsertOne,
                                 DeleteOne,
                                 DeleteMany,
                                 UpdateOne,
                                 UpdateMany,
                                 ReplaceOne)
-from pymongo.read_preferences import ReadPreference
-from pymongo.write_concern import WriteConcern
+from .read_preferences import ReadPreference
+from .write_concern import WriteConcern
 
 def has_c():
     """Is the C extension installed?"""
     try:
-        from pymongo import _cmessage
+        from . import _cmessage
         return True
     except ImportError:
         return False

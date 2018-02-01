@@ -3,20 +3,20 @@ import numbers
 from collections import Hashable
 from functools import partial
 
-from bson import ObjectId, json_util
-from bson.dbref import DBRef
-from bson.son import SON
-import pymongo
-import six
+from ...bson import ObjectId, json_util
+from ...bson.dbref import DBRef
+from ...bson.son import SON
+from ... import pymongo
+from ... import six
 
-from mongoengine import signals
-from mongoengine.base.common import get_document
-from mongoengine.base.datastructures import (BaseDict, BaseList,
+from .. import signals
+from ..base.common import get_document
+from ..base.datastructures import (BaseDict, BaseList,
                                              EmbeddedDocumentList,
                                              StrictDict)
-from mongoengine.base.fields import ComplexBaseField
-from mongoengine.common import _import_class
-from mongoengine.errors import (FieldDoesNotExist, InvalidDocumentError,
+from ..base.fields import ComplexBaseField
+from ..common import _import_class
+from ..errors import (FieldDoesNotExist, InvalidDocumentError,
                                 LookUpError, OperationError, ValidationError)
 
 __all__ = ('BaseDocument', 'NON_FIELD_ERRORS')

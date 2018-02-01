@@ -18,13 +18,13 @@ import datetime
 
 from collections import deque
 
-from bson.py3compat import integer_types
-from pymongo import helpers
-from pymongo.errors import (AutoReconnect,
+from ..bson.py3compat import integer_types
+from . import helpers
+from .errors import (AutoReconnect,
                             InvalidOperation,
                             NotMasterError,
                             OperationFailure)
-from pymongo.message import (_convert_exception,
+from .message import (_convert_exception,
                              _CursorAddress,
                              _GetMore,
                              _RawBatchGetMore)

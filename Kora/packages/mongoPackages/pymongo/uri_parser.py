@@ -23,15 +23,15 @@ try:
 except ImportError:
     _HAVE_DNSPYTHON = False
 
-from bson.py3compat import PY3, string_type
+from ..bson.py3compat import PY3, string_type
 
 if PY3:
     from urllib.parse import unquote_plus
 else:
     from urllib import unquote_plus
 
-from pymongo.common import get_validated_options
-from pymongo.errors import ConfigurationError, InvalidURI
+from .common import get_validated_options
+from .errors import ConfigurationError, InvalidURI
 
 
 SCHEME = 'mongodb://'

@@ -10,6 +10,7 @@ from .kora_modules import nlp
 from .kora_modules import fusion_execute_intent
 from .kora_modules import text_to_speech
 from .kora_modules import user_interface
+from .Services import interactionService as interLogger
 
 _app = adsk.core.Application.cast(None)
 _ui = adsk.core.UserInterface.cast(None)

@@ -18,8 +18,8 @@ import datetime
 
 from collections import MutableMapping, namedtuple
 
-from bson.py3compat import string_type
-from bson.binary import (ALL_UUID_REPRESENTATIONS,
+from .py3compat import string_type
+from .binary import (ALL_UUID_REPRESENTATIONS,
                          PYTHON_LEGACY,
                          UUID_REPRESENTATION_NAMES)
 

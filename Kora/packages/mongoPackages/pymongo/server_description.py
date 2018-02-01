@@ -14,10 +14,10 @@
 
 """Represent one server the driver is connected to."""
 
-from bson import EPOCH_NAIVE
-from pymongo.server_type import SERVER_TYPE
-from pymongo.ismaster import IsMaster
-from pymongo.monotonic import time as _time
+from ..bson import EPOCH_NAIVE
+from .server_type import SERVER_TYPE
+from .ismaster import IsMaster
+from .monotonic import time as _time
 
 
 def _total_seconds(delta):

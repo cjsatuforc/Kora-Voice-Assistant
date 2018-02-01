@@ -34,13 +34,13 @@ try:
 except ImportError:
     _SELECT_ERROR = OSError
 
-from pymongo import helpers, message
-from pymongo.common import MAX_MESSAGE_SIZE
-from pymongo.errors import (AutoReconnect,
+from . import helpers, message
+from .common import MAX_MESSAGE_SIZE
+from .errors import (AutoReconnect,
                             NotMasterError,
                             OperationFailure,
                             ProtocolError)
-from pymongo.message import _OpReply
+from .message import _OpReply
 
 
 _UNPACK_HEADER = struct.Struct("<iiii").unpack

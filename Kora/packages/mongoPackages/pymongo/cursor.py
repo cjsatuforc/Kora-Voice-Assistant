@@ -20,27 +20,27 @@ import warnings
 
 from collections import deque
 
-from bson import RE_TYPE
-from bson.code import Code
-from bson.py3compat import (iteritems,
+from ..bson import RE_TYPE
+from ..bson.code import Code
+from ..bson.py3compat import (iteritems,
                             integer_types,
                             string_type)
-from bson.son import SON
-from pymongo import helpers
-from pymongo.common import validate_boolean, validate_is_mapping
-from pymongo.collation import validate_collation_or_none
-from pymongo.errors import (AutoReconnect,
+from ..bson.son import SON
+from . import helpers
+from .common import validate_boolean, validate_is_mapping
+from .collation import validate_collation_or_none
+from .errors import (AutoReconnect,
                             ConnectionFailure,
                             InvalidOperation,
                             NotMasterError,
                             OperationFailure)
-from pymongo.message import (_convert_exception,
+from .message import (_convert_exception,
                              _CursorAddress,
                              _GetMore,
                              _RawBatchGetMore,
                              _Query,
                              _RawBatchQuery)
-from pymongo.read_preferences import ReadPreference
+from .read_preferences import ReadPreference
 
 _QUERY_OPTIONS = {
     "tailable_cursor": 2,

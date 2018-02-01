@@ -17,7 +17,7 @@
 .. _collations: http://userguide.icu-project.org/collation/concepts
 """
 
-from pymongo import common
+from . import common
 
 
 class CollationStrength(object):

@@ -16,13 +16,13 @@
 
 import threading
 
-from bson.objectid import ObjectId
-from pymongo import common, monitor, pool
-from pymongo.common import LOCAL_THRESHOLD_MS, SERVER_SELECTION_TIMEOUT
-from pymongo.errors import ConfigurationError
-from pymongo.topology_description import TOPOLOGY_TYPE
-from pymongo.pool import PoolOptions
-from pymongo.server_description import ServerDescription
+from ..bson.objectid import ObjectId
+from . import common, monitor, pool
+from .common import LOCAL_THRESHOLD_MS, SERVER_SELECTION_TIMEOUT
+from .errors import ConfigurationError
+from .topology_description import TOPOLOGY_TYPE
+from .pool import PoolOptions
+from .server_description import ServerDescription
 
 
 class TopologySettings(object):

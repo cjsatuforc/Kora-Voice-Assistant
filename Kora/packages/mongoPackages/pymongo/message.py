@@ -24,18 +24,18 @@ import datetime
 import random
 import struct
 
-import bson
-from bson import CodecOptions
-from bson.codec_options import DEFAULT_CODEC_OPTIONS
-from bson.py3compat import b, StringIO
-from bson.son import SON
+from ..bson import *
+from ..bson import CodecOptions
+from ..bson.codec_options import DEFAULT_CODEC_OPTIONS
+from ..bson.py3compat import b, StringIO
+from ..bson.son import SON
 
 try:
-    from pymongo import _cmessage
+    from . import _cmessage
     _use_c = True
 except ImportError:
     _use_c = False
-from pymongo.errors import (ConfigurationError,
+from .errors import (ConfigurationError,
                             CursorNotFound,
                             DocumentTooLarge,
                             ExecutionTimeout,
@@ -43,8 +43,8 @@ from pymongo.errors import (ConfigurationError,
                             NotMasterError,
                             OperationFailure,
                             ProtocolError)
-from pymongo.read_concern import DEFAULT_READ_CONCERN
-from pymongo.read_preferences import ReadPreference
+from .read_concern import DEFAULT_READ_CONCERN
+from .read_preferences import ReadPreference
 
 
 MAX_INT32 = 2147483647

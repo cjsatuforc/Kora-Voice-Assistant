@@ -1,11 +1,11 @@
 import itertools
 import weakref
 
-from bson import DBRef
-import six
+from ...bson import DBRef
+from ... import six
 
-from mongoengine.common import _import_class
-from mongoengine.errors import DoesNotExist, MultipleObjectsReturned
+from ..common import _import_class
+from ..errors import DoesNotExist, MultipleObjectsReturned
 
 __all__ = ('BaseDict', 'BaseList', 'EmbeddedDocumentList', 'LazyReference')
 

@@ -1,12 +1,12 @@
 import warnings
 
-import six
+from ... import six
 
-from mongoengine.base.common import _document_registry
-from mongoengine.base.fields import BaseField, ComplexBaseField, ObjectIdField
-from mongoengine.common import _import_class
-from mongoengine.errors import InvalidDocumentError
-from mongoengine.queryset import (DO_NOTHING, DoesNotExist,
+from ..base.common import _document_registry
+from ..base.fields import BaseField, ComplexBaseField, ObjectIdField
+from ..common import _import_class
+from ..errors import InvalidDocumentError
+from ..queryset import (DO_NOTHING, DoesNotExist,
                                   MultipleObjectsReturned,
                                   QuerySetManager)
 

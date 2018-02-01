@@ -24,9 +24,9 @@ def _import_class(cls_name):
 
     # Field Classes
     if not _field_list_cache:
-        from mongoengine.fields import __all__ as fields
+        from .fields import __all__ as fields
         _field_list_cache.extend(fields)
-        from mongoengine.base.fields import __all__ as fields
+        from .base.fields import __all__ as fields
         _field_list_cache.extend(fields)
 
     field_classes = _field_list_cache
@@ -35,19 +35,19 @@ def _import_class(cls_name):
     deref_classes = ('DeReference',)
 
     if cls_name == 'BaseDocument':
-        from mongoengine.base import document as module
+        from .base import document as module
         import_classes = ['BaseDocument']
     elif cls_name in doc_classes:
-        from mongoengine import document as module
+        from . import document as module
         import_classes = doc_classes
     elif cls_name in field_classes:
-        from mongoengine import fields as module
+        from . import fields as module
         import_classes = field_classes
     elif cls_name in queryset_classes:
-        from mongoengine import queryset as module
+        from . import queryset as module
         import_classes = queryset_classes
     elif cls_name in deref_classes:
-        from mongoengine import dereference as module
+        from . import dereference as module
         import_classes = deref_classes
     else:
         raise ValueError('No import set for: ' % cls_name)

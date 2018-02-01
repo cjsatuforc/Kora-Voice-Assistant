@@ -1,7 +1,7 @@
-import six
+from ... import six
 
-from mongoengine.errors import OperationError
-from mongoengine.queryset.base import (BaseQuerySet, CASCADE, DENY, DO_NOTHING,
+from ..errors import OperationError
+from .base import (BaseQuerySet, CASCADE, DENY, DO_NOTHING,
                                        NULLIFY, PULL)
 
 __all__ = ('QuerySet', 'QuerySetNoCache', 'DO_NOTHING', 'NULLIFY', 'CASCADE',

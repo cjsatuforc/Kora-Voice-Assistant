@@ -18,10 +18,10 @@ import collections
 import sys
 import traceback
 
-from bson.py3compat import string_type, iteritems, itervalues
-from bson.son import SON
-from pymongo import ASCENDING
-from pymongo.errors import (CursorNotFound,
+from ..bson.py3compat import string_type, iteritems, itervalues
+from ..bson.son import SON
+from . import ASCENDING
+from .errors import (CursorNotFound,
                             DuplicateKeyError,
                             ExecutionTimeout,
                             NotMasterError,

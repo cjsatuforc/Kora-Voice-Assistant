@@ -16,7 +16,7 @@
 """
 import collections
 
-from bson.py3compat import string_type, PY3, text_type
+from .py3compat import string_type, PY3, text_type
 
 
 class Code(str):

@@ -19,7 +19,7 @@ import threading
 import time
 import weakref
 
-from pymongo.monotonic import time as _time
+from .monotonic import time as _time
 
 
 class PeriodicExecutor(object):

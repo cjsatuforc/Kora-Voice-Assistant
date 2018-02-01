@@ -4,11 +4,11 @@
 # other modules should import directly from the top-level module (e.g.
 # `from mongoengine.base import BaseDocument`). This approach is cleaner and
 # also helps with cyclical import errors.
-from mongoengine.base.common import *
-from mongoengine.base.datastructures import *
-from mongoengine.base.document import *
-from mongoengine.base.fields import *
-from mongoengine.base.metaclasses import *
+from .common import *
+from .datastructures import *
+from .document import *
+from .fields import *
+from .metaclasses import *
 
 __all__ = (
     # common

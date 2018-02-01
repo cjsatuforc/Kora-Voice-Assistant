@@ -29,12 +29,12 @@ except ImportError:
         pass
 
 
-from bson import DEFAULT_CODEC_OPTIONS
-from bson.py3compat import imap, itervalues, _unicode, integer_types
-from bson.son import SON
-from pymongo import auth, helpers, thread_util, __version__
-from pymongo.common import MAX_MESSAGE_SIZE, ORDERED_TYPES
-from pymongo.errors import (AutoReconnect,
+from ..bson import DEFAULT_CODEC_OPTIONS
+from ..bson.py3compat import imap, itervalues, _unicode, integer_types
+from ..bson.son import SON
+from . import auth, helpers, thread_util, __version__
+from .common import MAX_MESSAGE_SIZE, ORDERED_TYPES
+from .errors import (AutoReconnect,
                             ConnectionFailure,
                             ConfigurationError,
                             InvalidOperation,
@@ -42,15 +42,15 @@ from pymongo.errors import (AutoReconnect,
                             NetworkTimeout,
                             NotMasterError,
                             OperationFailure)
-from pymongo.ismaster import IsMaster
-from pymongo.monotonic import time as _time
-from pymongo.network import (command,
+from .ismaster import IsMaster
+from .monotonic import time as _time
+from .network import (command,
                              receive_message,
                              SocketChecker)
-from pymongo.read_preferences import ReadPreference
-from pymongo.server_type import SERVER_TYPE
+from .read_preferences import ReadPreference
+from .server_type import SERVER_TYPE
 # Always use our backport so we always have support for IP address matching
-from pymongo.ssl_match_hostname import match_hostname, CertificateError
+from .ssl_match_hostname import match_hostname, CertificateError
 
 # For SNI support. According to RFC6066, section 3, IPv4 and IPv6 literals are
 # not permitted for SNI hostname.

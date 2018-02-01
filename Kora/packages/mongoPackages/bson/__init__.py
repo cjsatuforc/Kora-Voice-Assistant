@@ -76,35 +76,35 @@ import uuid
 from codecs import (utf_8_decode as _utf_8_decode,
                     utf_8_encode as _utf_8_encode)
 
-from bson.binary import (Binary, OLD_UUID_SUBTYPE,
+from .binary import (Binary, OLD_UUID_SUBTYPE,
                          JAVA_LEGACY, CSHARP_LEGACY,
                          UUIDLegacy)
-from bson.code import Code
-from bson.codec_options import (
+from .code import Code
+from .codec_options import (
     CodecOptions, DEFAULT_CODEC_OPTIONS, _raw_document_class)
-from bson.dbref import DBRef
-from bson.decimal128 import Decimal128
-from bson.errors import (InvalidBSON,
+from .dbref import DBRef
+from .decimal128 import Decimal128
+from .errors import (InvalidBSON,
                          InvalidDocument,
                          InvalidStringData)
-from bson.int64 import Int64
-from bson.max_key import MaxKey
-from bson.min_key import MinKey
-from bson.objectid import ObjectId
-from bson.py3compat import (b,
+from .int64 import Int64
+from .max_key import MaxKey
+from .min_key import MinKey
+from .objectid import ObjectId
+from .py3compat import (b,
                             PY3,
                             iteritems,
                             text_type,
                             string_type,
                             reraise)
-from bson.regex import Regex
-from bson.son import SON, RE_TYPE
-from bson.timestamp import Timestamp
-from bson.tz_util import utc
+from .regex import Regex
+from .son import SON, RE_TYPE
+from .timestamp import Timestamp
+from .tz_util import utc
 
 
 try:
-    from bson import _cbson
+    from . import _cbson
     _USE_C = True
 except ImportError:
     _USE_C = False

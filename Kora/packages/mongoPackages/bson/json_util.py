@@ -122,25 +122,25 @@ if sys.version_info[:2] == (2, 6):
 else:
     import json
 
-from pymongo.errors import ConfigurationError
+from ..pymongo.errors import ConfigurationError
 
-import bson
-from bson import EPOCH_AWARE, EPOCH_NAIVE, RE_TYPE, SON
-from bson.binary import (Binary, JAVA_LEGACY, CSHARP_LEGACY, OLD_UUID_SUBTYPE,
+from . import *
+from . import EPOCH_AWARE, EPOCH_NAIVE, RE_TYPE, SON
+from .binary import (Binary, JAVA_LEGACY, CSHARP_LEGACY, OLD_UUID_SUBTYPE,
                          UUID_SUBTYPE)
-from bson.code import Code
-from bson.codec_options import CodecOptions
-from bson.dbref import DBRef
-from bson.decimal128 import Decimal128
-from bson.int64 import Int64
-from bson.max_key import MaxKey
-from bson.min_key import MinKey
-from bson.objectid import ObjectId
-from bson.py3compat import (PY3, iteritems, integer_types, string_type,
+from .code import Code
+from .codec_options import CodecOptions
+from .dbref import DBRef
+from .decimal128 import Decimal128
+from .int64 import Int64
+from .max_key import MaxKey
+from .min_key import MinKey
+from .objectid import ObjectId
+from .py3compat import (PY3, iteritems, integer_types, string_type,
                             text_type)
-from bson.regex import Regex
-from bson.timestamp import Timestamp
-from bson.tz_util import utc
+from .regex import Regex
+from .timestamp import Timestamp
+from .tz_util import utc
 
 
 try:

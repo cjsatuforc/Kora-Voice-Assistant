@@ -14,7 +14,7 @@
 
 """Result class definitions."""
 
-from pymongo.errors import InvalidOperation
+from .errors import InvalidOperation
 
 
 class _WriteResult(object):

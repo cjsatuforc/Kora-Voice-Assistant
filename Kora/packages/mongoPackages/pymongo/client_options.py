@@ -14,18 +14,18 @@
 
 """Tools to parse mongo client options."""
 
-from bson.codec_options import _parse_codec_options
-from pymongo.auth import _build_credentials_tuple
-from pymongo.common import validate_boolean
-from pymongo import common
-from pymongo.errors import ConfigurationError
-from pymongo.monitoring import _EventListeners
-from pymongo.pool import PoolOptions
-from pymongo.read_concern import ReadConcern
-from pymongo.read_preferences import (make_read_preference,
+from ..bson.codec_options import _parse_codec_options
+from .auth import _build_credentials_tuple
+from .common import validate_boolean
+from . import common
+from .errors import ConfigurationError
+from .monitoring import _EventListeners
+from .pool import PoolOptions
+from .read_concern import ReadConcern
+from .read_preferences import (make_read_preference,
                                       read_pref_mode_from_name)
-from pymongo.ssl_support import get_ssl_context
-from pymongo.write_concern import WriteConcern
+from .ssl_support import get_ssl_context
+from .write_concern import WriteConcern
 
 
 def _parse_credentials(username, password, database, options):

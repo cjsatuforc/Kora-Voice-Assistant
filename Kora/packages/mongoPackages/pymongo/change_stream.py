@@ -16,7 +16,7 @@
 
 import copy
 
-from pymongo.errors import (ConnectionFailure, CursorNotFound,
+from .errors import (ConnectionFailure, CursorNotFound,
                             InvalidOperation, PyMongoError)
 
 

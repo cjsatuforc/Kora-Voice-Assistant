@@ -18,38 +18,38 @@ import collections
 import datetime
 import warnings
 
-from bson.code import Code
-from bson.objectid import ObjectId
-from bson.py3compat import (_unicode,
+from ..bson.code import Code
+from ..bson.objectid import ObjectId
+from ..bson.py3compat import (_unicode,
                             integer_types,
                             string_type)
-from bson.raw_bson import RawBSONDocument
-from bson.codec_options import CodecOptions
-from bson.son import SON
-from pymongo import (common,
+from ..bson.raw_bson import RawBSONDocument
+from ..bson.codec_options import CodecOptions
+from ..bson.son import SON
+from . import (common,
                      helpers,
                      message)
-from pymongo.bulk import BulkOperationBuilder, _Bulk
-from pymongo.command_cursor import CommandCursor, RawBatchCommandCursor
-from pymongo.common import ORDERED_TYPES
-from pymongo.collation import validate_collation_or_none
-from pymongo.change_stream import ChangeStream
-from pymongo.cursor import Cursor, RawBatchCursor
-from pymongo.errors import (BulkWriteError,
+from .bulk import BulkOperationBuilder, _Bulk
+from .command_cursor import CommandCursor, RawBatchCommandCursor
+from .common import ORDERED_TYPES
+from .collation import validate_collation_or_none
+from .change_stream import ChangeStream
+from .cursor import Cursor, RawBatchCursor
+from .errors import (BulkWriteError,
                             ConfigurationError,
                             InvalidName,
                             OperationFailure)
-from pymongo.helpers import (_check_write_command_response,
+from .helpers import (_check_write_command_response,
                              _raise_last_error)
-from pymongo.message import _UNICODE_REPLACE_CODEC_OPTIONS
-from pymongo.operations import IndexModel
-from pymongo.read_preferences import ReadPreference
-from pymongo.results import (BulkWriteResult,
+from .message import _UNICODE_REPLACE_CODEC_OPTIONS
+from .operations import IndexModel
+from .read_preferences import ReadPreference
+from .results import (BulkWriteResult,
                              DeleteResult,
                              InsertOneResult,
                              InsertManyResult,
                              UpdateResult)
-from pymongo.write_concern import WriteConcern
+from .write_concern import WriteConcern
 
 _NO_OBJ_ERROR = "No matching object found"
 _UJOIN = u"%s.%s"

@@ -1,12 +1,12 @@
-from bson import DBRef, SON
-import six
+from ..bson import DBRef, SON
+import ..six
 
-from mongoengine.base import (BaseDict, BaseList, EmbeddedDocumentList,
+from .base import (BaseDict, BaseList, EmbeddedDocumentList,
                               TopLevelDocumentMetaclass, get_document)
-from mongoengine.connection import get_db
-from mongoengine.document import Document, EmbeddedDocument
-from mongoengine.fields import DictField, ListField, MapField, ReferenceField
-from mongoengine.queryset import QuerySet
+from .connection import get_db
+from .document import Document, EmbeddedDocument
+from .fields import DictField, ListField, MapField, ReferenceField
+from .queryset import QuerySet
 
 
 class DeReference(object):

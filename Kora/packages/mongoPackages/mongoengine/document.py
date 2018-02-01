@@ -1,22 +1,22 @@
 import re
 import warnings
 
-from bson.dbref import DBRef
-import pymongo
-from pymongo.read_preferences import ReadPreference
-import six
+from ..bson.dbref import DBRef
+from .. import pymongo
+from ..pymongo.read_preferences import ReadPreference
+from .. import six
 
-from mongoengine import signals
-from mongoengine.base import (BaseDict, BaseDocument, BaseList,
+from . import signals
+from .base import (BaseDict, BaseDocument, BaseList,
                               DocumentMetaclass, EmbeddedDocumentList,
                               TopLevelDocumentMetaclass, get_document)
-from mongoengine.common import _import_class
-from mongoengine.connection import DEFAULT_CONNECTION_NAME, get_db
-from mongoengine.context_managers import switch_collection, switch_db
-from mongoengine.errors import (InvalidDocumentError, InvalidQueryError,
+from .common import _import_class
+from .connection import DEFAULT_CONNECTION_NAME, get_db
+from .context_managers import switch_collection, switch_db
+from .errors import (InvalidDocumentError, InvalidQueryError,
                                 SaveConditionError)
-from mongoengine.python_support import IS_PYMONGO_3
-from mongoengine.queryset import (NotUniqueError, OperationError,
+from .python_support import IS_PYMONGO_3
+from .queryset import (NotUniqueError, OperationError,
                                   QuerySet, transform)
 
 __all__ = ('Document', 'EmbeddedDocument', 'DynamicDocument',

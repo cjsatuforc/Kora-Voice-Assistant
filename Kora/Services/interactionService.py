@@ -1,16 +1,15 @@
 # import mongoengine
-from Mongo.Interaction import Interaction 
-from Mongo import mongoSetup as mongoSetup
-import uuid
+from ..Mongo.Interaction import Interaction 
+from ..Mongo import mongoSetup as mongoSetup
 
 mongoSetup.globalInit() #connecting to db
 
 def logInteraction(data):
 	newInteraction = Interaction()
 
-
-	newInteraction.user = uuid.uuid4()
 	if(data):
+		if('user' in data):
+			newInteraction.user = data['user']
 		if('userCommand' in data):
 			newInteraction.userCommand = data['userCommand']
 		if('commandIntent' in data):
@@ -26,6 +25,6 @@ def logInteraction(data):
 
 	newInteraction.save()
 
-def findUserInserts(chosenAPICallQuery):
-    inserts = Interaction.objects(chosenAPICall=chosenAPICallQuery)
+def findUserInserts(userID):
+    inserts = Interaction.objects(user=userID)
     return list(inserts)

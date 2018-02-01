@@ -1,21 +1,22 @@
 # Import submodules so that we can expose their __all__
-from mongoengine import connection
-from mongoengine import document
-from mongoengine import errors
-from mongoengine import fields
-from mongoengine import queryset
-from mongoengine import signals
+
+from . import connection
+from . import document
+from . import errors
+from . import fields
+from . import queryset
+from . import signals
 
 # Import everything from each submodule so that it can be accessed via
 # mongoengine, e.g. instead of `from mongoengine.connection import connect`,
 # users can simply use `from mongoengine import connect`, or even
 # `from mongoengine import *` and then `connect('testdb')`.
-from mongoengine.connection import *
-from mongoengine.document import *
-from mongoengine.errors import *
-from mongoengine.fields import *
-from mongoengine.queryset import *
-from mongoengine.signals import *
+from .connection import *
+from .document import *
+from .errors import *
+from .fields import *
+from .queryset import *
+from .signals import *
 
 
 __all__ = (list(document.__all__) + list(fields.__all__) +

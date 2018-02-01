@@ -39,21 +39,21 @@ import weakref
 
 from collections import defaultdict
 
-from bson.codec_options import DEFAULT_CODEC_OPTIONS
-from bson.py3compat import (integer_types,
+from ..bson.codec_options import DEFAULT_CODEC_OPTIONS
+from ..bson.py3compat import (integer_types,
                             string_type)
-from bson.son import SON
-from pymongo import (common,
+from ..bson.son import SON
+from . import (common,
                      database,
                      helpers,
                      message,
                      periodic_executor,
                      uri_parser,
                      client_session)
-from pymongo.client_options import ClientOptions
-from pymongo.command_cursor import CommandCursor
-from pymongo.cursor_manager import CursorManager
-from pymongo.errors import (AutoReconnect,
+from .client_options import ClientOptions
+from .command_cursor import CommandCursor
+from .cursor_manager import CursorManager
+from .errors import (AutoReconnect,
                             ConfigurationError,
                             ConnectionFailure,
                             InvalidOperation,
@@ -62,14 +62,14 @@ from pymongo.errors import (AutoReconnect,
                             OperationFailure,
                             PyMongoError,
                             ServerSelectionTimeoutError)
-from pymongo.read_preferences import ReadPreference
-from pymongo.server_selectors import (writable_preferred_server_selector,
+from .read_preferences import ReadPreference
+from .server_selectors import (writable_preferred_server_selector,
                                       writable_server_selector)
-from pymongo.server_type import SERVER_TYPE
-from pymongo.topology import Topology
-from pymongo.topology_description import TOPOLOGY_TYPE
-from pymongo.settings import TopologySettings
-from pymongo.write_concern import WriteConcern
+from .server_type import SERVER_TYPE
+from .topology import Topology
+from .topology_description import TOPOLOGY_TYPE
+from .settings import TopologySettings
+from .write_concern import WriteConcern
 
 
 class MongoClient(common.BaseObject):

@@ -16,12 +16,12 @@
 
 from collections import namedtuple
 
-from pymongo import common
-from pymongo.errors import ConfigurationError
-from pymongo.read_preferences import ReadPreference
-from pymongo.server_description import ServerDescription
-from pymongo.server_selectors import Selection
-from pymongo.server_type import SERVER_TYPE
+from . import common
+from .errors import ConfigurationError
+from .read_preferences import ReadPreference
+from .server_description import ServerDescription
+from .server_selectors import Selection
+from .server_type import SERVER_TYPE
 
 
 TOPOLOGY_TYPE = namedtuple('TopologyType', ['Single', 'ReplicaSetNoPrimary',

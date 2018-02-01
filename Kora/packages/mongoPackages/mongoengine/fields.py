@@ -8,10 +8,10 @@ import uuid
 import warnings
 from operator import itemgetter
 
-from bson import Binary, DBRef, ObjectId, SON
-import gridfs
-import pymongo
-import six
+from ..bson import Binary, DBRef, ObjectId, SON
+from .. import gridfs
+from .. import pymongo
+from .. import six
 
 try:
     import dateutil
@@ -21,18 +21,18 @@ else:
     import dateutil.parser
 
 try:
-    from bson.int64 import Int64
+    from ..bson.int64 import Int64
 except ImportError:
     Int64 = int
 
-from mongoengine.base import (BaseDocument, BaseField, ComplexBaseField,
+from .base import (BaseDocument, BaseField, ComplexBaseField,
                               GeoJsonBaseField, LazyReference, ObjectIdField,
                               get_document)
-from mongoengine.connection import DEFAULT_CONNECTION_NAME, get_db
-from mongoengine.document import Document, EmbeddedDocument
-from mongoengine.errors import DoesNotExist, InvalidQueryError, ValidationError
-from mongoengine.python_support import StringIO
-from mongoengine.queryset import DO_NOTHING, QuerySet
+from .connection import DEFAULT_CONNECTION_NAME, get_db
+from .document import Document, EmbeddedDocument
+from .errors import DoesNotExist, InvalidQueryError, ValidationError
+from .python_support import StringIO
+from .queryset import DO_NOTHING, QuerySet
 
 try:
     from PIL import Image, ImageOps
@@ -1145,7 +1145,7 @@ class CachedReferenceField(BaseField):
         super(CachedReferenceField, self).__init__(**kwargs)
 
     def start_listener(self):
-        from mongoengine import signals
+        from . import signals
 
         signals.post_save.connect(self.on_document_pre_save,
                                   sender=self.document_type)

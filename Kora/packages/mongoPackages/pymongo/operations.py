@@ -14,9 +14,9 @@
 
 """Operation class definitions."""
 
-from pymongo.common import validate_boolean, validate_is_mapping, validate_list
-from pymongo.collation import validate_collation_or_none
-from pymongo.helpers import _gen_index_name, _index_document, _index_list
+from .common import validate_boolean, validate_is_mapping, validate_list
+from .collation import validate_collation_or_none
+from .helpers import _gen_index_name, _index_document, _index_list
 
 
 class InsertOne(object):

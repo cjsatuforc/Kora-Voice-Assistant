@@ -16,10 +16,10 @@
 
 from collections import Mapping
 
-from bson.py3compat import integer_types
-from pymongo import max_staleness_selectors
-from pymongo.errors import ConfigurationError
-from pymongo.server_selectors import (member_with_tags_server_selector,
+from ..bson.py3compat import integer_types
+from . import max_staleness_selectors
+from .errors import ConfigurationError
+from .server_selectors import (member_with_tags_server_selector,
                                       secondary_with_tags_server_selector)
 
 

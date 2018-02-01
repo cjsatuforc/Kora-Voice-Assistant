@@ -1,7 +1,7 @@
-from pymongo import MongoClient, ReadPreference, uri_parser
-import six
+from ..pymongo import MongoClient, ReadPreference, uri_parser
+from .. import six
 
-from mongoengine.python_support import IS_PYMONGO_3
+from .python_support import IS_PYMONGO_3
 
 __all__ = ['MongoEngineConnectionError', 'connect', 'register_connection',
            'DEFAULT_CONNECTION_NAME']
@@ -12,7 +12,7 @@ DEFAULT_CONNECTION_NAME = 'default'
 if IS_PYMONGO_3:
     READ_PREFERENCE = ReadPreference.PRIMARY
 else:
-    from pymongo import MongoReplicaSetClient
+    from ..pymongo import MongoReplicaSetClient
     READ_PREFERENCE = False
 
 

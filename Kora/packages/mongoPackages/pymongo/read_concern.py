@@ -14,7 +14,7 @@
 
 """Tools for working with read concerns."""
 
-from bson.py3compat import string_type
+from ..bson.py3compat import string_type
 
 
 class ReadConcern(object):

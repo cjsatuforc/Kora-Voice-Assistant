@@ -1,5 +1,5 @@
-from mongoengine.common import _import_class
-from mongoengine.connection import DEFAULT_CONNECTION_NAME, get_db
+from .common import _import_class
+from .connection import DEFAULT_CONNECTION_NAME, get_db
 
 
 __all__ = ('switch_db', 'switch_collection', 'no_dereference',

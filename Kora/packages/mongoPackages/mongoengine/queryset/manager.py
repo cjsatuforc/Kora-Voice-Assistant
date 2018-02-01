@@ -1,5 +1,5 @@
 from functools import partial
-from mongoengine.queryset.queryset import QuerySet
+from .queryset import QuerySet
 
 __all__ = ('queryset_manager', 'QuerySetManager')
 

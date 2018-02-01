@@ -22,16 +22,16 @@ The :mod:`gridfs` package is an implementation of GridFS on top of
 
 from collections import Mapping
 
-from gridfs.errors import NoFile
-from gridfs.grid_file import (GridIn,
+from .errors import NoFile
+from .grid_file import (GridIn,
                               GridOut,
                               GridOutCursor,
                               DEFAULT_CHUNK_SIZE)
-from pymongo import (ASCENDING,
+from ..pymongo import (ASCENDING,
                      DESCENDING)
-from pymongo.common import UNAUTHORIZED_CODES, validate_string
-from pymongo.database import Database
-from pymongo.errors import ConfigurationError, OperationFailure
+from ..pymongo.common import UNAUTHORIZED_CODES, validate_string
+from ..pymongo.database import Database
+from ..pymongo.errors import ConfigurationError, OperationFailure
 
 
 class GridFS(object):

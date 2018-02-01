@@ -19,18 +19,18 @@ import os
 
 from hashlib import md5
 
-from bson.son import SON
-from bson.binary import Binary
-from bson.objectid import ObjectId
-from bson.py3compat import text_type, StringIO
-from gridfs.errors import CorruptGridFile, FileExists, NoFile
-from pymongo import ASCENDING
-from pymongo.collection import Collection
-from pymongo.cursor import Cursor
-from pymongo.errors import (ConfigurationError,
+from ..bson.son import SON
+from ..bson.binary import Binary
+from ..bson.objectid import ObjectId
+from ..bson.py3compat import text_type, StringIO
+from .errors import CorruptGridFile, FileExists, NoFile
+from ..pymongo import ASCENDING
+from ..pymongo.collection import Collection
+from ..pymongo.cursor import Cursor
+from ..pymongo.errors import (ConfigurationError,
                             DuplicateKeyError,
                             OperationFailure)
-from pymongo.read_preferences import ReadPreference
+from ..pymongo.read_preferences import ReadPreference
 
 try:
     _SEEK_SET = os.SEEK_SET

@@ -1,9 +1,9 @@
-import mongoengine
+from ..packages.mongoPackages import mongoengine
 import datetime
 
 class Interaction(mongoengine.Document):
     postingDate    = mongoengine.DateTimeField(default=datetime.datetime.now)
-    user           = mongoengine.UUIDField(required=True)
+    user           = mongoengine.StringField(required=True)
     userCommand    = mongoengine.StringField()
     commandIntent  = mongoengine.StringField()
     context        = mongoengine.DictField()

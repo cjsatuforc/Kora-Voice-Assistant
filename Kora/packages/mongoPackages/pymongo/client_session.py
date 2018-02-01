@@ -46,12 +46,12 @@ Classes
 import collections
 import uuid
 
-from bson.binary import Binary
-from bson.int64 import Int64
-from bson.timestamp import Timestamp
+from ..bson.binary import Binary
+from ..bson.int64 import Int64
+from ..bson.timestamp import Timestamp
 
-from pymongo import monotonic
-from pymongo.errors import InvalidOperation
+from . import monotonic
+from .errors import InvalidOperation
 
 
 class SessionOptions(object):

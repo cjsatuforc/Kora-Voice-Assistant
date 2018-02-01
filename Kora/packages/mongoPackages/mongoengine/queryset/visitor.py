@@ -1,7 +1,7 @@
 import copy
 
-from mongoengine.errors import InvalidQueryError
-from mongoengine.queryset import transform
+from ..errors import InvalidQueryError
+from . import transform
 
 __all__ = ('Q',)
 

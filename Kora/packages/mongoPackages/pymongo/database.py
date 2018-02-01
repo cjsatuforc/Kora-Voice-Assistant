@@ -16,22 +16,22 @@
 
 import warnings
 
-from bson.code import Code
-from bson.codec_options import DEFAULT_CODEC_OPTIONS
-from bson.dbref import DBRef
-from bson.py3compat import iteritems, string_type, _unicode
-from bson.son import SON
-from pymongo import auth, common
-from pymongo.collection import Collection
-from pymongo.command_cursor import CommandCursor
-from pymongo.errors import (CollectionInvalid,
+from ..bson.code import Code
+from ..bson.codec_options import DEFAULT_CODEC_OPTIONS
+from ..bson.dbref import DBRef
+from ..bson.py3compat import iteritems, string_type, _unicode
+from ..bson.son import SON
+from . import auth, common
+from .collection import Collection
+from .command_cursor import CommandCursor
+from .errors import (CollectionInvalid,
                             ConfigurationError,
                             InvalidName,
                             OperationFailure)
-from pymongo.message import _first_batch
-from pymongo.read_preferences import ReadPreference
-from pymongo.son_manipulator import SONManipulator
-from pymongo.write_concern import WriteConcern
+from .message import _first_batch
+from .read_preferences import ReadPreference
+from .son_manipulator import SONManipulator
+from .write_concern import WriteConcern
 
 
 _INDEX_REGEX = {"name": {"$regex": "^(?!.*\$)"}}

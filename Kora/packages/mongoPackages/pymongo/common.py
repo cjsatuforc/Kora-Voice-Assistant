@@ -19,19 +19,19 @@ import collections
 import datetime
 import warnings
 
-from bson import SON
-from bson.binary import (STANDARD, PYTHON_LEGACY,
+from ..bson import SON
+from ..bson.binary import (STANDARD, PYTHON_LEGACY,
                          JAVA_LEGACY, CSHARP_LEGACY)
-from bson.codec_options import CodecOptions
-from bson.py3compat import string_type, integer_types, iteritems
-from bson.raw_bson import RawBSONDocument
-from pymongo.auth import MECHANISMS
-from pymongo.errors import ConfigurationError
-from pymongo.monitoring import _validate_event_listeners
-from pymongo.read_concern import ReadConcern
-from pymongo.read_preferences import _MONGOS_MODES, _ServerMode
-from pymongo.ssl_support import validate_cert_reqs
-from pymongo.write_concern import WriteConcern
+from ..bson.codec_options import CodecOptions
+from ..bson.py3compat import string_type, integer_types, iteritems
+from ..bson.raw_bson import RawBSONDocument
+from .auth import MECHANISMS
+from .errors import ConfigurationError
+from .monitoring import _validate_event_listeners
+from .read_concern import ReadConcern
+from .read_preferences import _MONGOS_MODES, _ServerMode
+from .ssl_support import validate_cert_reqs
+from .write_concern import WriteConcern
 
 try:
     from collections import OrderedDict

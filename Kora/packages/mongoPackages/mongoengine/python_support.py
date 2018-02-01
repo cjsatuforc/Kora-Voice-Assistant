@@ -2,8 +2,8 @@
 Helper functions, constants, and types to aid with Python v2.7 - v3.x and
 PyMongo v2.7 - v3.x support.
 """
-import pymongo
-import six
+from .. import pymongo
+from .. import six
 
 
 if pymongo.version_tuple[0] < 3:

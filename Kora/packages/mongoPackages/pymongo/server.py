@@ -18,9 +18,9 @@ import contextlib
 
 from datetime import datetime
 
-from pymongo.message import _convert_exception
-from pymongo.response import Response, ExhaustResponse
-from pymongo.server_type import SERVER_TYPE
+from .message import _convert_exception
+from .response import Response, ExhaustResponse
+from .server_type import SERVER_TYPE
 
 
 class Server(object):

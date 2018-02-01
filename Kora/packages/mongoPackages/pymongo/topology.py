@@ -20,28 +20,28 @@ import threading
 import warnings
 import weakref
 
-from bson.py3compat import itervalues, PY3
+from ..bson.py3compat import itervalues, PY3
 if PY3:
     import queue as Queue
 else:
     import Queue
 
-from pymongo import common
-from pymongo import periodic_executor
-from pymongo.pool import PoolOptions
-from pymongo.topology_description import (updated_topology_description,
+from . import common
+from . import periodic_executor
+from .pool import PoolOptions
+from .topology_description import (updated_topology_description,
                                           TOPOLOGY_TYPE,
                                           TopologyDescription)
-from pymongo.errors import ServerSelectionTimeoutError, ConfigurationError
-from pymongo.monotonic import time as _time
-from pymongo.server import Server
-from pymongo.server_selectors import (any_server_selector,
+from .errors import ServerSelectionTimeoutError, ConfigurationError
+from .monotonic import time as _time
+from .server import Server
+from .server_selectors import (any_server_selector,
                                       arbiter_server_selector,
                                       secondary_server_selector,
                                       readable_server_selector,
                                       writable_server_selector,
                                       Selection)
-from pymongo.client_session import _ServerSessionPool
+from .client_session import _ServerSessionPool
 
 
 def process_events_queue(queue_ref):
