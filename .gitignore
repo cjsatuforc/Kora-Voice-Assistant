@@ -10,4 +10,6 @@
 #holds out client access token
 witConfig.py
 
-
+#ignore caches and .pyc
+.pyc
+__pycache__
