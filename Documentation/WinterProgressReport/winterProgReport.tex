@@ -12,6 +12,8 @@
 \usepackage{geometry}
 \geometry{textheight=9.5in, textwidth=7in}
 \setlength\parindent{0pt}
+\setlength{\parskip}{1em}
+
 
 \usepackage{tabu}
 \usepackage{longtable}
@@ -25,10 +27,10 @@
 \def \CapstoneTeamNumber{8}
 \def \GroupMemberOne{Austin Row}
 \def \GroupMemberTwo{Jeremy Fischer}
-\def \GroupMemberThree{James Stallkamp}
 \def \CapstoneProjectName{Kora}
 \def \CapstoneSponsorCompany{Autodesk}
-\def \CapstoneSponsorPerson{Anand Karyekar}
+\def \CapstoneSponsorPersonOne{Anand Karyekar}
+\def \CapstoneSponsorPersonTwo{Jennifer Talaga}
 \def \botname{Kora\xspace}
 
 % 2. Uncomment the appropriate line below so that the document type works
@@ -65,7 +67,8 @@
             {\large Prepared for}\par
             \Huge \CapstoneSponsorCompany\par
             \vspace{5pt}
-            {\Large\NameSigPair{\CapstoneSponsorPerson}\par}
+            {\Large\NameSigPair{\CapstoneSponsorPersonOne}\par
+            \Large\NameSigPair{\CapstoneSponsorPersonTwo}\par}
             {\large Prepared by }\par
             Group\CapstoneTeamNumber\par
             % 5. comment out the line below this one if you do not wish to name your team
@@ -74,7 +77,6 @@
             {\Large
                 \NameSigPair{\GroupMemberOne}\par
                 \NameSigPair{\GroupMemberTwo}\par
-                \NameSigPair{\GroupMemberThree}\par
             }
             \vspace{20pt}
         }
@@ -134,12 +136,18 @@
 			5) Kora running as an Add-In in the background (contrast to it being a script)
 	\end{comment} 
 	
+	%1
 	Kora's MongoDB database will have two collections: Interaction and Logs.
 	The Interaction collection is setup and functioning.
 	The Interaction collection stores documents describing each user-Kora interaction.
 	Each document contains the posting date, the user's Fusion ID number, the JSON returned by WIT.ai, the chosen Fusion API call, Fusion's execution status, and the time it took from when the user stopped talking to the time Fusion finished executing the command.
 	
+	%3
+	Kora can now execute the two commands we marked as our baseline commands in the requirements document: rotate and save.
+	A user can activate Kora and say any permutation of "Rotate $<direction> <number>$ degrees", "Rotate $<number>$ degrees $<direction>$", "Save this", or "Save as $<name>$."
+	When the user is finished speaking Kora successfully executes the command within Fusion.
 	
+
 
 
 \section{Obstacles}
@@ -152,7 +160,36 @@
 				5) Add-Ins are run in own environment containing only default python modules (non-default python modules not supported, must self include)
 		\end{comment} 
 	
-
+		%1
+		As per our requirements, Kora must function on both Windows and MacOS.
+		This has caused subtle issues that were challenging to track down.
+		An issue in particular was PyAudio; the library used to stream audio to Wit.ai.
+		Kora and PyAudio worked fine on Windows.
+		However, when trying to run Kora on Mac, Fusion would crash without error messages or hints, just crash.
+		After some thorough investigating we found that the problem occurred because the default microphone sample rate on Windows is significantly lower than the default sample rate on Mac.
+		This caused an overflow in PyAudio's streaming buffer resulting in Fusion crashing.
+		
+		%4
+		Kora being a voice assistant means it must be able to execute commands quickly.
+		Users don't want to command Kora to do something and have to wait approximately seven and a half seconds before she accomplishes it.
+		Unfortunately, that is Kora's current average speed.
+		The problem is Wit.ai, our natural language processor, is on the web and Kora has to make HTTP calls to it.
+		This on average takes seven and a half seconds.
+		We are looking for a local alternative, but Wit.ai has all of Kora's learnings on their server which can only be accessed via HTTP.
+		
+		
+		%5
+		Fusion Add-Ins and Scripts are run in their own environment.
+		They have their own version of Python and their own Python modules.
+		This has been tricky for two reasons.
+		The first is pathing.
+		Since Fusion's Python only looks for libraries within its own environment we either have to append the directory of our newly downloaded library to the system path, causing a bloated system path variable, or change all of the absolute import paths in the library to relative imports.
+		To abide by good practices we have been changing the import paths to relative paths.
+		The second is library versions.
+		We have ran into issues where we pip install a library and it downloads the Python 2.7 version since that is what we are using locally, and when we move the library into Fusion, Fusion crashes because Fusion's built in Python is Python 3.3.
+		
+		
+		
 \section{Moving Forward}
 
 	
@@ -163,6 +200,18 @@
 			3) Handle silence from user (don't trying processing commands when user has not given one)
 			4) Implement unit tests
 	\end{comment}
+
+		%1
+		As mentioned above in the Obstacles section, we have a big problem with Kora's latency due to HTTP calls to Wit.ai's servers.
+		Our top priority moving forward is to bring the natural language processing library to our local machine.
+		A significant amount of our code is built upon the response returned from Wit.ai, so the sooner we have a solution to our latency problem the smaller headache we will have further down the road when refactoring our code to work with the solution.
+		We aren't aware if this is possible with Wit.ai.
+		We may need to pivot and use a new library altogether.
+		
+		%4
+		Moving forward we will also be integrating a suite of unit tests to verify Kora's robustness.
+		These tests will help us locate any weak points or subtle bugs which reside in Kora, as well as ensure that any new code submitted doesn't introduce any new issues.
+		
 
 
 \section{Photos}

@@ -3,6 +3,6 @@
 \contentsline {subsection}{\numberline {2.1}Main Goals}{2}
 \contentsline {subsection}{\numberline {2.2}Stretch Goals}{2}
 \contentsline {section}{\numberline {3}Project Progress}{2}
-\contentsline {section}{\numberline {4}Obstacles}{2}
-\contentsline {section}{\numberline {5}Moving Forward}{2}
-\contentsline {section}{\numberline {6}Photos}{2}
+\contentsline {section}{\numberline {4}Obstacles}{3}
+\contentsline {section}{\numberline {5}Moving Forward}{3}
+\contentsline {section}{\numberline {6}Photos}{3}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  10 FEB 2018 12:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  10 FEB 2018 15:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -667,18 +667,18 @@ Package: ltcaption 2013/06/09 v1.4-94 longtable captions (AR)
 Excluding comment 'comment') (./winterProgReport.aux)
 \openout1 = `winterProgReport.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
 
 -- Lines per column: 39 (approximate, difference = 14.73578pt).
 (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -785,34 +785,34 @@ Package epstopdf Info: Source file: <coe_v_spot1.eps>
 (epstopdf)                    size: 31221 bytes
 (epstopdf)             Command: <repstopdf --outfile=coe_v_spot1-eps-converted-
 to.pdf coe_v_spot1.eps>
-(epstopdf)             \includegraphics on input line 54.
+(epstopdf)             \includegraphics on input line 56.
 Package epstopdf Info: Output file is already uptodate.
 
 <coe_v_spot1-eps-converted-to.pdf, id=4, 346.29375pt x 436.63126pt>
 File: coe_v_spot1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use coe_v_spot1-eps-converted-to.pdf>
-Package pdftex.def Info: coe_v_spot1-eps-converted-to.pdf used on input line 54
+Package pdftex.def Info: coe_v_spot1-eps-converted-to.pdf used on input line 56
 .
 (pdftex.def)             Requested size: 90.26146pt x 113.81102pt.
 LaTeX Font Info:    Font shape `OT1/ppl/bx/sc' in size <20.075> not available
-(Font)              Font shape `OT1/ppl/b/sc' tried instead on input line 63.
+(Font)              Font shape `OT1/ppl/b/sc' tried instead on input line 65.
 LaTeX Font Info:    Font shape `OT1/ppl/bx/sc' in size <24.09> not available
-(Font)              Font shape `OT1/ppl/b/sc' tried instead on input line 63.
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 81.
+(Font)              Font shape `OT1/ppl/b/sc' tried instead on input line 65.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 83.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <8.03> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 81.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 83.
  [1{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./co
 e_v_spot1-eps-converted-to.pdf>]
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <11.04124> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 88.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 90.
 LaTeX Font Info:    Font shape `OT1/phv/bx/sc' in size <11.04124> not available
 
-(Font)              Font shape `OT1/phv/b/sc' tried instead on input line 88.
+(Font)              Font shape `OT1/phv/b/sc' tried instead on input line 90.
  (./winterProgReport.toc
 LaTeX Font Info:    Calculating math sizes for size <9.53561> on input line 3.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -827,15 +827,15 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
  [1]
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <9.53561> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 105.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 107.
  Excluding 'comment' comment.
-Excluding 'comment' comment. Excluding 'comment' comment. [2
+Excluding 'comment' comment. [2
 
-]
+] Excluding 'comment' comment. [3]
 (./winterProgReport.aux) ) 
 Here is how much of TeX's memory you used:
  16810 strings out of 492995
- 344556 string characters out of 6132704
+ 344567 string characters out of 6132704
  400557 words of memory out of 5000000
  20023 multiletter control sequences out of 15000+600000
  44011 words of font info for 90 fonts, out of 8000000 for 9000
@@ -843,15 +843,16 @@ Here is how much of TeX's memory you used:
  62i,6n,65p,438b,196s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/b
 ase/8r.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/c
-msy7.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pf
-b></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr
-/local/texlive/2017/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/
-texlive/2017/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on winterProgReport.pdf (3 pages, 106229 bytes).
+mmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+sy7.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb
+></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/
+local/texlive/2017/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/t
+exlive/2017/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/
+2017/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on winterProgReport.pdf (4 pages, 119249 bytes).
 PDF statistics:
- 53 PDF objects out of 1000 (max. 8388607)
- 37 compressed objects within 1 object stream
+ 60 PDF objects out of 1000 (max. 8388607)
+ 42 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  18 words of extra memory for PDF output out of 10000 (max. 10000000)
 
