@@ -1,30 +1,67 @@
-# import mongoengine
+from functools import wraps
+import time
+
+
+import adsk.core, adsk.fusion, adsk.cam, traceback
+_app = adsk.core.Application.get()
+_ui = _app.userInterface
+
 from ..Mongo.Interaction import Interaction 
 from ..Mongo import mongoSetup as mongoSetup
 
+
 mongoSetup.globalInit() #connecting to db
 
-def logInteraction(data):
-	newInteraction = Interaction()
+def logInteraction():
+	def decorator(executeFusion):
+		@wraps(executeFusion)
+		def wrapper(*args, **kwargs):
+			try:
+				# extract the dictionary from *args
+				argToFusion = args[0]
+				#get new Interaction object
+				newInteraction = Interaction()
 
-	if(data):
-		if('user' in data):
-			newInteraction.user = data['user']
-		if('userCommand' in data):
-			newInteraction.userCommand = data['userCommand']
-		if('commandIntent' in data):
-			newInteraction.commandIntent = data['commandIntent']
-		if('context' in data):
-			newInteraction.context = data['context']
-		if('chosenAPICall' in data):
-			newInteraction.chosenAPICall = data['chosenAPICall']
-		if('fusionResponse' in data):
-			newInteraction.fusionResponse = data['fusionResponse']
-		if('execTime' in data):
-			newInteraction.execTime = data['execTime']
+				if 'user' in argToFusion:
+					newInteraction.user = argToFusion['user']
+					del argToFusion['user'] #take it out to store pure witResponse
 
-	newInteraction.save()
+				#Gather the time it took wit to respond
+				totalExecuteTime = 0
+				if 'witStreamTime' in argToFusion:
+					totalExecuteTime += float(argToFusion['witStreamTime'])
+					del argToFusion['witStreamTime'] #take it out to store pure witResponse
+					
+				#Store the wit response free of added JSON
+				newInteraction.witResponse = argToFusion
 
-def findUserInserts(userID):
-    inserts = Interaction.objects(user=userID)
-    return list(inserts)
+				#Time Fuison execute command
+				before = time.time()
+				
+				executeResponse = executeFusion(*args, **kwargs)
+				
+				after = time.time()
+				
+				#Store total execution time
+				totalExecuteTime += float(after - before)
+				newInteraction.execTime = totalExecuteTime
+
+				#Extract from executeResponse
+				if 'chosenAPICall'in executeResponse:
+					newInteraction.chosenAPICall = executeResponse['chosenAPICall']
+				if 'fusionExecutionStatus' in executeResponse:
+					newInteraction.fusionExecutionStatus = executeResponse['fusionExecutionStatus']
+				
+				try:
+					newInteraction.save()
+				except:
+					_ui.messageBox('InteractionService Failed to Save'.format(traceback.format_exc()))
+
+				#return the execution status like originally
+				return executeResponse['fusionExecutionStatus']
+			except:
+				NONFATAL_ERROR = 2
+				return NONFATAL_ERROR
+
+		return wrapper
+	return decorator

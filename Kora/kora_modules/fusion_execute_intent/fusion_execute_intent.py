@@ -1,35 +1,48 @@
-import adsk.core, adsk.fusion, adsk.cam, traceback
 from array import array
 import struct
 import json
 import requests
 import math
 
+import adsk.core, adsk.fusion, adsk.cam, traceback
+from ...Services.interactionService import logInteraction
+
+
+
+@logInteraction()
 def executeCommand(command, callback=None):
+    _app = adsk.core.Application.get()
+    _ui = _app.userInterface
     distilledCommand = _distillCommand(command)
     thresholdConfidence = 0.79
     intents = _getFromCommand(distilledCommand, ['intent'])
     executionStatus = executionStatusCodes.UNRECOGNIZED_COMMAND
+    chosenAPICall = None
 
     def shouldExecute(intentName):
         confidence = None
         for key, intentData in intents.items():
             if intentData['value'] == intentName:
                 confidence = intentData['confidence']
-        return not confidence is None and confidence >= thresholdConfidence
+        return not (confidence is None) and (confidence >= thresholdConfidence)
 
     if shouldExecute('rotate'):
+        chosenAPICall = 'rotate'
         executionStatus = _rotate(_getFromCommand(distilledCommand, ['rotation_quantity', 'direction', 'value']),
                 _getFromCommand(distilledCommand, ['rotation_quantity', 'number', 'value']),
                 _getFromCommand(distilledCommand, ['rotation_quantity', 'units', 'value'])
                 )
     if shouldExecute('save'):
+        chosenAPICall = 'save'
         executionStatus = _save(_getFromCommand(distilledCommand, ['file_name']))
+    
+    # return to logInteraction decorator
+    returnDict = {'fusionExecutionStatus': executionStatus, 'chosenAPICall': chosenAPICall}
 
     if callback:
-        callback(executionStatus)
+        callback(returnDict)
 
-    return executionStatus
+    return returnDict
 
 class executionStatusCodes(object):
     FATAL_ERROR = 1 #For runtime errors/exceptions

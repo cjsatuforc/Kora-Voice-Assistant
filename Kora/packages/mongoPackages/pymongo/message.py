@@ -24,7 +24,7 @@ import datetime
 import random
 import struct
 
-from ..bson import *
+from .. import bson as bson
 from ..bson import CodecOptions
 from ..bson.codec_options import DEFAULT_CODEC_OPTIONS
 from ..bson.py3compat import b, StringIO

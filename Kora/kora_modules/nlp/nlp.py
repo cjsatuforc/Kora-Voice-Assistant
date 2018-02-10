@@ -1,10 +1,11 @@
-import adsk.core, adsk.fusion, adsk.cam, traceback
 from array import array
 import struct
 import sys
 import json
 import requests
 import math
+
+import adsk.core, adsk.fusion, adsk.cam, traceback
 from ...packages import pyaudio
 from ... import witConfig
 
@@ -38,7 +39,13 @@ def streamAudio():
     stream.stop_stream()
     stream.close()
     pAudio.terminate()
-    return postResponse.json()
+
+    #capture the elapsed time for wit
+    witStreamTime = postResponse.elapsed.total_seconds()
+    returnResponse = postResponse.json()
+    returnResponse['witStreamTime'] = witStreamTime
+
+    return returnResponse
 
 ##########################################################################
 ##########################################################################
