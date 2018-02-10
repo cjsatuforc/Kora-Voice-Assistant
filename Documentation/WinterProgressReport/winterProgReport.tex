@@ -19,6 +19,7 @@
 \usepackage{xspace}
 \usepackage{pgfgantt}
 \usepackage{subcaption}
+\usepackage{comment}
 
 % 1. Fill in these details
 \def \CapstoneTeamNumber{8}
@@ -103,32 +104,65 @@
 \section{Goals}
 	\subsection{Main Goals}
 		\begin{itemize}
-			 \item{
-			 	Kora will allow the user to perform tasks in Fusion via a voice interface.
-				Each voice command given by the user will be mapped to a specific task which will then be performed in the open Fusion design.}
-			\item{
-				All interactions with Kora will be logged for debugging and future development purposes.}
+			 \item
+		 	Kora will allow the user to perform tasks in Fusion via a voice interface.
+			Each voice command given by the user will be mapped to a specific task which will then be performed in the open Fusion design.
+			
+			\item
+			All interactions with Kora will be logged for debugging and future development purposes.
+			
 		\end{itemize}
 	\subsection{Stretch Goals}
 		\begin{itemize}
-			\item{
-				Kora will periodically ask the user questions regarding why they have performed specific tasks.
-				The questions asked by Kora will pertain to specific predefined contexts.}
-			\item{
-			Kora will record user responses and save a transcript along with contextual information.}
-			\item{
-				User responses to interview questions will be used to try to predict and assist with future user actions.}
+			\item
+			Kora will periodically ask the user questions regarding why they have performed specific tasks.
+			The questions asked by Kora will pertain to specific predefined contexts.
+			
+			\item
+			Kora will record user responses and save a transcript along with contextual information.
+			
+			\item
+			User responses to interview questions will be used to try to predict and assist with future user actions.
 		\end{itemize}
 \section{Project Progress}
-	%TODO%
+	\begin{comment} 
+		---Features---
+			1) Logging/MongoDB
+			2) Streaming to WIT/WIT response
+			3) Supported Commands (i.e. rotate, though it'd be easy to put save in there before this is due)
+			4) Automatic WIT training via Selenium
+			5) Kora running as an Add-In in the background (contrast to it being a script)
+	\end{comment} 
+	
+	Kora's MongoDB database will have two collections: Interaction and Logs.
+	The Interaction collection is setup and functioning.
+	The Interaction collection stores documents describing each user-Kora interaction.
+	Each document contains the posting date, the user's Fusion ID number, the JSON returned by WIT.ai, the chosen Fusion API call, Fusion's execution status, and the time it took from when the user stopped talking to the time Fusion finished executing the command.
+	
 	
 
+
 \section{Obstacles}
-	%TODO%
+		\begin{comment} 
+			---Obstacles---
+				1) Platform Compatibility
+				2) Rotate is not natively supported in Fusion API
+				3) Add-Ins are run in same thread as Fusion Editor and thus block use of editor when running
+				4) WIT response latency is currently too high
+				5) Add-Ins are run in own environment containing only default python modules (non-default python modules not supported, must self include)
+		\end{comment} 
 	
 
 \section{Moving Forward}
-	%TODO%
+
+	
+	\begin{comment} 
+		--Moving Forward---
+		 	1) Reduce NLP latency (probably by implementing some form of NLP locally either through other open source library or own implementation)
+			2) Implement UI messages via some python GUI framework to alert user to status of command (understood and working, not understood, etc.)
+			3) Handle silence from user (don't trying processing commands when user has not given one)
+			4) Implement unit tests
+	\end{comment}
 
 
 \section{Photos}
