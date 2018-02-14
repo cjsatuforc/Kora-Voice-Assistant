@@ -126,6 +126,68 @@
 			\item
 			User responses to interview questions will be used to try to predict and assist with future user actions.
 		\end{itemize}
+
+\section{Obstacles}
+    \begin{comment} 
+        ---Obstacles---
+            1) Platform Compatibility
+            2) Rotate is not natively supported in Fusion API
+            3) Add-Ins are run in same thread as Fusion Editor and thus block use of editor when running
+            4) WIT response latency is currently too high
+            5) Add-Ins are run in own environment containing only default python modules (non-default python modules not supported, must self include)
+    \end{comment} 
+
+    %1
+    \subsection{Cross Platform Compatibility}
+    As per our requirements, Kora must function on both Windows and MacOS.
+    This has caused subtle issues that were challenging to track down.
+    An issue in particular was PyAudio, the library used to stream audio to Wit.ai.
+    Kora and PyAudio worked fine on Windows.
+    However, when trying to run Kora on Mac, Fusion would crash without error messages or hints, just crash.
+    After some thorough investigating we found that the problem occurred because the default microphone sample rate on Windows is significantly lower than the default sample rate on Mac.
+    This caused an overflow in PyAudio's streaming buffer resulting in Fusion crashing.
+    
+    %4
+    \subsection{Latency}
+    Kora being a voice assistant means it must be able to execute commands quickly.
+    Users don't want to command Kora to do something and have to wait approximately seven and a half seconds before she accomplishes it.
+    Unfortunately, that is Kora's current average speed.
+    The problem is Wit.ai, our natural language processor, is on the web and Kora has to make HTTP calls to it.
+    This on average takes seven and a half seconds.
+    We are looking for a local alternative, but Wit.ai has all of Kora's learnings on their server which can only be accessed via HTTP.
+    
+    
+    %5
+    \subsection{Using Non-Default Python Modules}
+    Fusion Add-Ins and Scripts are run in their own environment.
+    They have their own version of Python and their own Python modules.
+    This has been tricky for two reasons.
+    The first is pathing.
+    Since Fusion's Python only looks for libraries within its own environment we either have to append the directory of our newly downloaded library to the system path, causing a bloated system path variable, or change all of the absolute import paths in the library to relative imports.
+    To abide by good practices we have been changing the import paths to relative paths.
+    The second is library versions.
+    We have ran into issues where we pip install a library and it downloads the Python 2.7 version since that is what we are using locally, and when we move the library into Fusion, Fusion crashes because Fusion's built in Python is Python 3.3.
+
+    \subsection{Implementing Rotate via API}
+    One of the requirements of the project is that a user should be able to rotate their view in the editor via a voice command.
+    It was initially believed that the Fusion API would include a method specifically for rotating the view in the editor or rotating a specific object in the project by a specified magnitude.
+    In fact, no such functionality is present in the API and achieving this functionality required a slightly more in-depth exploration and use of the Fusion API than was initially anticipated.
+    Admittedly this issue arose from a lack of sufficient research into a core driver of the requirements of our project.
+    However, the functionality was eventually implemented.
+
+
+    \subsection{Parallelizing Add-Ins and the Fusion Editor}
+    Part of Kora’s requirements specify that the core functionality of receiving and acting on user voice commands is able to run continuously in the background in parallel with the user’s actions within the Fusion editor.
+    It never occurred to the team that the Fusion editor may not natively support running Add-Ins in a separate thread from the editor itself which is the case.
+    This meant that we were required to self-implement a work around that allowed Kora to run in the background as intended which was a task that we had not expected to have to complete.
+
+
+    \subsection{Using API in Parellelized Add-In}
+    Compounding the problem of the lack of native support for running Add-Ins in parallel with the Fusion editor was the fact that calling most Fusion API functions within a self-spawned thread results in the editor crashing.
+    This complicated the solution for achieving Kora’s continuous-listening functionality by requiring that listening for and recording a user’s voice commands occur in a self-spawned thread while acting on these commands must happen back in the main thread.
+    This was eventually solved and implemented using Custom events provided by the Fusion API as a work around for this well-known problem.
+
+
 \section{Project Progress}
 	\begin{comment} 
 		---Features---
@@ -136,63 +198,53 @@
 			5) Kora running as an Add-In in the background (contrast to it being a script)
 	\end{comment} 
 	
+    \subsection{Natural Language Processing of Speech Audio}
+    Kora’s intended functionality is driven by the ability to process and understand voice commands given by a user.
+    Thus, the ability to process natural language given in an audio format is crucial to achieving Kora’s desired functionality and was the first feature that was implemented.
+    As of the writing of this document, Kora can record a user speaking and can translate the recorded audio into one of several learned intents.
+    This is functionality is provided entirely by the free-to-use third-party natural language processor, WIT.
+    WIT is owned by Facebook and offers a an API that supports streaming audio data to one of their servers where the natural language processing is performed and after which an HTTP response with the derived data is returned.
+    It is this data that can then be used to interpret what should be triggered in the Fusion editor to enact the command given by the user.
+    The delay associated with making requests to the WIT servers is proving to be a significant factor in the unacceptable latency of program and thus it is likely that a different method will be used for Kora’s natural language processing in the final iteration of the project.
+ 
+    \subsection{Automated WIT Training via Selenium}
+    To resolve the issue of having to manually enter training data to train the underlying model used by WIT--a slow and tedious process--a script was developed which automates this process.
+    No API is offered to train WIT programmatically, so the script to automate this process relies on the Selenium testing module which provides ways to simulate a user interacting with a web browser.
+    This script navigates to Kora’s training page on WIT’s website using provided credentials of an existing account with access to the project.
+    From there, it takes training data that is generated through the tuning of several parameters in the script or explicitly given in the script and performs all of the necessary interactions with the browser to train WIT using the data.
+    This offers a drastically faster method for training WIT.
+    There are two issues with this, however.
+    One is that the script’s success relies on several aspects of WIT’s website not changing.
+    If the website is updated and specific entities in the HTML are changed, the script could break.
+    This is, however, the lesser of the two issues as fixing it would simply require making changes to some of the identifiers the script uses to route itself to the correct place.
+    The more serious problem is that since the project will likely end up replacing WIT with something faster for its language processing needs, the work done to create this script and obtain this functionality will be rendered useless.
+
+ 
+    \subsection{Running Kora Continuously in Background}
+    One of the goals for Kora is have the application continuously listening for voice commands in parallel with what user is doing in the Fusion editor.
+    Originally it was believed that Fusion would by default ran Add-Ins, and thus Kora, in their own threads and thus would not specifically require the implementation of anything in the application to enable running continuously in parallel with the editor.
+    However, upon discovering that Fusion actually runs Add-Ins on the same thread as the editor and thus blocks use of the editor while Add-Ins are running, Python’s default threading module was used to run Kora in the background and achieve the desired functionality.
+    In doing this, a new problem was realized.
+    The Fusion API and even some of Python’s modules that are being used in Kora cannot be used within a separate spawned thread without crashing the editor.
+    This issue necessitated the use of Fusion’s Custom events for executing code that could only be executed in the main thread without crashing the editor.
+    Using these events, it was possible to make Kora fire an event that returned control of the main thread back to the Add-In and executed the desired code with data sent from Kora’s spawned thread via the fired event.
+    After implementing this feature, Kora was able to continuously listen for commands in the background while the user interacted with the Fusion editor in the standard way.
+
 	%1
+    \subsection{User Interaction Logging with MongoDB}
 	Kora's MongoDB database will have two collections: Interaction and Logs.
 	The Interaction collection is setup and functioning.
 	The Interaction collection stores documents describing each user-Kora interaction.
 	Each document contains the posting date, the user's Fusion ID number, the JSON returned by WIT.ai, the chosen Fusion API call, Fusion's execution status, and the time it took from when the user stopped talking to the time Fusion finished executing the command.
 	
 	%3
+    \subsection{Supported Commands}
 	Kora can now execute the two commands we marked as our baseline commands in the requirements document: rotate and save.
 	A user can activate Kora and say any permutation of "Rotate $<direction> <number>$ degrees", "Rotate $<number>$ degrees $<direction>$", "Save this", or "Save as $<name>$."
 	When the user is finished speaking Kora successfully executes the command within Fusion.
 	
-
-
-
-\section{Obstacles}
-		\begin{comment} 
-			---Obstacles---
-				1) Platform Compatibility
-				2) Rotate is not natively supported in Fusion API
-				3) Add-Ins are run in same thread as Fusion Editor and thus block use of editor when running
-				4) WIT response latency is currently too high
-				5) Add-Ins are run in own environment containing only default python modules (non-default python modules not supported, must self include)
-		\end{comment} 
-	
-		%1
-		As per our requirements, Kora must function on both Windows and MacOS.
-		This has caused subtle issues that were challenging to track down.
-		An issue in particular was PyAudio; the library used to stream audio to Wit.ai.
-		Kora and PyAudio worked fine on Windows.
-		However, when trying to run Kora on Mac, Fusion would crash without error messages or hints, just crash.
-		After some thorough investigating we found that the problem occurred because the default microphone sample rate on Windows is significantly lower than the default sample rate on Mac.
-		This caused an overflow in PyAudio's streaming buffer resulting in Fusion crashing.
-		
-		%4
-		Kora being a voice assistant means it must be able to execute commands quickly.
-		Users don't want to command Kora to do something and have to wait approximately seven and a half seconds before she accomplishes it.
-		Unfortunately, that is Kora's current average speed.
-		The problem is Wit.ai, our natural language processor, is on the web and Kora has to make HTTP calls to it.
-		This on average takes seven and a half seconds.
-		We are looking for a local alternative, but Wit.ai has all of Kora's learnings on their server which can only be accessed via HTTP.
-		
-		
-		%5
-		Fusion Add-Ins and Scripts are run in their own environment.
-		They have their own version of Python and their own Python modules.
-		This has been tricky for two reasons.
-		The first is pathing.
-		Since Fusion's Python only looks for libraries within its own environment we either have to append the directory of our newly downloaded library to the system path, causing a bloated system path variable, or change all of the absolute import paths in the library to relative imports.
-		To abide by good practices we have been changing the import paths to relative paths.
-		The second is library versions.
-		We have ran into issues where we pip install a library and it downloads the Python 2.7 version since that is what we are using locally, and when we move the library into Fusion, Fusion crashes because Fusion's built in Python is Python 3.3.
-		
-		
 		
 \section{Moving Forward}
-
-	
 	\begin{comment} 
 		--Moving Forward---
 		 	1) Reduce NLP latency (probably by implementing some form of NLP locally either through other open source library or own implementation)
@@ -201,17 +253,28 @@
 			4) Implement unit tests
 	\end{comment}
 
-		%1
-		As mentioned above in the Obstacles section, we have a big problem with Kora's latency due to HTTP calls to Wit.ai's servers.
-		Our top priority moving forward is to bring the natural language processing library to our local machine.
-		A significant amount of our code is built upon the response returned from Wit.ai, so the sooner we have a solution to our latency problem the smaller headache we will have further down the road when refactoring our code to work with the solution.
-		We aren't aware if this is possible with Wit.ai.
-		We may need to pivot and use a new library altogether.
-		
-		%4
-		Moving forward we will also be integrating a suite of unit tests to verify Kora's robustness.
-		These tests will help us locate any weak points or subtle bugs which reside in Kora, as well as ensure that any new code submitted doesn't introduce any new issues.
-		
+    %1
+    \subsection{Improving Latency}
+    As mentioned above in the Obstacles section, we have a big problem with Kora's latency due to HTTP calls to Wit.ai's servers.
+    Our top priority moving forward is to bring the natural language processing library to our local machine.
+    A significant amount of our code is built upon the response returned from Wit.ai, so the sooner we have a solution to our latency problem the smaller headache we will have further down the road when refactoring our code to work with the solution.
+    We aren't aware if this is possible with Wit.ai.
+    We may need to pivot and use a new library altogether.
+    
+    %4
+    \subsection{Testing}
+    Moving forward we will also be integrating a suite of unit tests to verify Kora's robustness.
+    These tests will help us locate any weak points or subtle bugs which reside in Kora, as well as ensure that any new code submitted doesn't introduce any new issues.
+
+    \subsection{Implementing UI Messaging via GUI Framework}	
+    Currently the only way for Kora to send the user status messages such as “Command Received” or “Command Not Understood” in a graphical format is via the limited UI components provided by the Fusion API.
+    The functionality that these provide are intrusive to the user experience and are not intended to be used as a way to incorporate attractive communication with the user in Add-Ins.
+    To achieve the informative yet unobtrusive user experience that we desire for Kora, we will look to integrate a Python GUI framework to provide the necessary messaging to the user.
+
+    \subsection{Handling Periods of Silence}	
+    Currently Kora does not recover from timeouts when listening for commands from the user.
+    This is a problem as it is likely that there will be times when a user is using the application in during which they have extended periods of silence and do not interact with Kora.
+    Looking forward we will aim to implement a way for Kora to handle these periods of silence without issue.
 
 
 \section{Photos}
