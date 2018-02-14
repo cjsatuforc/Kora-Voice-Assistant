@@ -1,3 +1,8 @@
+
+# 1. To run type python voiceToWav.py
+# 2. speak
+# 3. curl -XPOST 'https://api.wit.ai/speech?v=20160526' -i -L -H "Authorization: Bearer JV6WLCBDLTXIJUAOQ2MOOFBR7DUZQON7" -H "Content-Type: audio/wav" --data-binary "@output.wav"
+
 import pyaudio
 import wave
 
@@ -6,7 +11,7 @@ FORMAT = pyaudio.paInt16
 CHANNELS = 2
 RATE = 44100
 RECORD_SECONDS = 5
-WAVE_OUTPUT_FILENAME = "rotate.wav"
+WAVE_OUTPUT_FILENAME = "output.wav"
 
 p = pyaudio.PyAudio()
 
