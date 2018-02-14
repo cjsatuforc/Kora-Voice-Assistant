@@ -6,6 +6,9 @@
 *.aux
 *.toc
 *.log
+*.dvi
+*.ps
+*.blg
 
 #holds out client access token
 witConfig.py
