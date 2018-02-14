@@ -112,8 +112,10 @@ class KoraThread(threading.Thread):
             while not self.stopped:
                 witResponse = nlp.streamAudio() #returns wit response json
                 # witResponse = json.loads('{ "user": "lkhfdfghj", "witStreamTime": 7.23 , "_text" : "rotate left ninety degrees", "entities" : {"rotation_quantity" : [ {"suggested" : "true","entities" : {"direction" : [ {"confidence" : 1,"value" : "left","type" : "value"} ],"number" : [ {"confidence" : 1,"value" : 90,"type" : "value"} ],"units" : [ {"confidence" : 1,"value" : "degrees","type" : "value"} ]},"confidence" : 0.99542741620353,"value" : "left ninety degrees","type" : "value"} ],"intent" : [ {"confidence" : 0.99996046020482,"value" : "rotate"} ]},"msg_id" : "0TrwCOw1505FzxI2g"}')
+                # witResponse = json.loads('{ "user": "lkhfdfghj", "witStreamTime": 7.23 , "_text" : "save as my draft", "entities" : { "file_name" : [ { "suggested" : true, "confidence" : 0.98071145335626, "value" : "my draft", "type" : "value" } ], "intent" : [ { "confidence" : 0.99830154994535, "value" : "save_as" } ] }, "msg_id" : "0Aa2dmne4WUv2l7iV" }')
                 if not self.stopped:    #in case deactivation occurs while streamAudio is running
                     _app.fireCustomEvent(customEventIDWitResponse, json.dumps(witResponse))
+                    # self.stopped = True;
         except:
             _app.fireCustomEvent(customEventIDPopupMessage, json.dumps({'type': 'error', 'title': 'Kora Failed', 'message': 'Failed:\n{}'.format(traceback.format_exc())}))
         
@@ -130,9 +132,9 @@ class KoraThread(threading.Thread):
 # #        Kora Thread Handlers          # #
 # ##########################################
 
-#
-    # Kora Thread Activate Handler
-#
+##
+##    * Kora Thread Activate Handler
+##
 class KoraActivatedHandler(adsk.core.CommandCreatedEventHandler):
     def __init__(self):
         super().__init__()
@@ -165,9 +167,9 @@ class KoraActivatedHandler(adsk.core.CommandCreatedEventHandler):
         except:
             if _ui:
                 _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
-#
-    # Kora Thread Deactive Handler
-#
+##
+##    * Kora Thread Deactive Handler
+##
 class KoraDeactivatedHandler(adsk.core.CommandCreatedEventHandler):
     def __init__(self):
         super().__init__()
@@ -194,9 +196,9 @@ class KoraDeactivatedHandler(adsk.core.CommandCreatedEventHandler):
         except:
             if _ui:
                 _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
-#
-    # Kora Thread Destroyed Handler
-#
+##
+##    * Kora Thread Destroyed Handler
+##
 class KoraDestroyedHandler(adsk.core.CommandEventHandler):
     def __init__(self):
         super().__init__()
@@ -221,10 +223,10 @@ class KoraDestroyedHandler(adsk.core.CommandEventHandler):
 # #        Module Handlers          # #
 # #####################################
  
-#
-    # NLP (WIT) Response Handler
-    # In charge of calling Fusion's Handler
-#
+##
+##   * NLP (WIT) Response Handler
+##   * In charge of calling Fusion's Handler
+##
 class NLPResponseHandler(adsk.core.CustomEventHandler):
     def __init__(self):
         super().__init__()
@@ -241,9 +243,9 @@ class NLPResponseHandler(adsk.core.CustomEventHandler):
         except:
             if _ui:
                 _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
-#
-    # Fusion 360 Pop-Up message box Handler
-#
+##
+##    * Fusion 360 Pop-Up message box Handler
+##
 class PopupMessageHandler(adsk.core.CustomEventHandler):
     def __init__(self):
         super().__init__()
