@@ -9,6 +9,8 @@
 \usepackage{color}
 \usepackage{url}
 
+
+
 \usepackage{geometry}
 \geometry{textheight=9.5in, textwidth=7in}
 \setlength\parindent{0pt}
@@ -82,6 +84,8 @@
         }
         \begin{abstract}
 			This document outlines the production progress of Kora from December 2017 through the middle of February 2018, including obstacles and steps moving forward.
+			The biggest obstacle we've encountered is Kora's latency time, which is roughly seven and a half seconds.
+			Because of that, moving forward our top priority is to reduce Kora's latency.
         \end{abstract}     
     \end{singlespace}
 \end{titlepage}
@@ -166,21 +170,29 @@
 	    \subsubsection{Cross Platform Compatibility}
 		    As per our requirements, Kora must function on both Windows and MacOS.
 		    This has caused subtle issues that were challenging to track down.
-		    An issue in particular was PyAudio, the library used to stream audio to Wit.ai.
-		    Kora and PyAudio worked fine on Windows.
-		    However, when trying to run Kora on Mac, Fusion would crash without error messages or hints, just crash.
-		    After some thorough investigating we found that the problem occurred because the default microphone sample rate on Windows is significantly lower than the default sample rate on Mac.
-		    This caused an overflow in PyAudio's streaming buffer resulting in Fusion crashing.
+		    An issue in particular was PyAudio, the library used to stream audio to WIT.ai.
+		    Kora with PyAudio worked fine on Windows, however, when trying to run Kora with Pyaudio on Mac Fusion would crash without error messages or hints.
+		    The rainbow spinning wheel on Mac would start spinning and three seconds later Fusion would shut down.
+		    After some thorough investigating we found that the problem occurred for two reasons.
+		    The first was Pyaudio's use of the shared object file called\_portaudio.so.
+		    The version of \_portaudio.so we had in the repo was meant solely for the Windows operating system.
+		   	The second was that the default microphone sample rate on Windows is significantly lower than the default sample rate on Mac.
+		   	This meant that with Pyaudio's default values for chunk size, sample rate, and number of channels, Mac's microphone would fill up PyAudio's streaming buffer used to record the user's voice faster than Pyaudio was ready for.
+		    This caused an overflow which resulted in Fusion crashing.
+		    
+		    We assume that subtle issues will continue to arise in making Kora cross platform compatible.
+		    Moving forward we will do more incremental testing so if there is another issue we will be able to pinpoint the source of it much faster. 
 	    
 	    %4
 	    \subsubsection{Latency}
 		    Kora being a voice assistant means it must be able to execute commands quickly.
-		    Users don't want to command Kora to do something and have to wait approximately seven and a half seconds before she accomplishes it.
-		    Unfortunately, that is Kora's current average speed.
-		    The problem is Wit.ai, our natural language processor, is on the web and Kora has to make HTTP calls to it.
+		    Users won't use Kora if they command her to do something and then have to wait approximately seven and a half seconds before she accomplishes it.
+		    Unfortunately, this is Kora's current average speed.
+		    The problem lies within WIT.ai, the library we are using as our natural language processor.
+		    WIT is on the web and Kora has to stream the user's speech to it via HTTP calls.
 		    This on average takes seven and a half seconds.
-		    We are looking for a local alternative, but Wit.ai has all of Kora's learnings on their server which can only be accessed via HTTP.
-    
+		    Currently we don't exactly know why it's taking so long, but we have a few guesses.
+		    
     
 	    %5
 	    \subsubsection{Using Non-Default Python Modules}
@@ -189,38 +201,81 @@
 		    This has been tricky for two reasons.
 		    The first is pathing.
 		    Since Fusion's Python only looks for libraries within its own environment we either have to append the directory of our newly downloaded library to the system path, causing a bloated system path variable, or change all of the absolute import paths in the library to relative imports.
-		    To abide by good practices we have been changing the import paths to relative paths.
+		    It's not possible to move the libraries Kora uses to Fusion's Python folder, because that folder gets rewritten each update.
+		    To abide by good practices we have been changing the import paths to relative paths, but moving forward that may not be plausible depending on the size of the new libraries we include.
 		    The second is library versions.
-		    We have ran into issues where we pip install a library and it downloads the Python 2.7 version since that is what we are using locally, and when we move the library into Fusion, Fusion crashes because Fusion's built in Python is Python 3.3.
+		    We have ran into issues where we pip install a library via our command line and it downloads the Python 2.7 version since that is what we are using locally.
+		    Then, when we move the library into Kora Fusion crashes because Fusion's built in Python is Python 3.3 which isn't always compatible with libraries built for Python 2.7.
 
 		
 	\subsection{Project Progress}
 		%1
 		\subsubsection{User Interaction Logging with MongoDB}
 			Kora's MongoDB database will have two collections: Interaction and Logs.
-			The Interaction collection is setup and functioning.
+			The Interaction collection is setup and functioning locally.
 			The Interaction collection stores documents describing each user-Kora interaction.
 			Each document contains the posting date, the user's Fusion ID number, the JSON returned by WIT.ai, the chosen Fusion API call, Fusion's execution status, and the time it took from when the user stopped talking to the time Fusion finished executing the command.
 			
+			
 		%3
 		\subsubsection{Supported Commands}
-			Kora can now execute the two commands we marked as our baseline commands in the requirements document: rotate and save.
-			A user can activate Kora and say any permutation of "Rotate $<direction> <number>$ degrees", "Rotate $<number>$ degrees $<direction>$", "Save this", or "Save as $<name>$."
+			Kora can now execute the two commands we marked as our baseline commands in the requirements document: "rotate", "save", and "save as".
+			If the user commands Kora to save and they haven't saved the file themselves for the first time, then Kora will pop up a text input and ask the user what they want the file to be called.
+			If the file has been saved before, then Kora will go ahead and seamlessly save the document.
+			
+			Here are a few example sentences that a user can give Kora after she is activated.
 			When the user is finished speaking Kora successfully executes the command within Fusion.
+			\begin{itemize}
+				\item 
+				Rotate $<direction> <number>$ degrees
+				\item 
+				Rotate $<number>$ degrees $<direction>$
+
+				\item 
+				Save
+				
+				\item 
+				Please save this
+				
+				\item
+				Save it
+
+				\item 
+				Save as $<file name>$
+				
+				\item 
+				Please save this as $<file name>$
+			\end{itemize}
+		
 		
 	\subsection{Moving Forward}
 		    %1
 		\subsection{Improving Latency}
-			As mentioned above in the Obstacles section, we have a big problem with Kora's latency due to HTTP calls to Wit.ai's servers.
-			Our top priority moving forward is to bring the natural language processing library to our local machine.
-			A significant amount of our code is built upon the response returned from Wit.ai, so the sooner we have a solution to our latency problem the smaller headache we will have further down the road when refactoring our code to work with the solution.
-			We aren't aware if this is possible with Wit.ai.
-			We may need to pivot and use a new library altogether.
+			As mentioned above in the Obstacles section, we have a big problem with Kora's latency.
+			Our top priority moving forward is to solve this problem.
+			We may try:
+			\begin{itemize}
+				\item
+				Converting the speech to text locally and then sending text to WIT instead of streaming bytes of audio.
+				
+				\item
+				Using a wake word instead of an activate button so WIT only processes the relevant bytes of audio instead of attempting to process white noise.
+				
+				\item
+				Bringing WIT off the cloud and onto our local machines.
+				
+				\item
+				Pivoting and using a new natural language processor altogether
+			\end{itemize}
+			A significant amount of our code is built upon the response returned from WIT.ai, so the sooner we have a solution to our latency problem the smaller headache we will have further down the road when refactoring our code to work with the solution.
 		
 		%4
 		\subsection{Testing}
 			Moving forward we will also be integrating a suite of unit tests to verify Kora's robustness.
-			These tests will help us locate any weak points or subtle bugs which reside in Kora, as well as ensure that any new code submitted doesn't introduce any new issues.
+			We are hoping to incorporate a testing library which given a testing suite can automatically run the suite after every push to the GitHub repository, or every pull from the repository.
+			These tests will help us locate any weak points or subtle bugs which reside in Kora, as well as ensure that any new code submitted doesn't introduce new issues.
+			Having a testing suite will also minimize the frustration when investigating which piece of new code introduced is causing a crash on the opposite operating system when testing for cross-compatibility.
+			
 		
 	
 	
@@ -296,3 +351,6 @@
 		    Looking forward we will aim to implement a way for Kora to handle these periods of silence without issue.
 
 \end{document}
+
+\section{Conclusion}
+%TODO%
