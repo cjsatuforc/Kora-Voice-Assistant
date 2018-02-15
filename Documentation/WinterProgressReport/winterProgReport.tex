@@ -299,7 +299,7 @@
 		    This meant that we were required to self-implement a work around that allowed Kora to run in the background as intended which was a task that we had not expected to have to complete.
 
 
-    	\subsubsection{Using API in Parellelized Add-In}
+    	\subsubsection{Using API in Parallelized Add-In}
 		    Compounding the problem of the lack of native support for running Add-Ins in parallel with the Fusion editor was the fact that calling most Fusion API functions within a self-spawned thread results in the editor crashing.
 		    This complicated the solution for achieving Kora’s continuous-listening functionality by requiring that listening for and recording a user’s voice commands occur in a self-spawned thread while acting on these commands must happen back in the main thread.
 		    This was eventually solved and implemented using Custom events provided by the Fusion API as a work around for this well-known problem.
