@@ -250,7 +250,7 @@
 		
 	\subsection{Moving Forward}
 		    %1
-		\subsection{Improving Latency}
+		\subsubsection{Improving Latency}
 			As mentioned above in the Obstacles section, we have a big problem with Kora's latency.
 			Our top priority moving forward is to solve this problem.
 			We may try:
@@ -270,7 +270,7 @@
 			A significant amount of our code is built upon the response returned from WIT.ai, so the sooner we have a solution to our latency problem the smaller headache we will have further down the road when refactoring our code to work with the solution.
 		
 		%4
-		\subsection{Testing}
+		\subsubsection{Testing}
 			Moving forward we will also be integrating a suite of unit tests to verify Kora's robustness.
 			We are hoping to incorporate a testing library which given a testing suite can automatically run the suite after every push to the GitHub repository, or every pull from the repository.
 			These tests will help us locate any weak points or subtle bugs which reside in Kora, as well as ensure that any new code submitted doesn't introduce new issues.
