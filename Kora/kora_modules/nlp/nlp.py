@@ -7,7 +7,7 @@ import math
 
 import adsk.core, adsk.fusion, adsk.cam, traceback
 from ...packages import pyaudio
-from ... import witConfig
+from ... import config
 
 THRESHOLD = .05
 CHUNK_SIZE = 2048
@@ -15,7 +15,7 @@ FORMAT = pyaudio.paInt16
 CHANNELS = 2
 RATE = 8000
 SHORT_NORMALIZE = (1.0/32768.0)
-WIT_AI_CLIENT_ACCESS_TOKEN = witConfig.WIT_AI_CLIENT_ACCESS_TOKEN
+WIT_AI_CLIENT_ACCESS_TOKEN = config.WIT_AI_CLIENT_ACCESS_TOKEN
 
 
 if sys.platform == 'darwin':

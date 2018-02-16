@@ -8,7 +8,7 @@ _ui = _app.userInterface
 
 from ..Mongo.Interaction import Interaction 
 from ..Mongo import mongoSetup as mongoSetup
-from ..Services import debug
+from .. import config
 
 mongoSetup.globalInit() #connecting to db
 
@@ -19,7 +19,7 @@ def logInteraction():
 			try:
 				# extract the dictionary from *args
 				argToFusion = args[0]
-				if debug.on:
+				if config.logInteraction:
 					#if debug, skip the logging
 					executeResponse = executeFusion(*args, **kwargs)
 
