@@ -7,6 +7,7 @@ import math
 import adsk.core, adsk.fusion, adsk.cam, traceback
 from ...Services.interactionService import logInteraction
 
+
 _app = adsk.core.Application.get()
 _ui = _app.userInterface
 targetSaveFolder = None
@@ -92,7 +93,7 @@ def _save():
                 return _save_as(fileName[0], True)
 
         #been saved as before, so just save new version
-        elif not doc.save():
+        elif not doc.save("1"):
             return executionStatusCodes.NONFATAL_ERROR
 
         #normal save() worked. Return success
@@ -114,9 +115,9 @@ def _save_as(fileName, commingFromSave=False):
             targetSaveFolder = _app.data.activeProject.rootFolder
          
         def toCamel(s):
-            if not isinstance(searchKey, str):
+            if not isinstance(s, str):
                 s = str(s)
-            _ui.messageBox("in toCamel: " + s)
+            # _ui.messageBox("in toCamel: " + s)
             ret = ''.join(x for x in s.title() if not x.isspace()) 
             return ret[0].lower() + ret[1:]
 
