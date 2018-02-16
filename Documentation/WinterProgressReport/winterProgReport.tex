@@ -250,7 +250,7 @@
 		
 	\subsection{Moving Forward}
 		    %1
-		\subsection{Improving Latency}
+		\subsubsection{Improving Latency}
 			As mentioned above in the Obstacles section, we have a big problem with Kora's latency.
 			Our top priority moving forward is to solve this problem.
 			We may try:
@@ -270,7 +270,7 @@
 			A significant amount of our code is built upon the response returned from WIT.ai, so the sooner we have a solution to our latency problem the smaller headache we will have further down the road when refactoring our code to work with the solution.
 		
 		%4
-		\subsection{Testing}
+		\subsubsection{Testing}
 			Moving forward we will also be integrating a suite of unit tests to verify Kora's robustness.
 			We are hoping to incorporate a testing library which given a testing suite can automatically run the suite after every push to the GitHub repository, or every pull from the repository.
 			These tests will help us locate any weak points or subtle bugs which reside in Kora, as well as ensure that any new code submitted doesn't introduce new issues.
@@ -299,7 +299,7 @@
 		    This meant that we were required to self-implement a work around that allowed Kora to run in the background as intended which was a task that we had not expected to have to complete.
 
 
-    	\subsubsection{Using API in Parellelized Add-In}
+    	\subsubsection{Using API in Parallelized Add-In}
 		    Compounding the problem of the lack of native support for running Add-Ins in parallel with the Fusion editor was the fact that calling most Fusion API functions within a self-spawned thread results in the editor crashing.
 		    This complicated the solution for achieving Kora’s continuous-listening functionality by requiring that listening for and recording a user’s voice commands occur in a self-spawned thread while acting on these commands must happen back in the main thread.
 		    This was eventually solved and implemented using Custom events provided by the Fusion API as a work around for this well-known problem.
