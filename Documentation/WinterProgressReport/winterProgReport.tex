@@ -99,7 +99,7 @@
 
 
 \section{Purpose}
-	Kora is a proof of concept project that will integrate a natural language processing library into Autodesk's 3-D computer aided design software, Fusion.
+	Kora is a proof of concept project that will integrate a natural language processing library into Autodesk's 3-D computer aided design software, Fusion 360.
 	Kora will be a speech-based virtual assistant for Fusion that lets users perform a subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
 	As a stretch goal, Kora will be capable of questioning the user and using responses to predict and automatically assist with future user behavior.
 	
@@ -170,14 +170,14 @@
 	    \subsubsection{Cross Platform Compatibility}
 		    As per our requirements, Kora must function on both Windows and MacOS.
 		    This has caused subtle issues that were challenging to track down.
-		    An issue in particular was PyAudio, the library used to stream audio to WIT.ai.
+		    An issue in particular was PyAudio, the library used to stream audio to our NLP processor, WIT.ai.
 		    Kora with PyAudio worked fine on Windows, however, when trying to run Kora with Pyaudio on Mac Fusion would crash without error messages or hints.
 		    The rainbow spinning wheel on Mac would start spinning and three seconds later Fusion would shut down.
 		    After some thorough investigating we found that the problem occurred for two reasons.
-		    The first was Pyaudio's use of the shared object file called\_portaudio.so.
-		    The version of \_portaudio.so we had in the repo was meant solely for the Windows operating system.
+		    The first was Pyaudio's use of the shared object file called\textit{\_portaudio.so}.
+		    The version of \textit{\_portaudio.so} we had in the repo was meant solely for the Windows operating system.
 		   	The second was that the default microphone sample rate on Windows is significantly lower than the default sample rate on Mac.
-		   	This meant that with Pyaudio's default values for chunk size, sample rate, and number of channels, Mac's microphone would fill up PyAudio's streaming buffer used to record the user's voice faster than Pyaudio was ready for.
+		   	This meant that with Pyaudio's default values for audio chunk size, sample rate, and number of channels, Mac's microphone would fill up PyAudio's streaming buffer used to record the user's voice faster than Pyaudio was ready for.
 		    This caused an overflow which resulted in Fusion crashing.
 		    
 		    We assume that subtle issues will continue to arise in making Kora cross platform compatible.
@@ -186,26 +186,26 @@
 	    %4
 	    \subsubsection{Latency}
 		    Kora being a voice assistant means it must be able to execute commands quickly.
-		    Users won't use Kora if they command her to do something and then have to wait approximately seven and a half seconds before she accomplishes it.
+		    Users won't use Kora if they command her to do something and then have to wait approximately six seconds before she accomplishes it.
 		    Unfortunately, this is Kora's current average speed.
 		    The problem lies within WIT.ai, the library we are using as our natural language processor.
 		    WIT is on the web and Kora has to stream the user's speech to it via HTTP calls.
-		    This on average takes seven and a half seconds.
-		    Currently we don't exactly know why it's taking so long, but we have a few guesses.
+		    This on takes average six seconds.
+		    Currently we don't exactly know why it's taking so long.
 		    
     
 	    %5
 	    \subsubsection{Using Non-Default Python Modules}
 		    Fusion Add-Ins and Scripts are run in their own environment.
 		    They have their own version of Python and their own Python modules.
-		    This has been tricky for two reasons.
+		    This has made implementing Kora tricky for two reasons.
 		    The first is pathing.
 		    Since Fusion's Python only looks for libraries within its own environment we either have to append the directory of our newly downloaded library to the system path, causing a bloated system path variable, or change all of the absolute import paths in the library to relative imports.
-		    It's not possible to move the libraries Kora uses to Fusion's Python folder, because that folder gets rewritten each update.
+		    It's not possible to move the libraries Kora uses to Fusion's Python folder, because that folder gets rewritten each time Fusion has a software update.
 		    To abide by good practices we have been changing the import paths to relative paths, but moving forward that may not be plausible depending on the size of the new libraries we include.
 		    The second is library versions.
 		    We have ran into issues where we pip install a library via our command line and it downloads the Python 2.7 version since that is what we are using locally.
-		    Then, when we move the library into Kora Fusion crashes because Fusion's built in Python is Python 3.3 which isn't always compatible with libraries built for Python 2.7.
+		    Then, when we move the library into Kora Fusion crashes because Fusion's built in Python is Python 3.3, which isn't always compatible with libraries built for Python 2.7.
 
 		
 	\subsection{Project Progress}
@@ -219,7 +219,7 @@
 			
 		%3
 		\subsubsection{Supported Commands}
-			Kora can now execute the two commands we marked as our baseline commands in the requirements document: "rotate", "save", and "save as".
+			Kora can now execute the three commands we marked as our baseline commands in the requirements document: "rotate", "save", and "save as".
 			If the user commands Kora to save and they haven't saved the file themselves for the first time, then Kora will pop up a text input and ask the user what they want the file to be called.
 			If the file has been saved before, then Kora will go ahead and seamlessly save the document.
 			

@@ -8,11 +8,12 @@ import math
 import adsk.core, adsk.fusion, adsk.cam, traceback
 from ...packages import pyaudio
 from ... import config
+from ...Services.extractionService import _getFromCommand
 
 THRESHOLD = .05
 CHUNK_SIZE = 2048
 FORMAT = pyaudio.paInt16
-CHANNELS = 2
+CHANNELS = 1
 RATE = 8000
 SHORT_NORMALIZE = (1.0/32768.0)
 WIT_AI_CLIENT_ACCESS_TOKEN = config.WIT_AI_CLIENT_ACCESS_TOKEN
@@ -26,6 +27,15 @@ def streamAudio():
     :param ui:
     :return:
     """
+    # Returns True to keep listening if there is no intent key or if
+    # there is and the confidence is below threshold
+    def checkResponseValid(resp):
+        confidence = _getFromCommand(resp, ['entities','intent', 'confidence'])
+        if(confidence == None or confidence <=config.thresholdConfidence):
+            return True
+        return False
+
+
     pAudio = pyaudio.PyAudio()
     stream = pAudio.open(format=FORMAT, channels=CHANNELS, rate=RATE,
                     input=True, frames_per_buffer=CHUNK_SIZE)
@@ -35,7 +45,15 @@ def streamAudio():
                                ' rate=8000; endian=little', 'Transfer-Encoding': 'chunked'}
     url = 'https://api.wit.ai/speech'
 
-    postResponse = requests.post(url, headers=headers, data=_gen(stream))
+    keepListening = True
+    while(keepListening):
+        postResponse = requests.post(url, headers=headers, data=_gen(stream))
+        try:
+            resp = postResponse.json()
+            keepListening = checkResponseValid(resp)
+        except:
+            continue
+
     stream.stop_stream()
     stream.close()
     pAudio.terminate()
