@@ -1,8 +1,9 @@
 import adsk.core, adsk.fusion, adsk.cam, traceback
+from random import randint
 
 ui  = None
 amount = 0
-commandId = 'DialogExtrudeSelect'
+commandId = None
 commandName = 'Select a profile to extrude'
 commandDescription = 'Select a profile to extrude'
 # Global set of event handlers to keep them referenced for the duration of the command
@@ -52,6 +53,9 @@ class MyCommandDestroyHandler(adsk.core.CommandEventHandler):
 		try:
 			for handle in handlers:
 				del handle
+			global ui
+			cmdDef = ui.commandDefinitions.itemById(commandId)
+			cmdDef.deleteMe()
 		except:
 			if ui:
 				ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
@@ -150,7 +154,9 @@ def run(amnt, units='centimeters'):
 		global amount
 		global ui
 		ui = adsk.core.Application.get().userInterface
-
+		commandId = 'DialogExtrudeSelect' + str(randint(0,100000))
+		ui.messageBox(commandId)
+		
 		amount = convertToCM(amnt, units)
 		selections = ui.activeSelections
 		found = False

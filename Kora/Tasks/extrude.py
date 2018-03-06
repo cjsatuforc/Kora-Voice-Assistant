@@ -61,7 +61,7 @@ def run(amnt, units='centimeters'):
 		# If no selections or no Profiles, ask user to select one
 		if not found:
 			ui.messageBox("Select a Profile To extrude")
-			selectedSurface = ui.selectEntity('Select a sketch curve', 'Profiles')
+			selectedSurface = ui.selectEntity('Select a Profile to extrude', 'Profiles')
 			if extrudeSelect(selectedSurface.entity, amount) == -1:
 				# If error in extrudeing, return error to log
 				return executionStatusCodes.NONFATAL_ERROR
