@@ -9,6 +9,7 @@
 *.dvi
 *.ps
 *.blg
+*.pdf
 
 #holds out client access token
 witConfig.py
@@ -16,3 +17,6 @@ witConfig.py
 #ignore caches and .pyc
 *.pyc
 *__pycache__
+
+#ignore VS Code workspaces
+Kora.code-workspace

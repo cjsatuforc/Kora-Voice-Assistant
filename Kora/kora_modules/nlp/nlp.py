@@ -29,7 +29,7 @@ def streamAudio():
     """
     # Returns True to keep listening if there is no intent key or if
     # there is and the confidence is below threshold
-    def checkResponseValid(resp):
+    def shouldKeepListening(resp):
         confidence = _getFromCommand(resp, ['entities','intent', 'confidence'])
         if(confidence == None or confidence <=config.thresholdConfidence):
             return True
@@ -50,7 +50,7 @@ def streamAudio():
         postResponse = requests.post(url, headers=headers, data=_gen(stream))
         try:
             resp = postResponse.json()
-            keepListening = checkResponseValid(resp)
+            keepListening = shouldKeepListening(resp)
         except:
             continue
 

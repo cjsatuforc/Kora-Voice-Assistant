@@ -1,1 +1,2 @@
-from .fusion_execute_intent import executeCommand, executionStatusCodes
+from .fusion_execute_intent import executeCommand
+from .fusion_execute_intent import executionStatusCodes
