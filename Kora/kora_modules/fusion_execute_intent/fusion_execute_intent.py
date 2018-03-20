@@ -33,7 +33,7 @@ def executeCommand(command, callback=None):
 
         if shouldExecute('rotate'):
             chosenAPICall = 'rotate'
-            executionStatus = _rotate(_getFromCommand(distilledCommand, ['rotation_quantity', 'direction', 'value']),
+            executionStatus = tasks.rotate.run(_getFromCommand(distilledCommand, ['rotation_quantity', 'direction', 'value']),
                     _getFromCommand(distilledCommand, ['rotation_quantity', 'number', 'value']),
                     _getFromCommand(distilledCommand, ['rotation_quantity', 'units', 'value'])
                     )
