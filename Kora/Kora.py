@@ -4,6 +4,8 @@ import struct
 import json
 import requests
 import math
+import sys
+import random
 
 import adsk.core, adsk.fusion, adsk.cam, traceback
 from .packages import pyaudio
@@ -17,20 +19,28 @@ _ui = adsk.core.UserInterface.cast(None)
 _activateCmdDef = adsk.core.CommandDefinition.cast(None)
 _deactivateCmdDef = adsk.core.CommandDefinition.cast(None)
 _koraThread = None
+_onboarding = None
+_koraPaused = False
+_debug = False
+palette = None
+_templatesLocation = './templates/'
 handlers = []   #keeps handlers in scope
 customEventIDWitResponse = 'WitResponseEvent'
 customEventIDPopupMessage = 'PopupMessageEvent'
-
+customEventIDPaletteMessage = 'PaletteMessageEvent'
 
 # #################################
 # #        Add-In Main          # #
 # #################################
 
 def run(context):
-    global _app, _ui, _activateCmdDef, _deactivateCmdDef
+    global _app, _ui, _activateCmdDef, _deactivateCmdDef, _onboarding
     try:
+        random.seed()
         _app = adsk.core.Application.get()
         _ui = _app.userInterface
+        _onboarding = True
+
         addInsPanel = _ui.allToolbarPanels.itemById('SolidScriptsAddinsPanel')
 
         # Create a new command and add it to the ADD-INS panel in the model workspace.
@@ -62,13 +72,24 @@ def run(context):
         customEventPopupMessage.add(onPopupMessage)
         handlers.append(onPopupMessage)
 
+        customEventPaletteMessage = _app.registerCustomEvent(customEventIDPaletteMessage)
+        onPaletteMessage = PaletteMessageHandler()
+        customEventPaletteMessage.add(onPaletteMessage)
+        handlers.append(onPaletteMessage)
+
     except:
         if _ui:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
 
+
 def stop(context): #anything that should occur when Kora stops (e.g. when editor is closed)
     try:
-        _ui.messageBox('Kora add-in has been stopped.')
+        global _koraThread
+        if _koraThread:
+            _koraThread.stop()
+            _koraThread = None
+        if palette and not palette.isNative:
+            palette.deleteMe()
         # Clean up the command.
         addInsPanel = _ui.allToolbarPanels.itemById('SolidScriptsAddinsPanel')
         activateControl = addInsPanel.controls.itemById('ActivateKoraCmd')
@@ -76,7 +97,7 @@ def stop(context): #anything that should occur when Kora stops (e.g. when editor
 
         _app.unregisterCustomEvent(customEventIDWitResponse)
         _app.unregisterCustomEvent(customEventIDPopupMessage)
-
+        _app.unregisterCustomEvent(customEventIDPaletteMessage)
 
         if activateControl:
             activateControl.deleteMe()
@@ -91,42 +112,76 @@ def stop(context): #anything that should occur when Kora stops (e.g. when editor
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
 
 
+def goToNextOnboarding():
+    if palette:
+        palette.htmlFileURL = './template2.html'
+    else:
+        _ui.messageBox('palette does not exist, cannot go to next')
 
+def debugPopup(type, title, message):
+    if _debug:
+        _app.fireCustomEvent(customEventIDPopupMessage, json.dumps({'type': type, 'title': title, 'message': message}))
 
+class PaletteHTMLHandler(adsk.core.HTMLEventHandler):
+    def __init__(self):
+        super().__init__()
 
-
-
+    def notify(self, args):
+        try:
+            _ui.messageBox('made it to here')
+            htmlArgs = adsk.core.HTMLEventArgs.cast(args)
+            data = json.loads(htmlArgs.data)
+            if 1: #_onboarding and htmlArgs.action == 'next':
+                goToNextOnboarding()
+            _ui.messageBox('finished with handler')
+        except:
+            if _ui:
+                _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
 
 # ######################################
 # #        Main Kora Thread          # #
 # ######################################
 
+
 class KoraThread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
         self.stopped = False
+        self.uniqueID = str(random.randint(0, 9999))
 
     def run(self):
-        _app.fireCustomEvent(customEventIDPopupMessage, json.dumps({'type': 'info', 'title': 'Kora', 'message': 'Kora\'s Thread is Running'}))
+        debugPopup('info', 'KoraThread Start', 'KoraThread(' + self.uniqueID + ') starting.')
+        def commandStartDetectedCallback():
+            _app.fireCustomEvent(customEventIDPaletteMessage, json.dumps({'message': 'listening'}))
+        def commandEndDetectedCallback():
+            _app.fireCustomEvent(customEventIDPaletteMessage, json.dumps({'message': 'processing'}))
+        uID = self.uniqueID
+        def fireMessage(message):
+            debugPopup('info', 'NLP StreamAudio', 'KoraThread(' + uID + '): ' + message)
         try:
+            _app.fireCustomEvent(customEventIDPaletteMessage, json.dumps({'message': 'welcome'}))
             while not self.stopped:
-                witResponse = nlp.streamAudio() #returns wit response json
-                # witResponse = json.loads('{ "user": "lkhfdfghj", "witStreamTime": 7.23 , "_text" : "rotate left ninety degrees", "entities" : {"rotation_quantity" : [ {"suggested" : "true","entities" : {"direction" : [ {"confidence" : 1,"value" : "left","type" : "value"} ],"number" : [ {"confidence" : 1,"value" : 90,"type" : "value"} ],"units" : [ {"confidence" : 1,"value" : "degrees","type" : "value"} ]},"confidence" : 0.99542741620353,"value" : "left ninety degrees","type" : "value"} ],"intent" : [ {"confidence" : 0.99996046020482,"value" : "rotate"} ]},"msg_id" : "0TrwCOw1505FzxI2g"}')
-                # witResponse = json.loads('{ "user": "lkhfdfghj", "witStreamTime": 7.23 , "_text" : "save as my draft", "entities" : { "file_name" : [ { "suggested" : true, "confidence" : 0.98071145335626, "value" : "my draft", "type" : "value" } ], "intent" : [ { "confidence" : 0.99830154994535, "value" : "save_as" } ] }, "msg_id" : "0Aa2dmne4WUv2l7iV" }')
-                # witResponse = json.loads('{ "user": "lkhfdfghj", "witStreamTime": 7.23 , "_text" : "please save this", "entities" : { "intent" : [ { "confidence" : 0.99830154994535, "value" : "save" } ] }, "msg_id" : "0Aa2dmne4WUv2l7iV" }')
-                # witResponse = json.loads('{ "user": "lkhfdfghj", "witStreamTime": 7.23 , "_text" : "extrude by five centimeters", "entities" : {"extrude_quantity" : [ {"suggested" : "true","entities" : {"number" : [ {"confidence" : 1,"value" : 1,"type" : "value"} ],"units" : [ {"confidence" : 1,"value" : "inches","type" : "value"} ]} } ],"intent" : [ {"confidence" : 0.99996046020482,"value" : "extrude"} ]},"msg_id" : "0TrwCOw1505FzxI2g"}')
-                if not self.stopped:    #in case deactivation occurs while streamAudio is running
-                    _app.fireCustomEvent(customEventIDWitResponse, json.dumps(witResponse))
-                    # self.stopped = True;
+				while not _koraPaused:
+                    result = nlp.streamAudio(fireMessage, commandStartDetectedCallback, commandEndDetectedCallback) #returns wit response json
+                    debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') exited steamAudio.')
+                    if not self.stopped:    #in case deactivation occurs while streamAudio is running
+                        if 'streamingError' in result and result['streamingError']:
+                            debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') streaming error.')
+                            _app.fireCustomEvent(customEventIDPaletteMessage, json.dumps({'message': 'fatalError'}))
+                        else:
+                            debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') sending WIT result.')
+                            _app.fireCustomEvent(customEventIDWitResponse, json.dumps(result))
+                    else:
+                        debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') encountered stop, discarding nlp result and breaking loop.')
+                        break
+
+            debugPopup('info', 'KoraThread Exit', 'KoraThread(' + self.uniqueID + ') closing.')
         except:
-            _app.fireCustomEvent(customEventIDPopupMessage, json.dumps({'type': 'error', 'title': 'Kora Failed', 'message': 'Failed:\n{}'.format(traceback.format_exc())}))
+            debugPopup('error', 'Kora Failed', 'Failed:\n{}'.format(traceback.format_exc()))
         
     def stop(self):
+        nlp.stop()
         self.stopped = True
-
-
-
-
 
 
 
@@ -134,9 +189,7 @@ class KoraThread(threading.Thread):
 # #        Kora Thread Handlers          # #
 # ##########################################
 
-##
-##    * Kora Thread Activate Handler
-##
+
 class KoraActivatedHandler(adsk.core.CommandCreatedEventHandler):
     def __init__(self):
         super().__init__()
@@ -161,6 +214,20 @@ class KoraActivatedHandler(adsk.core.CommandCreatedEventHandler):
             if deactivateControl:
                 deactivateControl.isVisible = True
 
+            global palette
+            palette = _ui.palettes.itemById('myPalette')
+            if not palette:
+                palette = _ui.palettes.add('myPalette', 'Kora', _templatesLocation + 'initializing.html', True, False, False, 300, 200)
+                onPaletteHTMLEvent = PaletteHTMLHandler()
+                palette.incomingFromHTML.add(onPaletteHTMLEvent)
+                handlers.append(onPaletteHTMLEvent)
+            else:
+                palette.isVisible = True
+
+            palette.dockingState = adsk.core.PaletteDockingStates.PaletteDockStateLeft
+
+            #palette.sendInfoToHTML('setContent', 'Blah blah blah testing setContent.')
+
             #Start Kora
             global _koraThread
             _koraThread = KoraThread()
@@ -169,9 +236,8 @@ class KoraActivatedHandler(adsk.core.CommandCreatedEventHandler):
         except:
             if _ui:
                 _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
-##
-##    * Kora Thread Deactive Handler
-##
+
+
 class KoraDeactivatedHandler(adsk.core.CommandCreatedEventHandler):
     def __init__(self):
         super().__init__()
@@ -182,7 +248,6 @@ class KoraDeactivatedHandler(adsk.core.CommandCreatedEventHandler):
 
             global _koraThread
             if _koraThread:
-                _ui.messageBox("Deactivating Kora")
                 _koraThread.stop()
                 _koraThread = None
 
@@ -195,12 +260,16 @@ class KoraDeactivatedHandler(adsk.core.CommandCreatedEventHandler):
             if deactivateControl:
                 deactivateControl.isVisible = False
 
+            global palette
+            if palette and not palette.isNative:
+                palette.deleteMe()
+                palette = None
+
         except:
             if _ui:
                 _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
-##
-##    * Kora Thread Destroyed Handler
-##
+
+
 class KoraDestroyedHandler(adsk.core.CommandEventHandler):
     def __init__(self):
         super().__init__()
@@ -217,18 +286,11 @@ class KoraDestroyedHandler(adsk.core.CommandEventHandler):
             if _ui:
                 _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
 
-
-
-
-
 # #####################################
 # #        Module Handlers          # #
 # #####################################
  
-##
-##   * NLP (WIT) Response Handler
-##   * In charge of calling Fusion's Handler
-##
+
 class NLPResponseHandler(adsk.core.CustomEventHandler):
     def __init__(self):
         super().__init__()
@@ -240,14 +302,14 @@ class NLPResponseHandler(adsk.core.CustomEventHandler):
 
             #get userID
             nlpResponse['user'] = _app.userId
-            _ui.messageBox(str(nlpResponse))
-            executionResultCode = fusion_execute_intent.executeCommand(nlpResponse)
+            debugPopup('info', 'NLP Response', str(nlpResponse))
+            executionResult = fusion_execute_intent.executeCommand(nlpResponse)
+            _app.fireCustomEvent(customEventIDPaletteMessage, json.dumps({'message': executionResult['fusionExecutionStatus']}))
         except:
             if _ui:
                 _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
-##
-##    * Fusion 360 Pop-Up message box Handler
-##
+
+
 class PopupMessageHandler(adsk.core.CustomEventHandler):
     def __init__(self):
         super().__init__()
@@ -258,9 +320,42 @@ class PopupMessageHandler(adsk.core.CustomEventHandler):
             eventArgs = adsk.core.CustomEventArgs.cast(args)
             messageInfo = json.loads(eventArgs.additionalInfo)
             if messageInfo['type'] == 'info':
-                 _ui.messageBox(messageInfo['message'], messageInfo['title'], )
+                _ui.messageBox("INFO: " + messageInfo['message'], messageInfo['title'])
             elif messageInfo['type'] == 'error':
-                _ui.messageBox(messageInfo['message'], messageInfo['title'])
+                _ui.messageBox("ERROR: " + messageInfo['message'], messageInfo['title'])
+        except:
+            if _ui:
+                _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
+
+class PaletteMessageHandler(adsk.core.CustomEventHandler):
+    def __init__(self):
+        super().__init__()
+
+    def notify(self, args):
+        try:
+            global _ui, palette
+            eventArgs = adsk.core.CustomEventArgs.cast(args)
+            messageInfo = json.loads(eventArgs.additionalInfo)
+            newTemplate = ''
+            if messageInfo['message'] == 'listening':
+                newTemplate = _templatesLocation + 'listening.html'
+            elif messageInfo['message'] == 'processing':
+                newTemplate = _templatesLocation + 'processing.html'
+            elif messageInfo['message'] == 'success':
+                newTemplate = _templatesLocation + 'success.html'
+            elif messageInfo['message'] == 'fatalError' or messageInfo['message'] == 'nonfatalError':
+                newTemplate = _templatesLocation + 'error.html'
+            elif messageInfo['message'] == 'unrecognizedCommand':
+                newTemplate = _templatesLocation + 'unrecognizedCommand.html'
+            elif messageInfo['message'] == 'userAbort':
+                newTemplate = _templatesLocation + 'userAbort.html'
+            elif messageInfo['message'] == 'welcome':
+                newTemplate = _templatesLocation + 'welcome.html'
+            else:
+                _ui.messageBox('did not find template for: ' + messageInfo['message'])
+
+            if palette and newTemplate:
+                palette.htmlFileURL = newTemplate
         except:
             if _ui:
                 _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))

@@ -8,7 +8,7 @@ _ui = _app.userInterface
 
 from ..Mongo.Interaction import Interaction 
 from ..Mongo import mongoSetup as mongoSetup
-from .. import config
+from ..Services import debug
 
 mongoSetup.globalInit() #connecting to db
 
@@ -19,7 +19,7 @@ def logInteraction():
 			try:
 				# extract the dictionary from *args
 				argToFusion = args[0]
-				if config.logInteraction:
+				if debug.on:
 					#if debug, skip the logging
 					executeResponse = executeFusion(*args, **kwargs)
 
@@ -33,9 +33,9 @@ def logInteraction():
 
 					#Gather the time it took wit to respond
 					totalExecuteTime = 0
-					if 'witStreamTime' in argToFusion:
-						totalExecuteTime += float(argToFusion['witStreamTime'])
-						del argToFusion['witStreamTime'] #take it out to store pure witResponse
+					if 'witDelay' in argToFusion:
+						totalExecuteTime += float(argToFusion['witDelay'])
+						del argToFusion['witDelay'] #take it out to store pure witResponse
 						
 					#Store the wit response free of added JSON
 					newInteraction.witResponse = argToFusion
@@ -63,10 +63,9 @@ def logInteraction():
 						_ui.messageBox('InteractionService Failed to Save'.format(traceback.format_exc()))
 
 				#return the execution status like originally
-				return executeResponse['fusionExecutionStatus']
+				return executeResponse
 			except:
-				NONFATAL_ERROR = 2
-				return NONFATAL_ERROR
+				return {'fusionExecutionStatus': 'nonfatalError'}
 
 		return wrapper
 	return decorator
