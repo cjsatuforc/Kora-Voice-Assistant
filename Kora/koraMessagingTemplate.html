@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" style="box-sizing: border-box; width: 100%; height: 100%; padding: 0; margin: 0">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        html, body {
+            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        #content-container {
+            padding: 10px;
+            margin: 0;
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #buttons {
+            display: flex;
+            justify-content: flex-end;
+
+        }
+
+        button {
+            border: black 1px solid;
+            background: #ffffff;
+            border-radius: 1px;
+        }
+
+        button:hover {
+            cursor: pointer;
+        }
+
+        button:active {
+            background: #e2e2e2;
+        }
+
+        button:not(:last-child) {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body style="box-sizing: border-box; padding: 10px; margin: 0; display:flex; flex-direction:column; justify-content:space-between; height: 100%;">
+    <div id="content-container" style="padding: 10px; display: flex; flex-grow: 1; align-items: center; justify-content: center;">
+        <div id="content">First Message Box.</div>
+    </div>
+    <div id="buttons" style="display: flex; justify-content: flex-end;">
+        <button id="nextBtn" style="border: black 1px solid;">Next</button>
+        <button id="skipBtn" style="border: black 1px solid;">Skip</button>
+    </div>
+
+
+    <script>
+        var nextBtn = document.getElementById("nextBtn");
+        function nextClick() {
+            if(nextBtn.innerHTML == 'Next') {
+                nextBtn.innerHTML = 'NEXT';
+            } else {
+                nextBtn.innerHTML = 'Next';
+            }
+            var args = {
+                arg1 : "Sample argument 1",
+                arg2 : "Sample argument 2"
+            };
+            adsk.fusionSendData('send', JSON.stringify(args));
+        }
+
+        nextBtn.addEventListener("click", nextClick);
+    </script>
+    <script>
+        var contentDiv = document.getElementById('content');
+        var setContent = function(newContent) {
+            contentDiv.innerHTML = newContent;
+        }
+
+        var FusionEventHandlers = {
+            'setContent': setContent;
+        }
+
+        window.fusionJavaScriptHandler = {handle: function(action, data) {
+            return 'OK';
+        }};
+        /*
+            try {
+                if(FusionEventHandlers.hasOwnProperty(action)) {
+                    FusionEventHandlers[action](data);
+                } else {
+                    return 'Unexpected commmand type: ' + action;
+                }
+            } catch (e) {
+                console.log(e);
+                console.log('exception caught with command: ' + action + ', data: ' + data);
+            }
+            return 'OK';
+        }};*/
+    </script>
+</body>
+</html>

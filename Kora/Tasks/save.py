@@ -1,4 +1,6 @@
 import adsk.core, adsk.fusion, adsk.cam, traceback
+
+from .ExecutionStatusCodes import StatusCodes
 from . import saveAs
 
 ##
@@ -7,7 +9,6 @@ from . import saveAs
 ##
 def _save():
     # Put here to avoid circular dependencies. If put in global space, import error
-    from ..kora_modules.fusion_execute_intent import executionStatusCodes
     try:
         _app = adsk.core.Application.get()
         _ui = _app.userInterface
@@ -18,20 +19,20 @@ def _save():
         if not doc.isSaved:
             fileName = _ui.inputBox('You haven\'t saved this file yet, what would you like to name it?', 'Name Your File', 'myDraft')
             if fileName[1]: #second arg is True if box cancelled, false if submitted
-                return executionStatusCodes.USER_ABORT
+                return StatusCodes.USER_ABORT
             else:
                 return saveAs.run(fileName[0], True)
 
         #been saved as before, so just save new version
         elif not doc.save("1"):
-            return executionStatusCodes.NONFATAL_ERROR
+            return StatusCodes.NONFATAL_ERROR
 
         #normal save() worked. Return success
-        return executionStatusCodes.SUCCESS
+        return StatusCodes.SUCCESS
     except:
         if _ui:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
-        return executionStatusCodes.FATAL_ERROR
+        return StatusCodes.FATAL_ERROR
 
 def run():
 	return _save()
