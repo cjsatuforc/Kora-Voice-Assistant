@@ -16,11 +16,12 @@ CHUNK_SIZE = 2048
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 8000
-SHORT_NORMALIZE = (1.0/32768.0)
+SHORT_NORMALIZE = (1.0 / 32768.0)
 WIT_AI_CLIENT_ACCESS_TOKEN = witConfig.WIT_AI_CLIENT_ACCESS_TOKEN
 
 userStoppedTalkingTime = None
 stopped = False
+
 
 def streamAudio(fireMessage, onSpeechDetectedCallback=None, onSpeechEndCallback=None):
     """
@@ -29,31 +30,31 @@ def streamAudio(fireMessage, onSpeechDetectedCallback=None, onSpeechEndCallback=
     :return:
     """
     try:
-		# Returns True to keep listening if there is no intent key or if
-		# there is and the confidence is below threshold
-		def shouldKeepListening(resp):
-			confidence = _getFromCommand(resp, ['entities','intent', 'confidence'])
-			if(confidence == None or confidence <=config.thresholdConfidence):
-				return True
-			return False
+        # Returns True to keep listening if there is no intent key or if
+        # there is and the confidence is below threshold
+        def shouldKeepListening(resp):
+            confidence = _getFromCommand(resp, ['entities', 'intent', 'confidence'])
+            if (confidence == None or confidence <= config.thresholdConfidence):
+                return True
+            return False
 
         pAudio = pyaudio.PyAudio()
         stream = pAudio.open(format=FORMAT, channels=CHANNELS, rate=RATE,
-                        input=True, frames_per_buffer=CHUNK_SIZE)
-
+                             input=True, frames_per_buffer=CHUNK_SIZE)
         headers = {'Authorization': 'Bearer ' + WIT_AI_CLIENT_ACCESS_TOKEN,
                    'Content-Type': 'audio/raw; encoding=signed-integer; bits=16;' +
                                    ' rate=8000; endian=little', 'Transfer-Encoding': 'chunked'}
         url = 'https://api.wit.ai/speech'
 
-		keepListening = True
-		while(keepListening):
-			postResponse = requests.post(url, headers=headers, data=_gen(fireMessage, stream, onSpeechDetectedCallback, onSpeechEndCallback))
-			try:
-				returnResponse = postResponse.json()
-				keepListening = shouldKeepListening(returnResponse)
-			except:
-				continue
+        postResponse = None
+        keepListening = True
+        #while (keepListening):
+        postResponse = requests.post(url, headers=headers, data=_gen(fireMessage, stream, onSpeechDetectedCallback, onSpeechEndCallback))
+        """try:
+                returnResponse = postResponse.json()
+                keepListening = shouldKeepListening(returnResponse)
+            except:
+                continue"""
 
         endTime = time.time()
         stream.stop_stream()
@@ -62,10 +63,10 @@ def streamAudio(fireMessage, onSpeechDetectedCallback=None, onSpeechEndCallback=
         returnResponse = postResponse.json()
         returnResponse['witDelay'] = endTime - userStoppedTalkingTime
 
-		"""#capture the elapsed time for wit
-		witStreamTime = postResponse.elapsed.total_seconds()
-		returnResponse = postResponse.json()
-		returnResponse['witStreamTime'] = witStreamTime"""
+        """#capture the elapsed time for wit
+        witStreamTime = postResponse.elapsed.total_seconds()
+        returnResponse = postResponse.json()
+        returnResponse['witStreamTime'] = witStreamTime"""
 
         global stopped
         stopped = False
@@ -84,20 +85,21 @@ def stop():
     global stopped
     stopped = True
 
+
 # Returns if the RMS of block is less than the threshold
 def _is_silent(block):
     """
     :param block:
     :return:
     """
-    count = len(block)/2
+    count = len(block) / 2
     form = "%dh" % (count)
     shorts = struct.unpack(form, block)
     sum_squares = 0.0
 
     for sample in shorts:
         n = sample * SHORT_NORMALIZE
-        sum_squares += n*n
+        sum_squares += n * n
 
     rms_value = math.sqrt(sum_squares / count)
     return rms_value, rms_value <= THRESHOLD
@@ -111,7 +113,7 @@ def _returnUpTo(iterator, values, returnNum):
     :param returnNum:
     :return:
     """
-    if iterator+returnNum < len(values):
+    if iterator + returnNum < len(values):
         return (iterator + returnNum,
                 b"".join(values[iterator:iterator + returnNum]))
 
@@ -138,17 +140,15 @@ def _gen(fireMessage, stream, onSpeechDetectedCallback, onSpeechEndCallback):
         snd_data = array('i', rms_data)
         for d in snd_data:
             data.append(struct.pack('<i', d))
-
         rms, silent = _is_silent(rms_data)
-
         if silent and snd_started:
             num_silent += 1
 
         elif not silent and not snd_started:
             if onSpeechDetectedCallback:
                 onSpeechDetectedCallback()
-            i = len(data) - CHUNK_SIZE*2  # Set the counter back a few seconds
-            if i < 0:                     # so we can hear the start of speech.
+            i = len(data) - CHUNK_SIZE * 2  # Set the counter back a few seconds
+            if i < 0:  # so we can hear the start of speech.
                 i = 0
             snd_started = True
 
@@ -173,7 +173,7 @@ def _gen(fireMessage, stream, onSpeechDetectedCallback, onSpeechEndCallback):
             onSpeechEndCallback()
 
         # Yield the rest of the data.
-        #print "Pre-streamed " + str(i) + " of " + str(len(data)) + "."
+        # print "Pre-streamed " + str(i) + " of " + str(len(data)) + "."
         while (i < len(data)):
             i, temp = _returnUpTo(i, data, 512)
             yield temp

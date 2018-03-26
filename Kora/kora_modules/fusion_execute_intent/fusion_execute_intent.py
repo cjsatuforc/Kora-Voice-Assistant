@@ -2,7 +2,8 @@ from ...Services.interactionService import logInteraction
 from ...Services.extractionService import _getFromCommand
 from ... import config
 from ... import Tasks as tasks
-import adsk.core, adsk.fusion, adsk.cam, traceback
+from ...Tasks.ExecutionStatusCodes import StatusCodes
+
 
 
 # ##########################################
@@ -14,14 +15,12 @@ import adsk.core, adsk.fusion, adsk.cam, traceback
 ##    * Note this function is funneled through the logInteraction decorator
 ##
 @logInteraction()
-def executeCommand(command, callback=None):
-    distilledCommand = _distillCommand(command)
+def executeCommand(command, callback=None, firePopup=None):
     thresholdConfidence = config.thresholdConfidence
-    intents = _getFromCommand(distilledCommand, ['intent'])
-    executionStatus = executionStatusCodes.UNRECOGNIZED_COMMAND
+    intents = _getFromCommand(command, ['intent'])
+    executionStatus = StatusCodes.UNRECOGNIZED_COMMAND
     chosenAPICall = None
-    app = adsk.core.Application.get()
-    ui = app.userInterface
+    #app = adsk.core.Application.get()
 
     if intents:
         def shouldExecute(intentName):
@@ -33,35 +32,27 @@ def executeCommand(command, callback=None):
 
         if shouldExecute('rotate'):
             chosenAPICall = 'rotate'
-            executionStatus = tasks.rotate.run(_getFromCommand(distilledCommand, ['rotation_quantity', 'direction', 'value']),
-                    _getFromCommand(distilledCommand, ['rotation_quantity', 'number', 'value']),
-                    _getFromCommand(distilledCommand, ['rotation_quantity', 'units', 'value'])
-                    )
+            direction = _getFromCommand(command, ['rotation_quantity', 'direction', 'value'])
+            magnitude = _getFromCommand(command, ['rotation_quantity', 'number', 'value'])
+            units = _getFromCommand(command, ['rotation_quantity', 'units', 'value'])
+            executionStatus = tasks.rotate.run(firePopup, direction, magnitude, units)
         elif shouldExecute('save'):
             chosenAPICall = 'save'
-			executionStatus = tasks.save.run()
-
+            executionStatus = tasks.save.run()
         elif shouldExecute('save_as'):
             chosenAPICall = 'save_as'
-			executionStatus = tasks.saveAs.run(_getFromCommand(distilledCommand, ['file_name', 'value']) )
-		elif shouldExecute('extrude'):
-			chosenAPICall = 'extrude'
-			executionStatus = tasks.extrude.run(_getFromCommand(distilledCommand, ['extrude_quantity', 'number', 'value']),
-                _getFromCommand(distilledCommand, ['extrude_quantity', 'units', 'value']))
+            filename = _getFromCommand(command, ['file_name', 'value'])
+            executionStatus = tasks.saveAs.run(filename)
+        elif shouldExecute('extrude'):
+            chosenAPICall = 'extrude'
+            magnitude = _getFromCommand(command, ['extrude_quantity', 'number', 'value'])
+            units = _getFromCommand(command, ['extrude_quantity', 'units', 'value'])
+            executionStatus = tasks.extrude.run(magnitude, units)
 
-    # return to logInteraction decorator
     returnDict = {'fusionExecutionStatus': executionStatus, 'chosenAPICall': chosenAPICall}
 
     if callback:
         callback(returnDict)
 
     return returnDict
-
-
-class executionStatusCodes(object):
-    FATAL_ERROR = 'fatalError' #For runtime errors/exceptions
-    NONFATAL_ERROR = 'nonfatalError' #For non-exception errors that make it so that execution can't be completed
-    UNRECOGNIZED_COMMAND = 'unrecognizedCommand' #Didn't recognize intent of command
-    USER_ABORT = 'userAbort' #User aborted command
-    SUCCESS = 'success'
 
