@@ -1,4 +1,5 @@
 import random
+import sys
 import os
 
 from selenium import webdriver
@@ -11,7 +12,11 @@ _DEBUG = True
 
 def train(loginCredentials, appName, trainingPhrases, closeBrowserWhenDone=True):
     random.seed()
-    browser = webdriver.Chrome(os.path.join(os.path.dirname(os.path.abspath(__file__)),'chromedriver.exe'))
+    if sys.platform == 'darwin':
+        browser = webdriver.Chrome(os.path.join(os.path.dirname(os.path.abspath(__file__)),'chromedriverMac'))
+    else:
+        browser = webdriver.Chrome(os.path.join(os.path.dirname(os.path.abspath(__file__)),'chromedriver.exe'))
+        
     if not closeBrowserWhenDone:
         _browser  = browser
     browser.implicitly_wait(10)

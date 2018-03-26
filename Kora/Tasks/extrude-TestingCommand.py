@@ -120,7 +120,7 @@ def extrudeSelect(entity, amount):
 def convertToCM(amnt, units):
 	if units == 'centimeters':
 		return amnt;
-	elif units == 'milimeters':
+	elif units == 'millimeters':
 		return (amnt / 10)
 	elif units == 'meters':
 		return (amnt * 100)

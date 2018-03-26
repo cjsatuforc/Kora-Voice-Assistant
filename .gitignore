@@ -20,3 +20,6 @@ witConfig.py
 
 #ignore VS Code workspaces
 Kora.code-workspace
+
+#ignore witTraining config
+trainingConfig

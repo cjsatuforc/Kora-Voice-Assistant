@@ -19,7 +19,7 @@ def logInteraction():
 			try:
 				# extract the dictionary from *args
 				argToFusion = args[0]
-				if config.logInteraction:
+				if config.skipLogInteraction:
 					#if debug, skip the logging
 					executeResponse = executeFusion(*args, **kwargs)
 

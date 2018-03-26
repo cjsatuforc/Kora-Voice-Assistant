@@ -1,4 +1,5 @@
 import adsk.core, adsk.fusion, adsk.cam, traceback
+import math
 
 def extrudeSelect(entity, amount):
 	try:
@@ -24,27 +25,30 @@ def extrudeSelect(entity, amount):
 		return -1
 
 def convertToCM(amnt, units):
-	if units == 'centimeters':
+	if units == 'centimeters' or 'centimeter':
 		return amnt;
-	elif units == 'milimeters':
+	elif units == 'millimeters' or 'millimeter':
 		return (amnt / 10)
-	elif units == 'meters':
+	elif units == 'meters' or 'meter':
 		return (amnt * 100)
-	elif units == 'inches':
+	elif units == 'inches' or 'inch':
 		return (amnt * 2.54)
-	elif units == 'feet':
+	elif units == 'feet' or 'foot':
 		return (amnt * 30.48)
 
 	return 0 # No match case	
 	
-def run(amnt, units='centimeters'):
+def run(amnt, units='centimeters', negate=False):
 	from ..kora_modules.fusion_execute_intent import executionStatusCodes
 	"""
 	Extrude can only take entities of type 'Profile'
 	"""
+	if not amnt or math.isnan(amnt):
+		return executionStatusCodes.NONFATAL_ERROR
 	try:
 		ui = adsk.core.Application.get().userInterface
-
+		if(negate and amnt > 0):
+			amnt = amnt * -1
 		amount = convertToCM(amnt, units)
 		selections = ui.activeSelections
 		found = False

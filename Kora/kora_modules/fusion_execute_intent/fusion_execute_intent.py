@@ -47,8 +47,15 @@ def executeCommand(command, callback=None):
 
     elif shouldExecute('extrude'):
         chosenAPICall = 'extrude'
+
+        negate = False;
+        text = _getFromCommand(distilledCommand, ['_text'])
+        if text and "push down" in text or "negative" in text:
+            negate = True
+
         executionStatus = tasks.extrude.run(_getFromCommand(distilledCommand, ['extrude_quantity', 'number', 'value']),
-                _getFromCommand(distilledCommand, ['extrude_quantity', 'units', 'value']))
+                _getFromCommand(distilledCommand, ['extrude_quantity', 'units', 'value']),
+                negate)
 
     # return to logInteraction decorator
     returnDict = {'fusionExecutionStatus': executionStatus, 'chosenAPICall': chosenAPICall}
