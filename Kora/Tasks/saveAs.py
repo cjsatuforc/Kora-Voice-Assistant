@@ -1,5 +1,8 @@
 import adsk.core, adsk.fusion, adsk.cam, traceback
 
+from .ExecutionStatusCodes import StatusCodes
+
+#TODO: Ask Jeremy why this needs to be global.
 targetSaveFolder = None
 
 
@@ -10,7 +13,6 @@ targetSaveFolder = None
 ##
 def _saveAs(fileName, commingFromSave=False):
     # Put here to avoid circular dependencies. If put in global space, import error
-    from ..kora_modules.fusion_execute_intent import executionStatusCodes
     try:
         _app = adsk.core.Application.get()
         _ui = _app.userInterface
@@ -27,20 +29,20 @@ def _saveAs(fileName, commingFromSave=False):
             return ret[0].lower() + ret[1:]
 
         if not fileName:
-            return executionStatusCodes.NONFATAL_ERROR
+            return StatusCodes.NONFATAL_ERROR
 
         #if name was entered by user from input, then save name as is
         saveName = fileName if commingFromSave else toCamel(fileName)
 
         doc = _app.activeDocument
         if not doc.saveAs(saveName, targetSaveFolder, '', ''): #been saved as before, so just save new version
-            return executionStatusCodes.NONFATAL_ERROR
+            return StatusCodes.NONFATAL_ERROR
        
-        return executionStatusCodes.SUCCESS
+        return StatusCodes.SUCCESS
     except:
         if _ui:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))    
-        return executionStatusCodes.FATAL_ERROR
+        return StatusCodes.FATAL_ERROR
 
 def run(fileName, commingFromSave=False):
 	return _saveAs(fileName, commingFromSave)

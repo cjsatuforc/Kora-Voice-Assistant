@@ -18,10 +18,12 @@ _app = adsk.core.Application.cast(None)
 _ui = adsk.core.UserInterface.cast(None)
 _activateCmdDef = adsk.core.CommandDefinition.cast(None)
 _deactivateCmdDef = adsk.core.CommandDefinition.cast(None)
+_pauseCmdDef = adsk.core.CommandDefinition.cast(None)
+_resumeCmdDef = adsk.core.CommandDefinition.cast(None)
 _koraThread = None
 _onboarding = None
 _koraPaused = False
-_debug = False
+_debug = True
 palette = None
 _templatesLocation = './templates/'
 handlers = []   #keeps handlers in scope
@@ -34,8 +36,8 @@ customEventIDPaletteMessage = 'PaletteMessageEvent'
 # #################################
 
 def run(context):
-    global _app, _ui, _activateCmdDef, _deactivateCmdDef, _onboarding
     try:
+        global _app, _ui, _activateCmdDef, _deactivateCmdDef, _pauseCmdDef, _resumeCmdDef, _onboarding
         random.seed()
         _app = adsk.core.Application.get()
         _ui = _app.userInterface
@@ -61,6 +63,23 @@ def run(context):
         _deactivateCmdDef.commandCreated.add(onKoraDeactivated)
         handlers.append(onKoraDeactivated)
 
+        # Pause.
+        _pauseCmdDef = _ui.commandDefinitions.addButtonDefinition('PauseKoraCmd', 'Pause Kora', 'Pause Kora voice control for Fusion.')
+        pauseButtonControl = addInsPanel.controls.addCommand(_pauseCmdDef)
+        pauseButtonControl.isVisible = False
+
+        onKoraPaused = KoraPausedHandler()
+        _pauseCmdDef.commandCreated.add(onKoraPaused)
+        handlers.append(onKoraPaused)
+
+        _resumeCmdDef = _ui.commandDefinitions.addButtonDefinition('ResumeKoraCmd', 'Resume Kora', 'Resume Kora voice control for Fusion.')
+        resumeButtonControl = addInsPanel.controls.addCommand(_resumeCmdDef)
+        resumeButtonControl.isVisible = False
+
+        onKoraResumed = KoraResumedHandler()
+        _resumeCmdDef.commandCreated.add(onKoraResumed)
+        handlers.append(onKoraResumed)
+
         # Register the custom event and connect the handler.
         customEventWitResponse = _app.registerCustomEvent(customEventIDWitResponse)
         onWitResponse = NLPResponseHandler()
@@ -76,7 +95,6 @@ def run(context):
         onPaletteMessage = PaletteMessageHandler()
         customEventPaletteMessage.add(onPaletteMessage)
         handlers.append(onPaletteMessage)
-
     except:
         if _ui:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
@@ -94,6 +112,8 @@ def stop(context): #anything that should occur when Kora stops (e.g. when editor
         addInsPanel = _ui.allToolbarPanels.itemById('SolidScriptsAddinsPanel')
         activateControl = addInsPanel.controls.itemById('ActivateKoraCmd')
         deactivateControl = addInsPanel.controls.itemById('DeactivateKoraCmd')
+        pauseControl = addInsPanel.controls.itemById('PauseKoraCmd')
+        resumeControl = addInsPanel.controls.itemById('ResumeKoraCmd')
 
         _app.unregisterCustomEvent(customEventIDWitResponse)
         _app.unregisterCustomEvent(customEventIDPopupMessage)
@@ -107,6 +127,14 @@ def stop(context): #anything that should occur when Kora stops (e.g. when editor
             deactivateControl.deleteMe()
         if _deactivateCmdDef:
             _deactivateCmdDef.deleteMe()
+        if pauseControl:
+            pauseControl.deleteMe()
+        if _pauseCmdDef:
+            _pauseCmdDef.deleteMe()
+        if resumeControl:
+            resumeControl.deleteMe()
+        if _resumeCmdDef:
+            _resumeCmdDef.deleteMe()
     except:
         if _ui:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
@@ -142,7 +170,6 @@ class PaletteHTMLHandler(adsk.core.HTMLEventHandler):
 # #        Main Kora Thread          # #
 # ######################################
 
-
 class KoraThread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
@@ -161,19 +188,19 @@ class KoraThread(threading.Thread):
         try:
             _app.fireCustomEvent(customEventIDPaletteMessage, json.dumps({'message': 'welcome'}))
             while not self.stopped:
-				while not _koraPaused:
+                while not _koraPaused:
                     result = nlp.streamAudio(fireMessage, commandStartDetectedCallback, commandEndDetectedCallback) #returns wit response json
                     debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') exited steamAudio.')
-                    if not self.stopped:    #in case deactivation occurs while streamAudio is running
+                    if self.stopped:    #in case deactivation occurs while streamAudio is running
+                        debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') encountered stop, discarding nlp result and breaking loop.')
+                        break
+                    elif not _koraPaused:
                         if 'streamingError' in result and result['streamingError']:
                             debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') streaming error.')
                             _app.fireCustomEvent(customEventIDPaletteMessage, json.dumps({'message': 'fatalError'}))
                         else:
                             debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') sending WIT result.')
                             _app.fireCustomEvent(customEventIDWitResponse, json.dumps(result))
-                    else:
-                        debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') encountered stop, discarding nlp result and breaking loop.')
-                        break
 
             debugPopup('info', 'KoraThread Exit', 'KoraThread(' + self.uniqueID + ') closing.')
         except:
@@ -182,7 +209,6 @@ class KoraThread(threading.Thread):
     def stop(self):
         nlp.stop()
         self.stopped = True
-
 
 
 # ##########################################
@@ -209,10 +235,13 @@ class KoraActivatedHandler(adsk.core.CommandCreatedEventHandler):
             addInsPanel = _ui.allToolbarPanels.itemById('SolidScriptsAddinsPanel')
             activateControl = addInsPanel.controls.itemById('ActivateKoraCmd')
             deactivateControl = addInsPanel.controls.itemById('DeactivateKoraCmd')
+            pauseControl = addInsPanel.controls.itemById('PauseKoraCmd')
             if activateControl:
                 activateControl.isVisible = False
             if deactivateControl:
                 deactivateControl.isVisible = True
+            if pauseControl:
+                pauseControl.isVisible = True
 
             global palette
             palette = _ui.palettes.itemById('myPalette')
@@ -232,7 +261,6 @@ class KoraActivatedHandler(adsk.core.CommandCreatedEventHandler):
             global _koraThread
             _koraThread = KoraThread()
             _koraThread.start()
-
         except:
             if _ui:
                 _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
@@ -255,10 +283,16 @@ class KoraDeactivatedHandler(adsk.core.CommandCreatedEventHandler):
             addInsPanel = _ui.allToolbarPanels.itemById('SolidScriptsAddinsPanel')
             activateControl = addInsPanel.controls.itemById('ActivateKoraCmd')
             deactivateControl = addInsPanel.controls.itemById('DeactivateKoraCmd')
+            pauseControl = addInsPanel.controls.itemById('PauseKoraCmd')
+            resumeControl = addInsPanel.controls.itemById('ResumeKoraCmd')
             if activateControl:
                 activateControl.isVisible = True
             if deactivateControl:
                 deactivateControl.isVisible = False
+            if pauseControl:
+                pauseControl.isVisible = False
+            if resumeControl:
+                resumeControl.isVisible = False
 
             global palette
             if palette and not palette.isNative:
@@ -269,6 +303,34 @@ class KoraDeactivatedHandler(adsk.core.CommandCreatedEventHandler):
             if _ui:
                 _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
 
+class KoraPausedHandler(adsk.core.CommandCreatedEventHandler):
+    def __init__(self):
+        super().__init__()
+    def notify(self, args):
+        global _koraPaused
+        _koraPaused = True
+        nlp.stop()
+        addInsPanel = _ui.allToolbarPanels.itemById('SolidScriptsAddinsPanel')
+        pauseControl = addInsPanel.controls.itemById('PauseKoraCmd')
+        resumeControl = addInsPanel.controls.itemById('ResumeKoraCmd')
+        if pauseControl:
+            pauseControl.isVisible = False
+        if resumeControl:
+            resumeControl.isVisible = True
+
+class KoraResumedHandler(adsk.core.CommandCreatedEventHandler):
+    def __init__(self):
+        super().__init__()
+    def notify(self, args):
+        global _koraPaused
+        _koraPaused = False
+        addInsPanel = _ui.allToolbarPanels.itemById('SolidScriptsAddinsPanel')
+        pauseControl = addInsPanel.controls.itemById('PauseKoraCmd')
+        resumeControl = addInsPanel.controls.itemById('ResumeKoraCmd')
+        if pauseControl:
+            pauseControl.isVisible = True
+        if resumeControl:
+            resumeControl.isVisible = False
 
 class KoraDestroyedHandler(adsk.core.CommandEventHandler):
     def __init__(self):
@@ -303,7 +365,7 @@ class NLPResponseHandler(adsk.core.CustomEventHandler):
             #get userID
             nlpResponse['user'] = _app.userId
             debugPopup('info', 'NLP Response', str(nlpResponse))
-            executionResult = fusion_execute_intent.executeCommand(nlpResponse)
+            executionResult = fusion_execute_intent.executeCommand(nlpResponse, firePopup=debugPopup)
             _app.fireCustomEvent(customEventIDPaletteMessage, json.dumps({'message': executionResult['fusionExecutionStatus']}))
         except:
             if _ui:
