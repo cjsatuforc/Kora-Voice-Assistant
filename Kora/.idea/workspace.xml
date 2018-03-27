@@ -11,14 +11,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="fusion_execute_intent.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="fusion_execute_intent.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/kora_modules/fusion_execute_intent/fusion_execute_intent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
+            <state relative-caret-position="170">
               <caret line="19" column="50" lean-forward="true" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
               <folding>
                 <element signature="e#0#57#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="extrude.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Tasks/extrude.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -68,9 +78,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>executeCommand</find>
-      <find>userStoppedTalkingTime</find>
-      <find>executeResponse</find>
       <find>SUCCESS</find>
       <find>Kora T</find>
       <find>stopped</find>
@@ -98,6 +105,9 @@
       <find>executionStatusCodes</find>
       <find>NLPR</find>
       <find>distilledCommand</find>
+      <find>units</find>
+      <find>sleep</find>
+      <find>adsk.fusion.ExtentDirections.PositiveExtentDirection</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -135,7 +145,6 @@
         <option value="$PROJECT_DIR$/templates/initializing.html" />
         <option value="$PROJECT_DIR$/templates/welcome.html" />
         <option value="$PROJECT_DIR$/kora_modules/nlp/__init__.py" />
-        <option value="$USER_HOME$/PycharmProjects/LanguageLearner/trainWit.py" />
         <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/Mongo/mongoSetup.py" />
         <option value="$PROJECT_DIR$/Services/debug.py" />
@@ -143,19 +152,21 @@
         <option value="$PROJECT_DIR$/Services/interactionService.py" />
         <option value="$PROJECT_DIR$/Kora.py" />
         <option value="$PROJECT_DIR$/Tasks/ExecutionStatusCodes" />
-        <option value="$PROJECT_DIR$/Tasks/extrude.py" />
         <option value="$PROJECT_DIR$/Tasks/save.py" />
         <option value="$PROJECT_DIR$/Tasks/saveAs.py" />
         <option value="$PROJECT_DIR$/Tasks/extrude-TestingCommand.py" />
         <option value="$PROJECT_DIR$/kora_modules/fusion_execute_intent/__init__.py" />
         <option value="$PROJECT_DIR$/Tasks/rotate.py" />
         <option value="$PROJECT_DIR$/kora_modules/fusion_execute_intent/fusion_execute_intent.py" />
+        <option value="$USER_HOME$/PycharmProjects/LanguageLearner/witAutoTrainer/witAutoTrainer.py" />
+        <option value="$USER_HOME$/PycharmProjects/LanguageLearner/trainWit.py" />
+        <option value="$PROJECT_DIR$/Tasks/extrude.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-7" />
-    <option name="width" value="974" />
+    <option name="width" value="1010" />
     <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -193,7 +204,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.mongoSetup">
+  <component name="RunManager" selected="Python.trainWit">
     <configuration name="Test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -288,8 +299,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.mongoSetup" />
-        <item index="1" class="java.lang.String" itemvalue="Python.trainWit" />
+        <item index="0" class="java.lang.String" itemvalue="Python.trainWit" />
+        <item index="1" class="java.lang.String" itemvalue="Python.mongoSetup" />
         <item index="2" class="java.lang.String" itemvalue="Python.fusion_execute_intent" />
         <item index="3" class="java.lang.String" itemvalue="Python.Test" />
         <item index="4" class="java.lang.String" itemvalue="Python.kora" />
@@ -313,7 +324,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="974" height="1047" extended-state="0" />
+    <frame x="-7" y="0" width="1010" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14345405" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -322,7 +333,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32976446" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32976446" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28833553" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2852598" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -517,20 +528,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/PycharmProjects/LanguageLearner/witAutoTrainer/witAutoTrainer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/PycharmProjects/LanguageLearner/trainWit.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1020">
-          <caret line="63" column="23" lean-forward="true" selection-start-line="63" selection-start-column="23" selection-end-line="63" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Mongo/Interaction.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -550,22 +547,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tasks/extrude.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#50#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tasks/extrude-TestingCommand.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="597">
           <caret line="145" column="0" lean-forward="false" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
           <folding>
-            <element signature="e#0#50#0" expanded="true" />
+            <element signature="e#0#50#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -616,14 +603,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Services/debug.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="9" lean-forward="false" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Mongo/mongoSetup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -640,6 +619,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/kora_modules/fusion_execute_intent/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Tasks/rotate.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="767">
@@ -650,21 +637,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/kora_modules/fusion_execute_intent/__init__.py">
+    <entry file="file://$PROJECT_DIR$/Services/debug.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <caret line="1" column="9" lean-forward="false" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="9" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/PycharmProjects/LanguageLearner/trainWit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="415">
+          <caret line="57" column="25" lean-forward="false" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/PycharmProjects/LanguageLearner/witAutoTrainer/witAutoTrainer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#13#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/kora_modules/fusion_execute_intent/fusion_execute_intent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
+        <state relative-caret-position="170">
           <caret line="19" column="50" lean-forward="true" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
           <folding>
             <element signature="e#0#57#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tasks/extrude.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

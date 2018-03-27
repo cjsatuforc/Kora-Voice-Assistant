@@ -5,6 +5,7 @@ from .ExecutionStatusCodes import StatusCodes
 def extrudeSelect(entity, amount):
     try:
         app = adsk.core.Application.get()
+
         # Get the current Document
         doc = app.documents.item(0)
 
@@ -20,11 +21,18 @@ def extrudeSelect(entity, amount):
         distance = adsk.core.ValueInput.createByReal(amount)
 
         extrude = extrudes.addSimple(entity, distance, adsk.fusion.FeatureOperations.NewBodyFeatureOperation)
-        return 1
 
+        if entity.classType() == adsk.fusion.BRepFace.classType():
+            originalBody = entity.body
+            toolBodies = adsk.core.ObjectCollection.create()
+            toolBodies.add(originalBody)
+            targetBody = extrude.bodies.item(0)
+            combineFeaturesInput = rootComp.features.combineFeatures.createInput(targetBody, toolBodies)
+            rootComp.features.combineFeatures.add(combineFeaturesInput)
+
+        return 1
     except:
         return -1
-
 
 def convertToCM(amnt, units):
     if units == 'centimeters':
@@ -38,7 +46,7 @@ def convertToCM(amnt, units):
     elif units == 'feet':
         return (amnt * 30.48)
 
-    return 0  # No match case
+    return 0
 
 
 def run(amnt=1, units='centimeters'):
@@ -46,27 +54,30 @@ def run(amnt=1, units='centimeters'):
     Extrude can only take entities of type 'Profile'
     """
     try:
+        supportedExtrusionTypes = {
+            adsk.fusion.Profile.classType(),
+            adsk.fusion.BRepFace.classType()
+        }
+
         ui = adsk.core.Application.get().userInterface
 
         amount = convertToCM(amnt, units)
         selections = ui.activeSelections
         found = False
 
-        # If there are entities selected
         if selections:
-            # For all enties, if they are of type Profile, extrude them
             for sel in selections.asArray():
-                if sel and (sel.entity.classType() == adsk.fusion.Profile.classType()):
+                if sel and sel.entity.classType() in supportedExtrusionTypes:
                     found = True
-                    if extrudeSelect(sel.entity, amount) == -1:
-                        # If error in extrudeing, return error to log
+                    extrudeResult = extrudeSelect(sel.entity, amount)
+                    if extrudeResult == -1:
                         return StatusCodes.NONFATAL_ERROR
-        # If no selections or no Profiles, ask user to select one
+        # If no supported extrude types in selection, ask user to select one
         if not found:
-            ui.messageBox("Select a Profile To extrude")
+            ui.messageBox("Select a profile or face to extrude.")
             selectedSurface = ui.selectEntity('Select a Profile to extrude', 'Profiles')
-            if extrudeSelect(selectedSurface.entity, amount) == -1:
-                # If error in extrudeing, return error to log
+            extrudeResult = extrudeSelect(selectedSurface.entity, amount)
+            if extrudeResult == -1:
                 return StatusCodes.NONFATAL_ERROR
 
         return StatusCodes.SUCCESS
