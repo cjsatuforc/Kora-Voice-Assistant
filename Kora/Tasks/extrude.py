@@ -58,6 +58,7 @@ def run(amnt=1, units='centimeters'):
             adsk.fusion.Profile.classType(),
             adsk.fusion.BRepFace.classType()
         }
+        supportedSelectionFilters = 'Profiles,Faces'
 
         ui = adsk.core.Application.get().userInterface
 
@@ -75,7 +76,7 @@ def run(amnt=1, units='centimeters'):
         # If no supported extrude types in selection, ask user to select one
         if not found:
             ui.messageBox("Select a profile or face to extrude.")
-            selectedSurface = ui.selectEntity('Select a Profile to extrude', 'Profiles')
+            selectedSurface = ui.selectEntity('Select something to extrude.', supportedSelectionFilters)
             extrudeResult = extrudeSelect(selectedSurface.entity, amount)
             if extrudeResult == -1:
                 return StatusCodes.NONFATAL_ERROR
