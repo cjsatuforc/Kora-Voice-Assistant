@@ -1,18 +1,11 @@
 import threading
-from array import array
-import struct
 import json
-import requests
-import math
-import sys
 import random
 
 import adsk.core, adsk.fusion, adsk.cam, traceback
-from .packages import pyaudio
-from .kora_modules import nlp
-from .kora_modules import fusion_execute_intent
-from .kora_modules import text_to_speech
-from .kora_modules import user_interface
+from . import config
+from .modules import nlp
+from .modules import fusion_execute_intent
 
 _app = adsk.core.Application.cast(None)
 _ui = adsk.core.UserInterface.cast(None)
@@ -23,17 +16,8 @@ _resumeCmdDef = adsk.core.CommandDefinition.cast(None)
 _koraThread = None
 _onboarding = None
 _koraPaused = False
-_debug = True
 palette = None
-_templatesLocation = './templates/'
 handlers = []   #keeps handlers in scope
-customEventIDWitResponse = 'WitResponseEvent'
-customEventIDPopupMessage = 'PopupMessageEvent'
-customEventIDPaletteMessage = 'PaletteMessageEvent'
-
-# #################################
-# #        Add-In Main          # #
-# #################################
 
 def run(context):
     try:
@@ -54,8 +38,8 @@ def run(context):
         _activateCmdDef.commandCreated.add(onKoraActivated)
         handlers.append(onKoraActivated)
 
-        #Repeat above steps to the command to deactivate Kora
-        _deactivateCmdDef = _ui.commandDefinitions.addButtonDefinition('DeactivateKoraCmd', 'Deactivate Kora','Deactivate Kora voice control for Fusion.')
+        # Repeat above steps for the command to deactivate Kora
+        _deactivateCmdDef = _ui.commandDefinitions.addButtonDefinition('DeactivateKoraCmd', 'Deactivate Kora', 'Deactivate Kora voice control for Fusion.')
         deactivateButtonControl = addInsPanel.controls.addCommand(_deactivateCmdDef)
         deactivateButtonControl.isVisible = False
 
@@ -63,7 +47,7 @@ def run(context):
         _deactivateCmdDef.commandCreated.add(onKoraDeactivated)
         handlers.append(onKoraDeactivated)
 
-        # Pause.
+        # Repeat for command to pause Kora.
         _pauseCmdDef = _ui.commandDefinitions.addButtonDefinition('PauseKoraCmd', 'Pause Kora', 'Pause Kora voice control for Fusion.')
         pauseButtonControl = addInsPanel.controls.addCommand(_pauseCmdDef)
         pauseButtonControl.isVisible = False
@@ -72,6 +56,7 @@ def run(context):
         _pauseCmdDef.commandCreated.add(onKoraPaused)
         handlers.append(onKoraPaused)
 
+        # Repeat for command to resume Kora.
         _resumeCmdDef = _ui.commandDefinitions.addButtonDefinition('ResumeKoraCmd', 'Resume Kora', 'Resume Kora voice control for Fusion.')
         resumeButtonControl = addInsPanel.controls.addCommand(_resumeCmdDef)
         resumeButtonControl.isVisible = False
@@ -80,18 +65,18 @@ def run(context):
         _resumeCmdDef.commandCreated.add(onKoraResumed)
         handlers.append(onKoraResumed)
 
-        # Register the custom event and connect the handler.
-        customEventWitResponse = _app.registerCustomEvent(customEventIDWitResponse)
+        # Register the custom events and connect the handlers.
+        customEventWitResponse = _app.registerCustomEvent(config.customEventIDWitResponse)
         onWitResponse = NLPResponseHandler()
         customEventWitResponse.add(onWitResponse)
         handlers.append(onWitResponse)
 
-        customEventPopupMessage = _app.registerCustomEvent(customEventIDPopupMessage)
+        customEventPopupMessage = _app.registerCustomEvent(config.customEventIDPopupMessage)
         onPopupMessage = PopupMessageHandler()
         customEventPopupMessage.add(onPopupMessage)
         handlers.append(onPopupMessage)
 
-        customEventPaletteMessage = _app.registerCustomEvent(customEventIDPaletteMessage)
+        customEventPaletteMessage = _app.registerCustomEvent(config.customEventIDPaletteMessage)
         onPaletteMessage = PaletteMessageHandler()
         customEventPaletteMessage.add(onPaletteMessage)
         handlers.append(onPaletteMessage)
@@ -115,9 +100,9 @@ def stop(context): #anything that should occur when Kora stops (e.g. when editor
         pauseControl = addInsPanel.controls.itemById('PauseKoraCmd')
         resumeControl = addInsPanel.controls.itemById('ResumeKoraCmd')
 
-        _app.unregisterCustomEvent(customEventIDWitResponse)
-        _app.unregisterCustomEvent(customEventIDPopupMessage)
-        _app.unregisterCustomEvent(customEventIDPaletteMessage)
+        _app.unregisterCustomEvent(config.customEventIDWitResponse)
+        _app.unregisterCustomEvent(config.customEventIDPopupMessage)
+        _app.unregisterCustomEvent(config.customEventIDPaletteMessage)
 
         if activateControl:
             activateControl.deleteMe()
@@ -142,13 +127,13 @@ def stop(context): #anything that should occur when Kora stops (e.g. when editor
 
 def goToNextOnboarding():
     if palette:
-        palette.htmlFileURL = './template2.html'
+        palette.htmlFileURL = config.templatesLocation + 'template2.html'
     else:
         _ui.messageBox('palette does not exist, cannot go to next')
 
 def debugPopup(type, title, message):
-    if _debug:
-        _app.fireCustomEvent(customEventIDPopupMessage, json.dumps({'type': type, 'title': title, 'message': message}))
+    if config.debugMode:
+        _app.fireCustomEvent(config.customEventIDPopupMessage, json.dumps({'type': type, 'title': title, 'message': message}))
 
 class PaletteHTMLHandler(adsk.core.HTMLEventHandler):
     def __init__(self):
@@ -179,17 +164,15 @@ class KoraThread(threading.Thread):
     def run(self):
         debugPopup('info', 'KoraThread Start', 'KoraThread(' + self.uniqueID + ') starting.')
         def commandStartDetectedCallback():
-            _app.fireCustomEvent(customEventIDPaletteMessage, json.dumps({'message': 'listening'}))
+            _app.fireCustomEvent(config.customEventIDPaletteMessage, json.dumps({'message': 'listening'}))
         def commandEndDetectedCallback():
-            _app.fireCustomEvent(customEventIDPaletteMessage, json.dumps({'message': 'processing'}))
-        uID = self.uniqueID
-        def fireMessage(message):
-            debugPopup('info', 'NLP StreamAudio', 'KoraThread(' + uID + '): ' + message)
+            _app.fireCustomEvent(config.customEventIDPaletteMessage, json.dumps({'message': 'processing'}))
+
         try:
-            _app.fireCustomEvent(customEventIDPaletteMessage, json.dumps({'message': 'welcome'}))
+            _app.fireCustomEvent(config.customEventIDPaletteMessage, json.dumps({'message': 'welcome'}))
             while not self.stopped:
                 while not _koraPaused:
-                    result = nlp.streamAudio(fireMessage, commandStartDetectedCallback, commandEndDetectedCallback) #returns wit response json
+                    result = nlp.streamAudio(commandStartDetectedCallback, commandEndDetectedCallback) #returns wit response json
                     debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') exited steamAudio.')
                     if self.stopped:    #in case deactivation occurs while streamAudio is running
                         debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') encountered stop, discarding nlp result and breaking loop.')
@@ -197,10 +180,10 @@ class KoraThread(threading.Thread):
                     elif not _koraPaused:
                         if 'streamingError' in result and result['streamingError']:
                             debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') streaming error.')
-                            _app.fireCustomEvent(customEventIDPaletteMessage, json.dumps({'message': 'fatalError'}))
+                            _app.fireCustomEvent(config.customEventIDPaletteMessage, json.dumps({'message': 'fatalError'}))
                         else:
                             debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') sending WIT result.')
-                            _app.fireCustomEvent(customEventIDWitResponse, json.dumps(result))
+                            _app.fireCustomEvent(config.customEventIDWitResponse, json.dumps(result))
 
             debugPopup('info', 'KoraThread Exit', 'KoraThread(' + self.uniqueID + ') closing.')
         except:
@@ -246,7 +229,7 @@ class KoraActivatedHandler(adsk.core.CommandCreatedEventHandler):
             global palette
             palette = _ui.palettes.itemById('myPalette')
             if not palette:
-                palette = _ui.palettes.add('myPalette', 'Kora', _templatesLocation + 'initializing.html', True, False, False, 300, 200)
+                palette = _ui.palettes.add('myPalette', 'Kora', config.templatesLocation + 'initializing.html', True, False, False, 300, 200)
                 onPaletteHTMLEvent = PaletteHTMLHandler()
                 palette.incomingFromHTML.add(onPaletteHTMLEvent)
                 handlers.append(onPaletteHTMLEvent)
@@ -298,7 +281,6 @@ class KoraDeactivatedHandler(adsk.core.CommandCreatedEventHandler):
             if palette and not palette.isNative:
                 palette.deleteMe()
                 palette = None
-
         except:
             if _ui:
                 _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
@@ -339,18 +321,15 @@ class KoraDestroyedHandler(adsk.core.CommandEventHandler):
     def notify(self, args):
         try:
             eventArgs = adsk.core.CommandEventArgs.cast(args)
-            _app.unregisterCustomEvent(customEventIDWitResponse)
-            _app.unregisterCustomEvent(customEventIDPopupMessage)
+            _app.unregisterCustomEvent(config.customEventIDWitResponse)
+            _app.unregisterCustomEvent(config.customEventIDPopupMessage)
+            _app.unregisterCustomEvent(config.customEventIDPaletteMessage)
+
             if _koraThread:
                 _koraThread.stop()
-
         except:
             if _ui:
                 _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
-
-# #####################################
-# #        Module Handlers          # #
-# #####################################
  
 
 class NLPResponseHandler(adsk.core.CustomEventHandler):
@@ -365,8 +344,8 @@ class NLPResponseHandler(adsk.core.CustomEventHandler):
             #get userID
             nlpResponse['user'] = _app.userId
             debugPopup('info', 'NLP Response', str(nlpResponse))
-            executionResult = fusion_execute_intent.executeCommand(nlpResponse, firePopup=debugPopup)
-            _app.fireCustomEvent(customEventIDPaletteMessage, json.dumps({'message': executionResult['fusionExecutionStatus']}))
+            executionResult = fusion_execute_intent.executeCommand(nlpResponse)
+            _app.fireCustomEvent(config.customEventIDPaletteMessage, json.dumps({'message': executionResult['fusionExecutionStatus']}))
         except:
             if _ui:
                 _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
@@ -400,19 +379,19 @@ class PaletteMessageHandler(adsk.core.CustomEventHandler):
             messageInfo = json.loads(eventArgs.additionalInfo)
             newTemplate = ''
             if messageInfo['message'] == 'listening':
-                newTemplate = _templatesLocation + 'listening.html'
+                newTemplate = config.templatesLocation + 'listening.html'
             elif messageInfo['message'] == 'processing':
-                newTemplate = _templatesLocation + 'processing.html'
+                newTemplate = config.templatesLocation + 'processing.html'
             elif messageInfo['message'] == 'success':
-                newTemplate = _templatesLocation + 'success.html'
+                newTemplate = config.templatesLocation + 'success.html'
             elif messageInfo['message'] == 'fatalError' or messageInfo['message'] == 'nonfatalError':
-                newTemplate = _templatesLocation + 'error.html'
+                newTemplate = config.templatesLocation + 'error.html'
             elif messageInfo['message'] == 'unrecognizedCommand':
-                newTemplate = _templatesLocation + 'unrecognizedCommand.html'
+                newTemplate = config.templatesLocation + 'unrecognizedCommand.html'
             elif messageInfo['message'] == 'userAbort':
-                newTemplate = _templatesLocation + 'userAbort.html'
+                newTemplate = config.templatesLocation + 'userAbort.html'
             elif messageInfo['message'] == 'welcome':
-                newTemplate = _templatesLocation + 'welcome.html'
+                newTemplate = config.templatesLocation + 'welcome.html'
             else:
                 _ui.messageBox('did not find template for: ' + messageInfo['message'])
 

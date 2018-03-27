@@ -11,12 +11,13 @@
 *.blg
 *.pdf
 
-#holds out client access token
-witConfig.py
-
 #ignore caches and .pyc
 *.pyc
-*__pycache__
+__pycache__/
+
+# Fusion-Generated Directory
+.idea/
+
 
 #ignore VS Code workspaces
 Kora.code-workspace
