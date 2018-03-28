@@ -1,4 +1,8 @@
-import adsk.core, adsk.fusion, adsk.cam, traceback, json
+import adsk.cam
+import adsk.core
+import adsk.fusion
+import json
+
 from . import config
 
 

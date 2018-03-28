@@ -1,8 +1,11 @@
-import adsk.core, adsk.fusion, adsk.cam
 import math
 
-from ..ExecutionStatusCodes import StatusCodes
+import adsk.cam
+import adsk.core
+import adsk.fusion
+
 from ....kora_utils import getApp
+from ..ExecutionStatusCodes import StatusCodes
 
 
 def rotate(direction, magnitude=None, units='degrees'):

@@ -1,4 +1,8 @@
-import threading, traceback, random, json
+import json
+import random
+import threading
+import traceback
+
 from .. import config
 from ..kora_utils import debugPopup, getApp
 from ..modules import nlp
@@ -35,7 +39,7 @@ class KoraThread(threading.Thread):
                         if 'streamingError' in result and result['streamingError']:
                             debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') streaming error.')
                             app.fireCustomEvent(config.customEventIDPaletteMessage,
-                                                 json.dumps({'message': 'fatalError'}))
+                                                json.dumps({'message': 'fatalError'}))
                         else:
                             debugPopup('info', 'KoraThread', 'KoraThread(' + self.uniqueID + ') sending WIT result.')
                             app.fireCustomEvent(config.customEventIDWitResponse, json.dumps(result))

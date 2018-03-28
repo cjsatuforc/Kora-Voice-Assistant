@@ -4,7 +4,7 @@ import requests
 import math
 import time
 
-from ...ext import pyaudio
+from ....ext import pyaudio
 from ... import config
 
 THRESHOLD = .05

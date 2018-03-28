@@ -1,7 +1,7 @@
-from ..logging import logInteraction
-from ... import config
 from . import tasks
 from .ExecutionStatusCodes import StatusCodes
+from ..logging import logInteraction
+from ... import config
 
 
 @logInteraction()

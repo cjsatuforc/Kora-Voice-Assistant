@@ -1,7 +1,8 @@
-import adsk.core, adsk.fusion, adsk.cam, traceback
+import traceback
 
-from ..ExecutionStatusCodes import StatusCodes
 from ....kora_utils import getApp, debugPopup
+from ..ExecutionStatusCodes import StatusCodes
+
 
 def saveAs(fileName, commingFromSave=False):
     targetSaveFolder = None

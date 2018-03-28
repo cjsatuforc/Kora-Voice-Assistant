@@ -1,6 +1,6 @@
 import datetime
 
-from ...ext.mongoPackages import mongoengine
+from ....ext.mongoPackages import mongoengine
 
 # class Interaction(mongoengine.Document):
 #     postingDate         = mongoengine.DateTimeField(default=datetime.datetime.now)

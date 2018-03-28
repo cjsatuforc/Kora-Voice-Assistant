@@ -1,10 +1,11 @@
+import time
+import traceback
 from functools import wraps
-import time, traceback
 
-from .interaction import Interaction
-from . import mongoSetup as mongoSetup
-from ... import config
 from ...kora_utils import debugPopup
+from . import mongoSetup as mongoSetup
+from .interaction import Interaction
+from ... import config
 
 mongoSetup.globalInit()  # connecting to db
 

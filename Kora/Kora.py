@@ -1,13 +1,12 @@
-import threading
-import json
 import random
+import traceback
 
-import adsk.core, adsk.fusion, adsk.cam, traceback
-from . import config
-from . import globals
-from .kora_utils import getUI, getApp
-from .event_handlers import KoraActivatedHandler, KoraDeactivatedHandler, KoraPausedHandler, KoraResumedHandler
-from .event_handlers import NLPResponseHandler, PaletteMessageHandler, PopupMessageHandler
+import adsk.core, adsk.cam, adsk.fusion
+
+from .main import config, globals
+from .main.event_handlers import KoraActivatedHandler, KoraDeactivatedHandler, KoraPausedHandler, KoraResumedHandler
+from .main.event_handlers import NLPResponseHandler, PaletteMessageHandler, PopupMessageHandler
+from .main.kora_utils import getUI, getApp
 
 _activateCmdDef = adsk.core.CommandDefinition.cast(None)
 _deactivateCmdDef = adsk.core.CommandDefinition.cast(None)

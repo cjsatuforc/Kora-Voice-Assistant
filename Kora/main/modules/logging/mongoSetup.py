@@ -1,4 +1,4 @@
-from ...ext.mongoPackages import mongoengine
+from ....ext.mongoPackages import mongoengine
 
 def globalInit():
     mongoengine.register_connection(alias='core', name='kora')

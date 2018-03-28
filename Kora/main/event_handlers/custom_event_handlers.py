@@ -1,6 +1,11 @@
-import adsk.core, adsk.fusion, adsk.cam, traceback, json
-from .. import config
-from .. import globals
+import json
+import traceback
+
+import adsk.cam
+import adsk.core
+import adsk.fusion
+
+from .. import config, globals
 from ..kora_utils import debugPopup, getApp, getUI
 from ..modules import fusion_execute_intent
 

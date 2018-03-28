@@ -1,7 +1,13 @@
-import adsk.core, adsk.fusion, adsk.cam, traceback, json
+import json
+import traceback
+
+import adsk.cam
+import adsk.core
+import adsk.fusion
 
 from .. import config
 from ..kora_utils import getUI, debugPopup
+
 
 class PaletteHTMLHandler(adsk.core.HTMLEventHandler):
     def __init__(self):

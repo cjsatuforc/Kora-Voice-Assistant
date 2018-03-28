@@ -1,9 +1,13 @@
-import adsk.core, adsk.fusion, adsk.cam, traceback
-from .kora_thread import KoraThread
-from .. import config
-from .. import globals
-from ..kora_utils import getApp, getUI, debugPopup
+import traceback
+
+import adsk.cam
+import adsk.core
+import adsk.fusion
+
+from .. import config, globals
+from ..kora_utils import getApp, getUI
 from ..modules import nlp
+from .kora_thread import KoraThread
 
 _handlers = []
 
@@ -38,7 +42,7 @@ class KoraActivatedHandler(adsk.core.CommandCreatedEventHandler):
             globals.palette = ui.palettes.itemById('myPalette')
             if not globals.palette:
                 globals.palette = ui.palettes.add('myPalette', 'Kora', config.templatesLocation + 'initializing.html', True,
-                                           False, False, 300, 200)
+                                                  False, False, 300, 200)
                 """onPaletteHTMLEvent = PaletteHTMLHandler()
                 globals.palette.incomingFromHTML.add(onPaletteHTMLEvent)
                 globals.handlers.append(onPaletteHTMLEvent)"""

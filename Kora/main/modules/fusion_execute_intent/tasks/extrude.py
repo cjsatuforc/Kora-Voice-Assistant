@@ -1,7 +1,10 @@
-import adsk.core, adsk.fusion, adsk.cam, traceback
+import adsk.cam
+import adsk.core
+import adsk.fusion
+import traceback
 
-from ..ExecutionStatusCodes import StatusCodes
 from ....kora_utils import getApp, getUI
+from ..ExecutionStatusCodes import StatusCodes
 
 
 def extrudeSelect(entity, amount):
