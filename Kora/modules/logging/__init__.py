@@ -1,1 +1,1 @@
-from .log import logInteraction
+from .logInteraction import logInteraction
