@@ -3,7 +3,7 @@ import adsk.core, adsk.fusion, adsk.cam, traceback
 from ..ExecutionStatusCodes import StatusCodes
 from ....kora_utils import getApp, debugPopup
 
-def _saveAs(fileName, commingFromSave=False):
+def saveAs(fileName, commingFromSave=False):
     targetSaveFolder = None
     try:
         _app = getApp()
@@ -32,6 +32,3 @@ def _saveAs(fileName, commingFromSave=False):
     except:
         debugPopup('error', 'saveAs', 'Failed:\n{}'.format(traceback.format_exc()))
         return StatusCodes.FATAL_ERROR
-
-def run(fileName, commingFromSave=False):
-	return _saveAs(fileName, commingFromSave)

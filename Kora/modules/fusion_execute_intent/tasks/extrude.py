@@ -3,6 +3,7 @@ import adsk.core, adsk.fusion, adsk.cam, traceback
 from ..ExecutionStatusCodes import StatusCodes
 from ....kora_utils import getApp, getUI
 
+
 def extrudeSelect(entity, amount):
     try:
         app = getApp()
@@ -32,6 +33,7 @@ def extrudeSelect(entity, amount):
     except:
         return -1
 
+
 def convertToCM(amnt, units):
     if units == 'centimeters':
         return amnt;
@@ -47,7 +49,7 @@ def convertToCM(amnt, units):
     return 0
 
 
-def run(amnt=1, units='centimeters'):
+def extrude(amnt=1, units='centimeters'):
     try:
         supportedExtrusionTypes = {
             adsk.fusion.Profile.classType(),
@@ -77,7 +79,6 @@ def run(amnt=1, units='centimeters'):
                 return StatusCodes.NONFATAL_ERROR
 
         return StatusCodes.SUCCESS
-
     except:
         if ui:
             ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))

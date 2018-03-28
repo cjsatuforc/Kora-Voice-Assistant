@@ -5,7 +5,7 @@ from ..ExecutionStatusCodes import StatusCodes
 from ....kora_utils import getApp
 
 
-def _rotate(direction, magnitude=None, units='degrees'):
+def rotate(direction, magnitude=None, units='degrees'):
     app = getApp()
     if not direction:
         return StatusCodes.NONFATAL_ERROR
@@ -44,7 +44,3 @@ def _rotate(direction, magnitude=None, units='degrees'):
     app.activeViewport.camera = camera
 
     return StatusCodes.SUCCESS
-
-
-def run(direction, magnitude=None, units='degrees'):
-    return _rotate(direction, magnitude, units)

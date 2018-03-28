@@ -24,19 +24,19 @@ def executeCommand(command, callback=None):
             direction = _getFromCommand(command, ['rotation_quantity', 'direction', 'value'])
             magnitude = _getFromCommand(command, ['rotation_quantity', 'number', 'value'])
             units = _getFromCommand(command, ['rotation_quantity', 'units', 'value'])
-            executionStatus = tasks.rotate.run(direction, magnitude, units)
+            executionStatus = tasks.rotate(direction, magnitude, units)
         elif shouldExecute('save'):
             chosenAPICall = 'save'
-            executionStatus = tasks.save.run()
+            executionStatus = tasks.save()
         elif shouldExecute('save_as'):
             chosenAPICall = 'save_as'
             filename = _getFromCommand(command, ['file_name', 'value'])
-            executionStatus = tasks.saveAs.run(filename)
+            executionStatus = tasks.saveAs(filename)
         elif shouldExecute('extrude'):
             chosenAPICall = 'extrude'
             magnitude = _getFromCommand(command, ['extrude_quantity', 'number', 'value'])
             units = _getFromCommand(command, ['extrude_quantity', 'units', 'value'])
-            executionStatus = tasks.extrude.run(magnitude, units)
+            executionStatus = tasks.extrude(magnitude, units)
 
     returnDict = {'fusionExecutionStatus': executionStatus, 'chosenAPICall': chosenAPICall}
 

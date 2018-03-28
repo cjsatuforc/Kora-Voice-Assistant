@@ -5,9 +5,9 @@ from . import saveAs
 from ....kora_utils import getApp, getUI
 
 
-def _save():
+def save():
     try:
-        app = getApp
+        app = getApp()
         ui = getUI()
 
         doc = app.activeDocument
@@ -26,6 +26,3 @@ def _save():
         if ui:
             ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
         return StatusCodes.FATAL_ERROR
-
-def run():
-	return _save()
