@@ -1,24 +1,14 @@
 import adsk.core, adsk.fusion, adsk.cam, traceback
 
 from ..ExecutionStatusCodes import StatusCodes
+from ....kora_utils import getApp, debugPopup
 
-#TODO: Ask Jeremy why this needs to be global.
-targetSaveFolder = None
-
-
-##
-##    * Saves a file by a given name
-##    * If this is the first save as operation of this session, then
-##      we need to get the current project's dataFolder.    
-##
 def _saveAs(fileName, commingFromSave=False):
-    # Put here to avoid circular dependencies. If put in global space, import error
+    targetSaveFolder = None
     try:
-        _app = adsk.core.Application.get()
-        _ui = _app.userInterface
+        _app = getApp()
 
         # NO target folder for save. Need To get it
-        global targetSaveFolder
         if not targetSaveFolder:
             targetSaveFolder = _app.data.activeProject.rootFolder
          
@@ -40,8 +30,7 @@ def _saveAs(fileName, commingFromSave=False):
        
         return StatusCodes.SUCCESS
     except:
-        if _ui:
-            _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))    
+        debugPopup('error', 'saveAs', 'Failed:\n{}'.format(traceback.format_exc()))
         return StatusCodes.FATAL_ERROR
 
 def run(fileName, commingFromSave=False):

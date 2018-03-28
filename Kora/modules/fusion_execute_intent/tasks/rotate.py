@@ -2,10 +2,11 @@ import adsk.core, adsk.fusion, adsk.cam
 import math
 
 from ..ExecutionStatusCodes import StatusCodes
+from ....kora_utils import getApp
 
 
 def _rotate(direction, magnitude=None, units='degrees'):
-    _app = adsk.core.Application.get()
+    app = getApp()
     if not direction:
         return StatusCodes.NONFATAL_ERROR
     if not units or units == 'degrees':
@@ -17,7 +18,7 @@ def _rotate(direction, magnitude=None, units='degrees'):
     elif magnitude == None:
         magnitude = math.pi / 2.0
 
-    camera = _app.activeViewport.camera
+    camera = app.activeViewport.camera
     rotationMatrix = adsk.core.Matrix3D.create()
 
     # TODO: fix vertical rotation of 90 degrees.
@@ -40,7 +41,7 @@ def _rotate(direction, magnitude=None, units='degrees'):
     newPos = camera.eye.asVector()
     newPos.transformBy(rotationMatrix)
     camera.eye = newPos.asPoint()
-    _app.activeViewport.camera = camera
+    app.activeViewport.camera = camera
 
     return StatusCodes.SUCCESS
 

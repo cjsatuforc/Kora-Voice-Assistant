@@ -1,13 +1,11 @@
 import adsk.core, adsk.fusion, adsk.cam, traceback
 
 from ..ExecutionStatusCodes import StatusCodes
+from ....kora_utils import getApp, getUI
 
 def extrudeSelect(entity, amount):
     try:
-        app = adsk.core.Application.get()
-
-        # Get the current Document
-        doc = app.documents.item(0)
+        app = getApp()
 
         # Get the current Design
         product = app.activeProduct
@@ -57,7 +55,7 @@ def run(amnt=1, units='centimeters'):
         }
         supportedSelectionFilters = 'Profiles,Faces'
 
-        ui = adsk.core.Application.get().userInterface
+        ui = getUI()
 
         amount = convertToCM(amnt, units)
         selections = ui.activeSelections

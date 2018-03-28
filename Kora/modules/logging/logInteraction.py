@@ -1,14 +1,10 @@
 from functools import wraps
-import time
-
-import adsk.core, adsk.fusion, adsk.cam, traceback
-
-_app = adsk.core.Application.get()
-_ui = _app.userInterface
+import time, traceback
 
 from .interaction import Interaction
 from . import mongoSetup as mongoSetup
 from ... import config
+from ...kora_utils import debugPopup
 
 mongoSetup.globalInit()  # connecting to db
 
@@ -59,7 +55,8 @@ def logInteraction():
                     try:
                         newInteraction.save()
                     except:
-                        _ui.messageBox('InteractionService Failed to Save'.format(traceback.format_exc()))
+                        # TODO: Replace with logging function.
+                        debugPopup('error', 'logInteraction', 'InteractionService Failed to Save'.format(traceback.format_exc()))
 
                 # return the execution status like originally
                 return executeResponse
