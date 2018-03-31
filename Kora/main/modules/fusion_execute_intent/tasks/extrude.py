@@ -37,32 +37,37 @@ def extrudeSelect(entity, amount):
         return -1
 
 
-def convertToCM(amnt, units):
+def convertToCM(magnitude, units):
     if units == 'centimeters':
-        return amnt;
+        return magnitude;
     elif units == 'millimeters' or 'millimeter':
-        return (amnt / 10)
+        return (magnitude / 10)
     elif units == 'meters':
-        return (amnt * 100)
+        return (magnitude * 100)
     elif units == 'inches':
-        return (amnt * 2.54)
+        return (magnitude * 2.54)
     elif units == 'feet':
-        return (amnt * 30.48)
+        return (magnitude * 30.48)
 
     return 0
 
 
-def extrude(amnt=1, units='centimeters'):
+def extrude(magnitude=1, units='centimeters'):
+    ui = None
     try:
+        ui = getUI()
+
+        if magnitude is None:
+            return StatusCodes.NONFATAL_ERROR
+
         supportedExtrusionTypes = {
             adsk.fusion.Profile.classType(),
             adsk.fusion.BRepFace.classType()
         }
+
         supportedSelectionFilters = 'Profiles,Faces'
 
-        ui = getUI()
-
-        amount = convertToCM(amnt, units)
+        amount = convertToCM(magnitude, units)
         selections = ui.activeSelections
         found = False
 
