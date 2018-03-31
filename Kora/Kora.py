@@ -47,6 +47,7 @@ def stop(context):
         if globals.palette and not globals.palette.isNative:
             globals.palette.deleteMe()
 
+        global _registeredCommands, _registeredCustomEvents
         app = getApp()
         ui = getUI()
         addInsPanel = ui.allToolbarPanels.itemById('SolidScriptsAddinsPanel')
@@ -58,8 +59,12 @@ def stop(context):
             if command['definition']:
                 command['definition'].deleteMe()
 
+        _registeredCommands = []
+
         for event in _registeredCustomEvents:
             app.unregisterCustomEvent(event['id'])
+
+        _registeredCustomEvents = []
     except:
         if ui:
             ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
