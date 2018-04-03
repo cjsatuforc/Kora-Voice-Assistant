@@ -4,28 +4,12 @@ from ....kora_utils import getApp, debugPopup
 from ..ExecutionStatusCodes import StatusCodes
 
 
-<<<<<<< HEAD:Kora/Tasks/saveAs.py
-##
-##    * Saves a file by a given name
-##    * If this is the first save as operation of this session, then
-##      we need to get the current project's dataFolder.    
-##
-def _saveAs(fileName, commingFromSave=False):
-    # Put here to avoid circular dependencies. If put in global space, import error
-=======
 def saveAs(fileName, commingFromSave=False):
     targetSaveFolder = None
->>>>>>> 7df36a68ba2d402dd7d68dfb1e27b26b3a5417e7:Kora/main/modules/fusion_execute_intent/tasks/saveAs.py
     try:
         _app = getApp()
 
-<<<<<<< HEAD:Kora/Tasks/saveAs.py
         targetSaveFolder = _app.data.activeProject.rootFolder
-=======
-        # NO target folder for save. Need To get it
-        if not targetSaveFolder:
-            targetSaveFolder = _app.data.activeProject.rootFolder
->>>>>>> 7df36a68ba2d402dd7d68dfb1e27b26b3a5417e7:Kora/main/modules/fusion_execute_intent/tasks/saveAs.py
          
         def toCamel(s):
             if not isinstance(s, str):

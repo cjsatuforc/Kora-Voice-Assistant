@@ -1,3 +1,5 @@
+import math
+
 import adsk.cam
 import adsk.core
 import adsk.fusion
@@ -39,17 +41,17 @@ def extrudeSelect(entity, amount):
 
 def convertToCM(magnitude, units):
     if units == 'centimeters' or 'centimeter':
-		return magnitude;
-	elif units == 'millimeters' or 'millimeter':
-		return (magnitude / 10)
-	elif units == 'meters' or 'meter':
-		return (magnitude * 100)
-	elif units == 'inches' or 'inch':
-		return (magnitude * 2.54)
-	elif units == 'feet' or 'foot':
-		return (magnitude * 30.48)
-
-	return 0 # No match case
+        return magnitude;
+    elif units == 'millimeters' or 'millimeter':
+	    return (magnitude / 10)
+    elif units == 'meters' or 'meter':
+        return (magnitude * 100)
+    elif units == 'inches' or 'inch':
+        return (magnitude * 2.54)
+    elif units == 'feet' or 'foot':
+        return (magnitude * 30.48)
+        
+    return 0 # No match case
 
 
 def extrude(text, magnitude=1, units='centimeters'):

@@ -33,7 +33,7 @@ def executeCommand(command, callback=None):
             filename = _getFromCommand(command, ['file_name', 'value'])
             executionStatus = tasks.saveAs(filename)
         elif shouldExecute('extrude'):
-            text = _getFromCommand(distilledCommand, ['_text'])
+            text = _getFromCommand(command, ['_text'])
             chosenAPICall = 'extrude'
             magnitude = _getFromCommand(command, ['extrude_quantity', 'number', 'value'])
             units = _getFromCommand(command, ['extrude_quantity', 'units', 'value'])
