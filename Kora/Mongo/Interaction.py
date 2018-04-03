@@ -23,7 +23,7 @@ class Interaction(mongoengine.Document):
     user                    = mongoengine.StringField(required=True)
     witResponse             = mongoengine.DynamicField()
     chosenAPICall           = mongoengine.StringField()
-    fusionExecutionStatus   = mongoengine.IntField()
+    fusionExecutionStatus   = mongoengine.StringField()
     execTime                = mongoengine.DecimalField(min_value=0.00)
     
     meta = {

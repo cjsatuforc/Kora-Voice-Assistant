@@ -1,28 +1,31 @@
 import adsk.core, adsk.fusion, adsk.cam, traceback
 import math
 
+from .ExecutionStatusCodes import StatusCodes
+
 def extrudeSelect(entity, amount):
-	try:
-		app = adsk.core.Application.get()
-		# Get the current Document
-		doc = app.documents.item(0)
+    try:
+        app = adsk.core.Application.get()
+        # Get the current Document
+        doc = app.documents.item(0)
 
-		# Get the current Design
-		product = app.activeProduct
-		design = adsk.fusion.Design.cast(product)
+        # Get the current Design
+        product = app.activeProduct
+        design = adsk.fusion.Design.cast(product)
 
-		# Get the root component of the active design
-		rootComp = design.rootComponent
-				
-		# Get extrude features
-		extrudes = rootComp.features.extrudeFeatures   
-		distance = adsk.core.ValueInput.createByReal(amount)
-		
-		extrude = extrudes.addSimple(entity, distance, adsk.fusion.FeatureOperations.NewBodyFeatureOperation) 
-		return 1
+        # Get the root component of the active design
+        rootComp = design.rootComponent
 
-	except:
-		return -1
+        # Get extrude features
+        extrudes = rootComp.features.extrudeFeatures
+        distance = adsk.core.ValueInput.createByReal(amount)
+
+        extrude = extrudes.addSimple(entity, distance, adsk.fusion.FeatureOperations.NewBodyFeatureOperation)
+        return 1
+
+    except:
+        return -1
+
 
 def convertToCM(amnt, units):
 	if units == 'centimeters' or 'centimeter':
@@ -38,41 +41,39 @@ def convertToCM(amnt, units):
 
 	return 0 # No match case	
 	
-def run(amnt, units='centimeters', negate=False):
-	from ..kora_modules.fusion_execute_intent import executionStatusCodes
-	"""
-	Extrude can only take entities of type 'Profile'
-	"""
-	if not amnt or math.isnan(amnt):
-		return executionStatusCodes.NONFATAL_ERROR
-	try:
-		ui = adsk.core.Application.get().userInterface
-		if(negate and amnt > 0):
-			amnt = amnt * -1
-		amount = convertToCM(amnt, units)
-		selections = ui.activeSelections
-		found = False
+def run(text, amnt, units='centimeters'):
+    if not amnt or math.isnan(amnt):
+        return StatusCodes.NONFATAL_ERROR
+    try:
+        ui = adsk.core.Application.get().userInterface
+        # if amount should be negative
+        if text and ("push down" in text or "negative" in text) and amnt > 0:
+            amnt = amnt * -1
+        
+        amount = convertToCM(amnt, units)
+        selections = ui.activeSelections
+        found = False
 
 		# If there are entities selected
-		if selections:
-			# For all enties, if they are of type Profile, extrude them
-			for sel in selections.asArray():
-				if sel and (sel.entity.classType() == adsk.fusion.Profile.classType()):
-					found = True
-					if extrudeSelect(sel.entity, amount) == -1:
-						# If error in extrudeing, return error to log
-						return executionStatusCodes.NONFATAL_ERROR
+        if selections:
+		    # For all enties, if they are of type Profile, extrude them
+            for sel in selections.asArray():
+                if sel and (sel.entity.classType() == adsk.fusion.Profile.classType()):
+                    found = True
+                    if extrudeSelect(sel.entity, amount) == -1:
+                        # If error in extrudeing, return error to log
+                        return StatusCodes.NONFATAL_ERROR
 		# If no selections or no Profiles, ask user to select one
-		if not found:
-			ui.messageBox("Select a Profile To extrude")
-			selectedSurface = ui.selectEntity('Select a Profile to extrude', 'Profiles')
-			if extrudeSelect(selectedSurface.entity, amount) == -1:
-				# If error in extrudeing, return error to log
-				return executionStatusCodes.NONFATAL_ERROR
-
-		return executionStatusCodes.SUCCESS
-
-	except:
-		if ui:
-			ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
-			return executionStatusCodes.FATAL_ERROR
+        if not found:
+            ui.messageBox("Select a Profile To extrude")
+            selectedSurface = ui.selectEntity('Select a Profile to extrude', 'Profiles')
+            if extrudeSelect(selectedSurface.entity, amount) == -1:
+                # If error in extrudeing, return error to log
+                return StatusCodes.NONFATAL_ERROR
+        
+        return StatusCodes.SUCCESS
+        
+    except:
+        if ui:
+            ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
+            return StatusCodes.FATAL_ERROR
