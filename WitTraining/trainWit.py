@@ -31,12 +31,12 @@ def getLoginCreds():
 def generateTrainingPhrases():
     # for phrase in RandomRotate(10):
     #     yield phrase
-    # for phrase in RandomSaveAs(100):
+    # for phrase in RandomExtrude(100):
     #     yield phrase
-    for phrase in RandomExtrude(100):
-        yield phrase
-    # for phrase in RandomSave(100):
+    # for phrase in RandomSave(50):
     #     yield phrase
+    for phrase in RandomSaveAs(50):
+	        yield phrase
 
 ###############################
 ##                           ##
@@ -45,27 +45,24 @@ def generateTrainingPhrases():
 ###############################
 def RandomSave(numToGenerate):
     while numToGenerate:
-        yield TrainingPhrase(Intents.save, 
-            random.choice(['', 'Please ']) + 'save ' +  random.choice(['', 'this', 'it', 'now']))
+        # random.choice(['', 'please ']) + 'save ' +  random.choice(['', 'this', 'it', 'now']))
+        yield TrainingPhrase(Intents.save, "please save this")
+            
        
         numToGenerate -= 1
 
 
 def RandomSaveAs(numToGenerate):
     while numToGenerate:
-        version = random.random() * randint(0, 20)
         version = random.choice(['one','two','three','four','five','six','seven','eight','nine','ten'])
 
-        fileName = random.choice(['my draft', 'version', 'new car', 'chair', 'jeremy test', 
-                                     'example testing', 'new draft for class', 'testing for tommorow',
-                                     'old truck', 'electic skateboard', 'auto desk', 'champion',
-                                     'bridge', 'golden gate bridge',]) \
+        fileName = random.choice(['my draft', 'version', 'auto desk', 'chair', 'test', 
+                                     'demo', 'auto desk demo']) \
                     + random.choice(['', ' ' + version])  
-
         fileName = Entity(fileName, EntityTypes.fileName)
 
         yield TrainingPhrase(Intents.saveAs, 
-                random.choice(['', 'Please ']) + 'save ' +  random.choice(['', 'this ', 'it ']) + 'as' + fileName)
+                random.choice(['', 'please ']) + 'save ' +  random.choice(['', 'this ', 'it ']) + 'as' + fileName)
 
         numToGenerate -= 1    
 
@@ -81,7 +78,7 @@ def RandomExtrude(numToGenerate):
         if makeInt <= 3:
             magnitude = magnitude * -1
         
-        units = random.choice(['milimeters', 'centimeters', 'meters', 'inches','feet'])
+        units = random.choice(['millimeters', 'centimeters', 'meters', 'inches','feet'])
 
         magnitude = Entity(magnitude, EntityTypes.wit_number)
         units = Entity(units, EntityTypes.units)

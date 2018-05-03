@@ -17,7 +17,7 @@ def save():
             if fileName[1]:  # second arg is True if box cancelled, false if submitted
                 return StatusCodes.USER_ABORT
             else:
-                return saveAs.run(fileName[0], True)
+                return saveAs(fileName[0], True)
         elif not doc.save("1"):
             return StatusCodes.NONFATAL_ERROR
 

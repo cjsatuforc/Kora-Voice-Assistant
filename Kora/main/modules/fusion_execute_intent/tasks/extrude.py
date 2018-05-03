@@ -40,15 +40,15 @@ def extrudeSelect(entity, amount):
 
 
 def convertToCM(magnitude, units):
-    if units == 'centimeters' or 'centimeter':
+    if units == 'centimeters' or units == 'centimeter':
         return magnitude;
-    elif units == 'millimeters' or 'millimeter':
+    elif units == 'millimeters' or units == 'millimeter':
 	    return (magnitude / 10)
-    elif units == 'meters' or 'meter':
+    elif units == 'meters' or units == 'meter':
         return (magnitude * 100)
-    elif units == 'inches' or 'inch':
+    elif units == 'inches' or units == 'inch':
         return (magnitude * 2.54)
-    elif units == 'feet' or 'foot':
+    elif units == 'feet' or units == 'foot':
         return (magnitude * 30.48)
         
     return 0 # No match case
@@ -62,7 +62,7 @@ def extrude(text, magnitude=1, units='centimeters'):
         if not magnitude or math.isnan(magnitude):
             return StatusCodes.NONFATAL_ERROR
          # if amount should be negative
-        if text and ("push down" in text or "negative" in text) and magnitude > 0:
+        if text and ("down" in text) and magnitude > 0:
             magnitude = magnitude * -1
 
         if magnitude is None:
