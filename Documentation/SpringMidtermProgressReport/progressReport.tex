@@ -91,9 +91,12 @@
 % 8. now you write!
 
 \section{Purpose}
-	Kora is a proof of concept project that will integrate natural language processing capabilities into Autodesk's 3-D computer-aided design software, Fusion.
-	It will be a speech-based virtual assistant for Fusion that lets users perform a subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
-	The end result will be a tool that decreases the time required to achieve goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
+	Kora is a proof of concept project that will integrate a natural language processing library into Autodesk's 3-D computer aided design software, Fusion 360.
+	Kora will be a speech-based virtual assistant for Fusion that lets users perform a subset of tasks within the product such as saving a document by verbally instructing it to perform the task.
+	As a stretch goal, Kora will be capable of questioning the user and using responses to predict and automatically assist with future user behavior.
+	
+	Kora will offer users a tool that decreases the time required to achieve their goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
+	If the stretch goal is achieved, Kora will further increase productivity by learning to automate specific workflows within the product.
 
 \section{Goals}
 	\begin{itemize}
@@ -114,13 +117,15 @@
 
 \section{Project Progress}
 	\subsection{User Interaction Logging with MongoDB}
-		Kora uses MongoDB to store documents describing each interaction Kora has with a user.
+		Kora's MongoDB database will have an Interaction collection.
+		The Interaction collection is setup and functioning locally.
+		The Interaction collection stores documents describing each user-Kora interaction.
 		Each document contains the posting date, the user's Fusion ID number, the JSON returned by WIT, the chosen Fusion API call, Fusion's execution status, and the time it took from when the user stopped talking to the time Fusion finished executing the command.
 		This process is setup and functioning locally.
 
 	\subsection{Supported Commands}
 		Kora can now execute the Rotate, Save, Save As, and Extrude commands which are all of the commands required for the project.
-		If the user commands Kora to save and they have not saved the file themselves for the first time, then Kora will pop up a text input and ask the user what they want the file to be called.
+		If the user commands Kora to save and they have not saved the file themselves for the first time, then Kora will pop up a text input and ask the user what they would like the file to be called.
 		However, if the file has been saved before, then Kora will save the document under its existing name.
 		If the user commands Kora to extrude by a certain amount, the selected face(s) will be extruded by the given amount.
 		If no faces are selected, the user will be instructed to select the face that they wish to extrude and the action will be performed after a face is selected.
@@ -202,6 +207,19 @@
 		Admittedly this issue arose from a lack of sufficient research into a core driver of the requirements of our project.
 		However, the functionality was eventually implemented.
 
+	\subsection{Implementing Extrude via API}
+		If a user executes the \textit{extrude} command, but doesn't have a profile selected then a pop-up message appears which reads \textit{"Please select a profile to extrude"}, and then a tool tip remains on the user's mouse until they click a profile.
+		A better work-flow would be a command dialog.
+		A command dialog would appear and allow the user to select the "Close" button to terminate the command. Fusion's command dialogs also have a much better UI feel to them. 
+		Using command dialogs don't seem possible at the moment due to the below reasons.
+		\begin{enumerate}
+			\item Using a command dialog doesn't allow us to return the \textit{executionStatusCode} that needs to be stored in the database. The command dialog's \textit{run} function simply initiates a separate thread in the API and then exits.
+			Meaning, there's no way to return an \textit{executionStatusCode} because Kora continues on thinking that the \textit{extrude} task is over.
+			
+			\item Can't terminate the command from code. Meaning, after the user selects
+			a profile to extrude, the command dialog should automatically kill itself,
+			but it doesn't and needs the user to click the "Close" button, which is a hassle.
+		\end{enumerate}
 
    	 \subsection{Parallelizing Add-Ins and the Fusion Editor}
 		Part of Kora's requirements specify that the core functionality of receiving and acting on user voice commands is able to run continuously in the background in parallel with the user's actions within the Fusion editor.
