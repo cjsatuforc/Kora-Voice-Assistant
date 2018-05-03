@@ -1,0 +1,250 @@
+\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\usepackage{url}
+\usepackage{setspace}
+ 
+\usepackage{alltt}                                           
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{geometry}
+\geometry{textheight=9.5in, textwidth=7in}
+\setlength\parindent{0pt}
+
+\usepackage{tabu}
+\usepackage{longtable}
+
+\usepackage{xspace}
+\usepackage{pgfgantt}
+\usepackage{subcaption}
+
+% 1. Fill in these details
+\def \CapstoneTeamName{\textbf{Insert Team Name Here} }
+\def \CapstoneTeamNumber{8}
+\def \GroupMemberOne{James Stallkamp}
+\def \GroupMemberTwo{Jeremy Fischer}
+\def \GroupMemberThree{Austin Row}
+\def \CapstoneProjectName{Kora}
+\def \CapstoneSponsorCompany{Autodesk}
+\def \CapstoneSponsorPerson{Patti Vrobel}
+\def \botname{Kora\xspace}
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{		%Problem Statement
+				%Requirements Document
+				%Technology Review
+				%Design Document
+				Progress Report
+				}
+			
+\newcommand{\NameSigPair}[1]{\par
+\makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+\par\vspace{-12pt} \textit{\tiny\noindent
+\makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \pagenumbering{gobble}
+    \begin{singlespace}
+    	\includegraphics[height=4cm]{coe_v_spot1}
+        %\hfill 
+        % 4. If you have a logo, use this includegraphics command to put it on the coversheet.
+        \par\vspace{.2in}
+        \centering
+        \scshape{
+            \huge CS Capstone \DocType \par
+            {\large\today}\par
+            \vspace{.5in}
+            \textbf{\Huge\CapstoneProjectName}\par
+            \vfill
+            {\large Prepared by }\par
+            % 5. comment out the line below this one if you do not wish to name your team
+            %\CapstoneTeamName\par 
+            \vspace{5pt}
+            {\Large
+                Austin Row\par
+            }
+            \vspace{20pt}
+        }
+        \begin{abstract}
+			Over the course of Winter Term 2018, our team has managed to implement all but a few of the desired functionalities for our project, Kora.
+			The implemented functionalities include the ability to save files, rotate the editor view, and extrude selected faces within Fusion as well as the ability to provide feedback messages to the user all while running in parallel to the editor.
+			Various obstacles have been encountered in the process of the project's implementation including issues with cross-platform compatability, natural language processing latency, the use of non-default Python modules, the parellization of Kora and the Fusion editor, and the UI for Kora's feedback messaging.
+			Most of these obstacles have been overcome, though some issues still remain and several project requirements have yet to be completed.
+			Moving forward, our team will look to solve the remaining issues and implement the necessary functionality to complete the remaining project requirements.
+        \end{abstract}     
+    \end{singlespace}
+\end{titlepage}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+% 7. uncomment this (if applicable). Consider adding a page break.
+%\listoffigures
+%\listoftables
+\clearpage
+
+% 8. now you write!
+
+\section{Purpose}
+	Kora is a proof of concept project that will integrate natural language processing capabilities into Autodesk's 3-D computer-aided design software, Fusion.
+	It will be a speech-based virtual assistant for Fusion that lets users perform a subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
+	The end result will be a tool that decreases the time required to achieve goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
+
+\section{Goals}
+	\begin{itemize}
+		\item
+			Kora will allow the user to perform the following tasks in Fusion via a voice interface:
+			\begin{itemize}
+				\item Rotate Editor View
+				\item Save File With Current or New Name
+				\item Extrude Face
+			\end{itemize}
+		\item
+			All interactions with Kora will be logged for debugging and future development purposes.
+		\item
+			Kora will provide feedback to the user to indicate the status of a given command.
+		\item
+			Kora's listening mode will be triggered with a hot word.
+	\end{itemize}
+
+\section{Project Progress}
+	\subsection{User Interaction Logging with MongoDB}
+		Kora uses MongoDB to store documents describing each interaction Kora has with a user.
+		Each document contains the posting date, the user's Fusion ID number, the JSON returned by WIT, the chosen Fusion API call, Fusion's execution status, and the time it took from when the user stopped talking to the time Fusion finished executing the command.
+		This process is setup and functioning locally.
+
+	\subsection{Supported Commands}
+		Kora can now execute the Rotate, Save, Save As, and Extrude commands which are all of the commands required for the project.
+		If the user commands Kora to save and they have not saved the file themselves for the first time, then Kora will pop up a text input and ask the user what they want the file to be called.
+		However, if the file has been saved before, then Kora will save the document under its existing name.
+		If the user commands Kora to extrude by a certain amount, the selected face(s) will be extruded by the given amount.
+		If no faces are selected, the user will be instructed to select the face that they wish to extrude and the action will be performed after a face is selected.
+		
+	\subsection{Natural Language Processing of Speech Audio}
+		Kora's intended functionality is driven by the ability to process and understand voice commands given by a user.
+		Thus, the ability to process natural language given in an audio format is crucial to achieving Kora's desired functionality and was the first feature that was implemented.
+		As of the writing of this document, Kora can record a user speaking and can translate the recorded audio into one of several learned intents.
+		This is functionality is provided entirely by the free-to-use third-party natural language processor, WIT.
+		WIT is owned by Facebook and offers a an API that supports streaming audio data to one of their servers where the natural language processing is performed and after which an HTTP response with the derived data is returned.
+		It is this data that can then be used to interpret what should be triggered in the Fusion editor to enact the command given by the user.
+
+	\subsection{Automated WIT Training via Selenium}
+		To resolve the issue of having to manually enter training data to train the underlying model used by WIT--a slow and tedious process--a script was developed which automates this process.
+		No API is offered to train WIT programmatically, so the script to automate this process relies on the Selenium testing module which provides ways to simulate a user interacting with a web browser.
+		This script navigates to Kora's training page on WIT's website using provided credentials of an existing account with access to the project.
+		From there, it takes training data that is generated through the tuning of several parameters in the script or explicitly given in the script and performs all of the necessary interactions with the browser to train WIT using the data.
+		This offers a drastically faster method for training WIT.
+		There are two issues with this, however.
+		One is that the script's success relies on several aspects of WIT's website not changing.
+		If the website is updated and specific entities in the HTML are changed, the script could break.
+		This is, however, the lesser of the two issues as fixing it would simply require making changes to some of the identifiers the script uses to route itself to the correct place.
+		The more serious problem is that since the project will likely end up replacing WIT with something faster for its language processing needs, the work done to create this script and obtain this functionality will be rendered useless.
+
+	\subsection{Running Kora Continuously in Background}
+		One of the goals for Kora is have the application continuously listening for voice commands in parallel with what user is doing in the Fusion editor.
+		Originally it was believed that Fusion would by default run add-ins, and thus Kora, in their own threads and thus would not specifically require the implementation of anything in the application to enable running continuously in parallel with the editor.
+		However, upon discovering that Fusion actually runs add-ins in the same thread as the editor and thus blocks use of the editor while add-ins are running, we used Python's default threading module to run Kora in the background and achieve the desired functionality.
+		In doing this, a new problem was realized.
+		The Fusion API and even some of Python's modules that are being used in Kora cannot be used within a separate spawned thread without crashing the editor.
+		This issue necessitated the use of Fusion's Custom events for executing code that could only be executed in the main thread without crashing the editor.
+		Using these, it was possible to make Kora fire an event that returned control of the main thread back to the add-in and executed the desired code with data sent from Kora's spawned thread via the fired event.
+		After implementing this feature, Kora was able to continuously listen for commands in the background while the user interacted with the Fusion editor in the standard way.
+
+	\subsection{Status Feedback}
+		Kora reports its status to the user via a built-in Fusion palette UI object that displays a message within the editor.
+		Kora reports when it is ready to be used, currently listening to a command, processing a command, could not recognize a command, or encountered an error while trying to execute a command.
+		These messages fulfill the requirement of needing to provide feedback to the user so that they understand what Kora is doing.
+
+\section{Obstacles}
+	\subsection{Cross Platform Compatibility}
+		As per our requirements, Kora must function on both Windows and MacOS.
+		This has caused subtle issues that were challenging to track down.
+		An issue in particular was PyAudio, the library used to stream audio to WIT.
+		Kora with PyAudio worked fine on Windows, however, when trying to run Kora with PyAudio on Mac, Fusion would crash without error messages or hints.
+		The rainbow spinning wheel on Mac would start spinning and three seconds later Fusion would shut down.
+		After some thorough investigating we found that the problem occurred for two reasons.
+		The first was PyAudio's use of a shared object file for the PortAudio module which was being used to interface with the computer's microphone.
+		The version of the object file that we were using was meant solely for the Windows operating system and thus caused issues on Mac.
+		The second issue was that the default microphone sample rate on Windows is significantly lower than the default sample rate on Mac.
+		This meant that with PyAudio's default values for chunk size, sample rate, and number of channels, Mac's microphone would fill up PyAudio's streaming buffer used to record the user's voice faster than PyAudio was ready for.
+		This caused an overflow which resulted in Fusion crashing.
+	
+	\subsection{Latency}
+		Kora being a voice assistant means it must be able to execute commands quickly.
+		Users won't use Kora if they command her to do something and then have to wait approximately four to seven  seconds before she accomplishes it.
+		Unfortunately, this is Kora's current average speed.
+		The problem lies within WIT, the library we are using as our natural language processor.
+		WIT is on the web and Kora has to stream the user's speech to it via HTTP calls.
+		This on average takes four to seven seconds.
+		Currently we don't exactly know why it's taking so long, but we believe that network latency may play a role.
+		
+	\subsection{Using Non-Default Python Modules}
+		Fusion add-ins and Scripts are run in their own environment.
+		They have their own version of Python and their own Python modules.
+		This has made implementing Kora tricky for two reasons.
+		The first reason is pathing.
+		Since Fusion's Python only looks for libraries within its own environment we either have to append the directory of our newly downloaded library to the system path, causing a bloated system path variable, or change all of the absolute import paths in the library to relative imports.
+		It is not possible to move the libraries Kora uses to Fusion's Python folder, because that folder gets rewritten each time Fusion has a software update.
+		To abide by good practices we have been changing the import paths to relative paths.
+		The second reason is library versions.
+		We have ran into issues where we pip install a library via our command line and it downloads the Python 2.7 version since that is what we are using locally.
+		Then, when we move the library into Kora Fusion crashes because Fusion's built in Python is Python 3.3, which isn't always compatible with libraries built for Python 2.7.
+
+	\subsection{Implementing Rotate via API}
+		One of the requirements of the project is that a user should be able to rotate their view in the editor via a voice command.
+		It was initially believed that the Fusion API would include a method specifically for rotating the view in the editor or rotating a specific object in the project by a specified magnitude.
+		In fact, no such functionality is present in the API and achieving this functionality required a slightly more in-depth exploration and use of the Fusion API than was initially anticipated.
+		Admittedly this issue arose from a lack of sufficient research into a core driver of the requirements of our project.
+		However, the functionality was eventually implemented.
+
+
+   	 \subsection{Parallelizing Add-Ins and the Fusion Editor}
+		Part of Kora's requirements specify that the core functionality of receiving and acting on user voice commands is able to run continuously in the background in parallel with the user's actions within the Fusion editor.
+		It never occurred to the team that the Fusion editor may not natively support running add-ins in a separate thread from the editor itself which is the case.
+		This meant that we were required to self-implement a work around that allowed Kora to run in the background as intended which was a task that we had not expected to have to complete.
+
+
+	\subsection{Using API in Parallelized Add-In}
+		Compounding the problem of the lack of native support for running add-ins in parallel with the Fusion editor was the fact that calling most Fusion API functions within a self-spawned thread results in the editor crashing.
+		This complicated the solution for achieving Kora's continuous-listening functionality by requiring that listening for and recording a user's voice commands occur in a self-spawned thread while acting on these commands must happen back in the main thread.
+		This was eventually solved and implemented using Custom events provided by the Fusion API as a work around for this well-known problem.
+
+	\subsection{Implementing UI for Kora Status Feedback}
+		One requirement of the project is that Kora be able to provide status feedback via popup messages to the user.
+		After the user gives a command, they should be presented with a message indicating whether the command was succesfully understood or not.
+		To implement this functionality, we originally attempted to leverage some of the existing GUI frameworks for Python. 
+		However, the need to run the GUI code in a separate thread from the add-in to avoid blocking the thread that the editor executes made it so that these frameworks were not viable options.
+		Unfortunately you can not run the necessary code from the GUI frameworks in separate threads. 
+		As a result, the feedback messaging was built using the existing palette object provided by the Fusion editor which, in theory, provides all of the needed functionality to implement the desired functionality.
+		However, working with the palette object has introduced some new problems which are discussed below.
+
+	\subsection{Communicating Between Add-In and Fusion palette}
+		The built-in Fusion palette object has proven to be the best option for implementing feedback messages from Kora to the user in the Fusion editor.
+		One of the features of the palette is that it runs separately from the add-in and must use its own special method for communicating with the add-in.
+		However, up to this point, we have been unable to make this communication work.
+		Testing shows that the issues that we have encountered in this regard may be due to a bug in the Fusion API.
+		As a workaround, rather than update the contents of the palette by sending data to the JavaScript associated with the palette and using that data to update the HTML template for the palette,
+		we instead have a separate HTML template for each message that we wish to display and we change the template associated with the palette to that which we want to display.
+		This is not ideal as it requires creating a separate HTML template that differs only slightly from the rest for each message that we want to display and does not allow for dynamic messages.
+		However, it currently works for what we wanted to implement.
+		In the future we may continue to attempt to get the communication between the palette object and the add-in working correctly so that we can improve the implementation for updating the feedback messaging.
+ 
+\section{Moving Forward}
+	Almost all of the project requirements have been fulfilled at this point.
+	Moving forward we will look to implement hot word activation, implement an onboarding process for first-time users, improve reliability, and decrease the natural language processing latency. \\
+
+	Use of a hot word to activate Kora's listening phase and an onboarding process for first-time users are the only remaining unfulfilled requirements and thus will be given priority as we continue into the next term.
+	We believe that we can find existing software for integrating hot word activation into Kora, but the onboarding process may be more difficult.
+	The palette object offered by the Fusion API is the best option for displaying messages to the user, but, as mentioned in the Obstacles section, there are currently difficulties involved in processes that require communication between a palette and an add-in.
+	Implementing an onboarding process would require such communication.
+	It is possible that the message box offered by the Fusion API could provide an alternative, though the UI for the message box is inelegant and certainly would not provide the best user experience. \\
+
+\nocite{*}
+\bibliography{references}
+
+\end{document}
