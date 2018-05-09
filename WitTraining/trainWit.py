@@ -29,12 +29,12 @@ def getLoginCreds():
     return loginCredentials
 
 def generateTrainingPhrases():
-    # for phrase in RandomRotate(10):
-    #     yield phrase
-    # for phrase in RandomExtrude(100):
-    #     yield phrase
-    # for phrase in RandomSave(50):
-    #     yield phrase
+    for phrase in RandomRotate(10):
+        yield phrase
+    for phrase in RandomExtrude(100):
+        yield phrase
+    for phrase in RandomSave(50):
+        yield phrase
     for phrase in RandomSaveAs(50):
 	        yield phrase
 
