@@ -90,6 +90,20 @@
 %\listoftables
 \clearpage
 
+\section{Change History}
+\begin{table}[H]
+	\centering
+	\caption{Change History}
+	\label{my-label}
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Date}     & \textbf{Change Description}   \\ \hline
+		November 16, 2017 & {First requirements document draft} \\ \hline
+		May 8, 2018 & {User onboarding and Kora wake word taken out. Performance requirement loosend.} \\ \hline
+	\end{tabular}
+\end{table}
+
+
 % 8. now you write!
 \section{Introduction}
         The introduction outlines the purpose and scope of the project. 
@@ -99,7 +113,7 @@
         This document is a mutual agreement between the client and developers regarding the expected result of this project.
         The intended audience is the two aforementioned parties.
     \subsection{Scope}
-        \botname will be a speech-based virtual assistant for Fusion that lets users perform any one of a subset of tasks within the product, such as saving a document or opening a menu, by verbally instructing it to perform the task.
+        \botname will be a speech-based virtual assistant for Fusion that lets users perform any one of a subset of tasks within the product, such as rotating the camera or extruding a face, by verbally instructing it to perform the task.
         Workflows in Fusion that are not suited for handling by a voice interface will not be supported by \botname.
         As a stretch goal, \botname will be capable of questioning the user and using responses to predict and automatically assist with future user behavior.
         It will be a plugin that is bundled with Fusion and will be part of the product's standard download. 
@@ -141,7 +155,8 @@
             %TODO: Revisit this. I'm not sure if it is applicable to this project.
         \subsubsection{User Interfaces}
             The user will interact with \botname via voice commands given in English. 
-            To initiate a command, the user will say "\botname" followed by the command. 
+            %To initiate a command, the user will say "\botname" followed by the command.
+            To initiate \botname, the user will press the "Activate" button on the Add-Ins drop down in Fusion. 
 
             As part of a stretch goal, \botname will periodically ask questions back to the user via a speech synthesizer.
 
@@ -190,15 +205,15 @@
         Without this capability, the application's knowledge of user actions will be limited to the actions that the user performs through \botname.
 
 \section{Specific Requirements}
-    \subsection{External Interface}
-       After \botname is released, Fusion users will be shown a modal the next time that they log into the product that gives a brief description of \botname and asks if they would like to enable it.
-       If a user chooses not to enable \botname, their Fusion editor environment will not be changed. 
+    %\subsection{External Interface}
+      % After \botname is released, Fusion users will be shown a modal the next time that they log into the product that gives a brief description of \botname and asks if they would like to enable it.
+       %If a user chooses not to enable \botname, their Fusion editor environment will not be changed. 
 
-       Users that enable \botname will be presented with an onboarding process that incorporates an interactive demo.
-       The onboarding process will start with a popup that introduces \botname with a concise description of its purpose.
-       The user will then be able to click "Next" to transition to an interactive demo.
-       The interactive demo will consist of several sequential popups that each ask the user to tell \botname to perform a specific command.
-       This will make the user aware of \botname and the functionality that it offers.
+       %Users that enable \botname will be presented with an onboarding process that incorporates an interactive demo.
+       %The onboarding process will start with a popup that introduces \botname with a concise description of its purpose.
+       %The user will then be able to click "Next" to transition to an interactive demo.
+       %The interactive demo will consist of several sequential popups that each ask the user to tell \botname to perform a specific command.
+       %This will make the user aware of \botname and the functionality that it offers.
 
     \subsection{Functional Requirements}
     This section includes the requirements that specify all the fundamental actions of the software system.
@@ -246,7 +261,7 @@
         
         \subsubsection{Performance Requirement 1}
         TITLE: Response Time \\
-        DESCRIPTION: It will take a user at most one second longer to perform a supported task through \botname than it would take when using a keyboard and mouse. \\
+        DESCRIPTION: It will take a user at most three seconds longer to perform a supported task through \botname than it would take when using a keyboard and mouse. \\
         RATIONALE: The user must feel that \botname enhances rather than slows their development speed.
         
     \subsection{Design Constraints}
