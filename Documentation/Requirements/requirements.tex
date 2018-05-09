@@ -142,8 +142,6 @@
                 Workflow & A sequence of related tasks \\ \hline
             \end{tabular}
         \end{table}
-    %\subsection{References}
-        %TODO
     \subsection{Overview}
         %This section describes the contents and organization of the rest of the document. 
         The rest of this document outlines intended uses and specific functionalities of \botname as well as assumptions, dependencies, and constraints that pertain to the project. 
@@ -151,8 +149,6 @@
 \section{Overall Description}
     \subsection{Product Perspective}
 
-        %\subsubsection{System Interfaces}
-            %TODO: Revisit this. I'm not sure if it is applicable to this project.
         \subsubsection{User Interfaces}
             The user will interact with \botname via voice commands given in English. 
             %To initiate a command, the user will say "\botname" followed by the command.
@@ -168,10 +164,6 @@
             \botname needs to translate supported speech commands received from the user to the equivalent tasks within the user's Fusion project.
             For this, a series of open source NLP projects will be linked to derive meaning from speech.
             The derived meaning will then be mapped to a Fusion API call.
-        %\subsubsection{Communications Interfaces}                
-
-        %\subsubsection{Operations}
-            %TODO: I'm not sure what this section means.
 
         \subsubsection{Site Adaptation Requirements} 
             Since \botname interacts with Fusion using existing architecture, Fusion will not need to be modified to support it. 
@@ -242,10 +234,10 @@
         DESCRIPTION: \botname shall log every interaction that a user has with it and the result of that interaction. \\
         RATIONALE: This offers helpful information for debugging purposes. This information can also be used to learn how \botname is being used and to drive future development.
        
-        \subsubsection{Functional Requirement 6}
-        TITLE: Command Signalling \\
-        DESCRIPTION: \botname will begin listening for a command after hearing the user say "\botname". \\
-        RATIONALE: This is a pattern that is used in many successful voice assistants to signal when to start listening for a command.
+        %\subsubsection{Functional Requirement 6}
+        %TITLE: Command Signaling \\
+        %DESCRIPTION: \botname will begin listening for a command after hearing the user say "\botname". \\
+        %RATIONALE: This is a pattern that is used in many successful voice assistants to signal when to start listening for a command.
 
         %	%
         %	Below are stretch goals
