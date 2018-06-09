@@ -7,21 +7,22 @@
     2. [Preinstalled Packages](#preinstalledPackages)
 4. [Getting Started](#gettingStarted)
 5. [Explaining The Source Code](#sourceCode)
-    1. [User-Kora Interaction Logging]("#interaction")
-    2. [Extrude Command]("#extrude")  
-    3. [Save Command]("#save")  
-    4. [Save As Command]("#saveAs")  
+    1. [User-Kora Interaction Logging]("#interactionLogging")
+    2. [Extrude Command]("#extrudeCmd")  
+    3. [Save Command]("#saveCmd")  
+    4. [Save As Command]("#saveAsCmd")  
 6. [Next Steps](#nextSteps)
 7. [Authors](#authors)
 
-## What Is Kora <a name="whatIsKora"></a>
+<a name="whatIsKora"></a>
+## What Is Kora
 Kora is a proof of concept project that integrates a natural language processing library into Autodesk's Fusion 360 3-D computer aided design software.
 Kora is a speech-based virtual assistant for Fusion that lets users perform a subset of tasks within the product such as saving a document by verbally instructing it to perform the task.
 Kora offers users a tool that decreases the time required to achieve their goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
 
 
-
-## Packages <a name="packages"></a>
+<a name="packages"></a>
+## Packages
   #### Software Needed <a name="softwareNeeded"></a>
   Since _Autodesk's Fusion 360_ runs Add-Ins in their own environment, all software packages needed to run Kora had to be packaged within the Kora Add-In itself.
   Lucky for you, this means the only software that needs to be install is MongoDB.
@@ -36,8 +37,8 @@ Kora offers users a tool that decreases the time required to achieve their goals
   - _PyMongo_ version 3.61. PyMongo is the low-level driver wrapping the MongoDB API into Python.
   - _Mongoengine_ version 0.15.0. MongoEngine is a Document-Object Mapper for working with MongoDB from Python.
 
-
-## Getting Started <a name="gettingStarted"></a>
+<a name="gettingStarted"></a>
+## Getting Started
   Make sure you first read the Packages heading above.
   1.
     Install Kora into the Fusion 360 Add-Ins folder.
@@ -61,9 +62,14 @@ Kora offers users a tool that decreases the time required to achieve their goals
   10. Click _Activate Kora_
 
 
-## Explaining The Source Code <a name="sourceCode"></a>
 
- ##### User-Kora Interaction Logging  <a name="interaction"></a>
+
+
+<a name="sourceCode"></a>
+## Explaining The Source Code
+
+ <a name="interactionLogging"></a>
+ ##### User-Kora Interaction Logging  
  ***
  Inside of _Kora/main/modules/logging_ is the relevant code.
  ** interaction.py ** has the _Mongoengine_ class that outlines how the user-kora interaction document should be stored. ** logInteraction.py ** is the python decorator responsible for the actual storing of the interaction document. It first calls ** mongoSetup.py ** to initiate the connection to the mongoDB daemon.
@@ -72,8 +78,8 @@ Kora offers users a tool that decreases the time required to achieve their goals
  *logInteraction()* then inserts the interaction document into the mongoDB database.
 
 
-
- ##### Extrude Command  <a name="extrude"></a>
+ <a name="extrudeCmd"></a>
+ ##### Extrude Command  
  ***
  All of the commands are located in <em>Kora/main/modules/fusion_execute_intent/tasks</em>. The _extrude()_ function is given a sting representing what the user said, the magnitude, and the units.
 _extrude()_ checks if there is a "down" in the sentence. If there is and the magnitude is currently positive, then the magnitude is changed to negative. Next, _extrude()_ converts the _magnitude_ to the equivalent magnitude in terms of centimeters (the API only excepts centimeters) if the _units_ are not already centimeters.
@@ -81,21 +87,29 @@ _extrude()_ then scans through all of the profiles and faces in the project and 
 
 
 
- ##### Save Command  <a name="save"></a>
+ <a name="saveCmd"></a>
+ ##### Save Command  
  ***
 _save()_ first checks that the project has been saved before. If it hasn't then Kora prompts the user to input what they want the project to be called and then hands off the flow of control to _saveAs()_. If the project has been saved already, i.e. the project has a name, then _save()_ goes ahead and saves the project.
 
 
- ##### Save As Command  <a name="saveAs"></a>
+ <a name="saveAsCmd"></a>
+ ##### Save As Command  
  ***
 _saveAs()_ first checks if the call is coming from _save()_. If it is, then it creates a copy of the project and saves it as the supplied filename. Otherwise, _saveAs()_ firs converts the supplied filename to camelcase and then creates a copy of the file and saves it under the camelcased filename.
 
 
-## Next Steps <a name="nextSteps"></a>
+
+
+<a name="nextSteps"></a>
+## Next Steps
 1. Reduce Kora's latency. Right now it takes on average 3.5 seconds after the user stops speaking until Fusion executes the command. This is all on Wit.ai's side. Kora is simply passing the audio on to Wit and then waiting for a response. The code is set up such that pivoting to a new natural language processor shouldn't be too difficult.
 2. Adding a wake-word to Kora. Instead of Kora always listening in the background, add a "Kora" wake-word would be much more user friendly.
 
-## Authors <a name="authors"></a>
+
+
+<a name="authors"></a>
+## Authors
 Kora was developed by ...
 - Austin Row rowa@oregonstate.edu
 - Jeremy Fischer fischjer4@gmail.com
