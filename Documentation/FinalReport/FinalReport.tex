@@ -1,4 +1,5 @@
 \documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+\usepackage[usenames, dvipsnames]{color}
 \usepackage{graphicx}
 \usepackage[section]{placeins}
 \usepackage{url}
@@ -26,6 +27,9 @@
 \geometry{textheight=9.5in, textwidth=7in}
 \setlength\parindent{0pt}
 
+\usepackage{tabu}
+\usepackage{longtable}
+
 \usepackage{xspace}
 \usepackage{pgfgantt}
 \usepackage{subcaption}
@@ -36,10 +40,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 
-\usepackage[usenames, dvipsnames]{color}
-\definecolor{forestgreen}{rgb}{0.0, 0.65, 0.42}
 
-\newcommand{\greencheck}{\textcolor{forestgreen}{\ding{51}}}%
+\newcommand{\newpara}{\\[0.1in]}
+
+\newcommand{\greencheck}{\textcolor{ForestGreen}{\ding{51}}}%
 \newcommand{\redcheck}{\textcolor{red}{\ding{51}}}%
 
 
@@ -153,11 +157,34 @@
 
 
 
-
+%	Who requested it?
+%	Why was it requested?
+%	What is its importance?
+%	Who was/were your client(s)?
+%	Who are the members of your team?
+%	What were their roles?
+%	What was the role of the client(s)? (I.e., did they supervise only, or did they participate in doing development)
 
 \section{Introduction to Project}
-
-
+	Kora was requested by Patti Vrobel on behalf of Autodesk. 
+	After Fall term the project was passed on to Anand Karyekar and Jennifer Talaga, who supervised the project.
+	\newpara
+	Since the inception of publicly available computers until around 2006 society has interacted with computers in the same manner – keyboard and mouse. 
+	Recently there’s been a moving trend toward making computers and machines more interactive. 
+	Nintendo launched the Wii in 2006 and Microsoft’s XBOX division followed in 2010 with the Kinect \cite{wii}\cite{kinect}.
+	 Apple launched Siri in 2010 and Microsoft and Google followed shortly after with their smart assistants \cite{siri}. 
+	 Autodesk realizes the competitive advantage of having their products more interactive.
+	 This is what lead to Kora.
+	\newpara
+	Autodesk has the opportunity to gain much more from making their products more interactive than simply retaining and attracting users due to the new ease of use. 
+	From a business perspective, enabling natural language processing allows for a new addition to user data that is rich in potential!
+	Instead of only collecting button clicks on dropdown menus and ribbon items, with a voice interface Autodesk would be able to collect exactly what the user is intending to do.
+	This form of data collection rips away the ambiguity of the data. 
+	\newpara
+	Kora was created by Austin Row and Jeremy Fischer.
+	Since the team consisted of just the two of us, we didn't have assigned roles.
+	Instead, we both touched all aspects of the project.
+	
 
 
 
@@ -171,21 +198,7 @@
 
 
 \section{Requirements Document}
-	\subsection{Change History}
-	\begin{table}[H]
-		\centering
-		\caption{Change History}
-		\label{my-label}
-		\begin{tabular}{|l|l|}
-			\hline
-			\textbf{Date}     & \textbf{Change Description}   \\ \hline
-			November 16, 2017 & {First requirements document draft} \\ \hline
-			May 8, 2018 & {User onboarding and Kora wake word taken out. Performance requirement loosened.} \\ \hline
-		\end{tabular}
-	\end{table}
 
-
-	% 8. now you write!
 	\subsection{Introduction}
 	The introduction outlines the purpose and scope of the project.
 	This section is also responsible for defining any prerequisite acronyms and terms used in the document.
@@ -278,15 +291,15 @@
 	Without this capability, the application's knowledge of user actions will be limited to the actions that the user performs through \botname.
 
 	\subsection{Specific Requirements}
-	%\subsubsection{External Interface}
-	% After \botname is released, Fusion users will be shown a modal the next time that they log into the product that gives a brief description of \botname and asks if they would like to enable it.
-	%If a user chooses not to enable \botname, their Fusion editor environment will not be changed.
+	\subsubsection{External Interface}
+	 After \botname is released, Fusion users will be shown a modal the next time that they log into the product that gives a brief description of \botname and asks if they would like to enable it.
+	If a user chooses not to enable \botname, their Fusion editor environment will not be changed.
 
-	%Users that enable \botname will be presented with an onboarding process that incorporates an interactive demo.
-	%The onboarding process will start with a popup that introduces \botname with a concise description of its purpose.
-	%The user will then be able to click "Next" to transition to an interactive demo.
-	%The interactive demo will consist of several sequential popups that each ask the user to tell \botname to perform a specific command.
-	%This will make the user aware of \botname and the functionality that it offers.
+	Users that enable \botname will be presented with an onboarding process that incorporates an interactive demo.
+	The onboarding process will start with a popup that introduces \botname with a concise description of its purpose.
+	The user will then be able to click "Next" to transition to an interactive demo.
+	The interactive demo will consist of several sequential popups that each ask the user to tell \botname to perform a specific command.
+	This will make the user aware of \botname and the functionality that it offers.
 
 	\subsubsection{Functional Requirements}
 	This section includes the requirements that specify all the fundamental actions of the software system.
@@ -315,10 +328,10 @@
 	DESCRIPTION: \botname shall log every interaction that a user has with it and the result of that interaction. \\
 	RATIONALE: This offers helpful information for debugging purposes. This information can also be used to learn how \botname is being used and to drive future development.
 
-	%\subsubsection{Functional Requirement 6}
-	%TITLE: Command Signaling \\
-	%DESCRIPTION: \botname will begin listening for a command after hearing the user say "\botname". \\
-	%RATIONALE: This is a pattern that is used in many successful voice assistants to signal when to start listening for a command.
+	\subsubsection{Functional Requirement 6}
+	TITLE: Command Signaling \\
+	DESCRIPTION: \botname will begin listening for a command after hearing the user say "\botname". \\
+	RATIONALE: This is a pattern that is used in many successful voice assistants to signal when to start listening for a command.
 
 	%	%
 	%	Below are stretch goals
@@ -334,7 +347,7 @@
 
 	\subsubsection{Performance Requirement 1}
 	TITLE: Response Time \\
-	DESCRIPTION: It will take a user at most three seconds longer to perform a supported task through \botname than it would take when using a keyboard and mouse. \\
+	DESCRIPTION: It will take a user at most one second longer to perform a supported task through \botname than it would take when using a keyboard and mouse. \\
 	RATIONALE: The user must feel that \botname enhances rather than slows their development speed.
 
 	\subsubsection{Design Constraints}
@@ -386,9 +399,41 @@
 			\label{fig:developmentSchedule1}
 		\end{center}
 	\end{figure}
-
-
-
+	
+	\subsection{Changes}
+		\subsubsection{Change History}
+		\begin{table}[H]
+			\centering
+			\caption{Change History}
+			\label{my-label}
+			\begin{tabular}{|l|l|}
+				\hline
+				\textbf{Date}     & \textbf{Change Description}   \\ \hline
+				November 16, 2017 & {First requirements document draft} \\ \hline
+				May 8, 2018 & {User onboarding and Kora wake-word taken out. Performance requirement loosened.} \\ \hline
+			\end{tabular}
+		\end{table}
+		
+		The user onboarding requirement was taken off due to an issue on Fusion 360's end.
+		To complete the onboarding through the Fusion API we needed to use Fusion palettes.
+		According to the Fusion API documentation, the palettes support JavaScript. However, the sample palette given on the API's website didn't work.
+		After further discussion with our clients it appears there is a problem on Fusion's end, and the team is working on it. 
+		Unfortunately, this meant we couldn't accomplish the onboarding requirement until the JavaScript issue was handled.
+		\newpara
+		The performance metric was altered from \textit{at most one second longer than the task would take manually} to \textit{at most three seconds longer than the task would take manually}.
+		This was due to WIT.ai's average latency of three seconds to interpret the streamed audio.
+		We could have pivoted and used a different NLP, but our clients instructed to keep working on the other requirements and come back to the latency issue if time allows.
+		\newpara
+		The wake-word requirement was taken out because WIT.ai didn't support a wake-word, and we didn't have enough time to incorporate an open source solution for it. 
+		\newpara
+		We remind you at the time the requirements document was written our team had three members, and so the workload we assigned reflected that. Unfortunately, at the beginning of Kora's development our third member left the group, putting more of a workload on Austin and Jeremy's plates.
+		
+	\subsection{Final Gantt Chart}
+		\begin{figure}[H]
+			\includegraphics[width=16cm]{finalGantt}
+			\centering
+			\caption{Kora's final Gantt chart showing a rough estimate of when Kora's components were developed.}
+		\end{figure}
 
 
 
@@ -443,7 +488,7 @@
 	Workflows in Fusion that are not suited for handling by a voice interface will not be supported by \botname.
 	As a stretch goal, \botname will be capable of questioning the user and using responses to predict and automatically assist with future user behavior.
 	This functionality will be implemented as a plugin that is bundled with Fusion and will be part of the product's standard download.
-	\\[0.1in]
+	\newpara
 	\botname will offer users a tool that decreases the time required to achieve their goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
 	If the stretch goal is achieved, \botname will further increase productivity by learning to predict and automate specific workflows within the product.
 
@@ -720,8 +765,7 @@
 	There are two use patterns for a user when they give \botname a command. The first way to give a command is to say the wake word followed by the command.
 	When the user says the wake word, it signals to \botname that it should be actively listening for a command.
 	The other method is to click the wake button that acts as an alternative to the wake word then say the command.
-	\\[0.1in]
-
+	\newpara
 	Through the user interface, the application responds back to the user with the status of the previous command.
 	If the command succeeds, the application uses a voice synthesizer to alert the user that the previous command succeeded.
 	If the command fails, the application uses the voice synthesizer to alert the user that the previous command failed.
@@ -1451,9 +1495,430 @@
 
 
 
-
+\clearpage
 
 \section{Weekly Blog Posts}
+	\begin{center}
+		\begin{longtabu} to \textwidth {|X[2,l]|X[8,l]|X[8,l]|}
+			\hline
+			& \textbf{\Large{Jeremy}} & \textbf{\Large{Austin}}  \\ \hline
+			&	\textbf{\large{Fall Term 2017}}  &\\ \hline
+			\textbf{Week} & \textbf{Summary}  & \textbf{Summary }\\ \hline
+			
+			Week 1 
+			& 
+			{
+				This week I completed the tech review. I researched the best data structure for storing log files, how to map text output by the voice synthesizer to a Fusion command, and how to awake Kora in an efficient user friendly fashion.
+				Our weekly Thursday meeting with Patti got canceled because she was traveling.
+			}
+			
+			&
+			\\ \hline
+			
+			Week 2 
+			&  
+			{
+				The team reached out to Patti and set up an introductory meeting from 8:00 - 8:30am on Friday October 6th. The meeting went good. We got an overview of what Autodesk does, as well as Patti's role. We touched on the project and what she's hoping to get out of it, but scheduled an hour long follow up meeting for Monday October 9th to dive deeper into the project. 
+			}
+			
+			&
+			\\ \hline
+			
+			Week 3 
+			&
+			{
+				We met with Patti for about an hour Monday afternoon and got a better understanding of the project. The meeting notes can be found in 3.1. She mentioned that we won't be getting Fusion source code, we will have to use the Fusion APIs instead. This will be challenging, because we will have to figure out a way to work through the API to integrate the voice control libraries.
+				
+				I found an open source library called Mycroft that seems like the whole package: Voice-to-text, text-to-voice, sentence sentiment, and more. I haven't looked at it too deeply yet, but just from what I've seen so far I think there is a major obstacle to overcome If we want to use it. Mycroft is only supported on Raspberry Pis, android, and Linux because it is aimed towards embedded device. So, to get this running on Mac OS or Windows may not be possible. We'll see.
+			}
+			 
+ 			&
+			\\ \hline
+			
+			Week 4 
+			&
+			{
+				\begin{itemize}
+					\item Met with Juneki and discussed our GitHub repo structure. We need to add a Docs folder.
+					\item Met with Patti on Thursday afternoon and went through the problem statement together
+					\item We agreed on Phase 1 (our project) vs. Phase 2 (stretch goals) and accomplishments within each
+					\item We created a scenario to demonstrate at Expo. This is our project goal.
+				\end{itemize}
+			}
+			 
+			&
+			\\ \hline
+			
+			Week 5 
+			&
+			{
+				\begin{itemize}
+					\item This week we worked on the Requirements rough draft
+					\item Met with Junki on Tuesday and discussed possible open source projects we could use
+					\item Thursday meeting with Patti was canceled - she was traveling
+				\end{itemize}
+			}
+			 
+			&
+			\\ \hline
+			
+			Week 6 
+			&
+			{
+				\begin{itemize}
+					\item Met with Junki on Tuesday and discussed whether there was a research component to our project -- we agreed there was in our stretch goals
+					\item Went to the research class on Thursday (see notes in 6.4)
+					\item Met with Patti Thursday night and went through the requirements document. She liked it, and added a few things to think about 
+					Turned requirements document in.
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 7 
+			&
+			{
+					\begin{itemize}
+						\item The three of us had a meeting on Wednesday and discussed the nine parts of the project
+						\item Met with Patti on Thursday and ran the nine parts by her. She approved
+						\item She also mentioned that using Amazon's Alexa is a valid choice. She just wants to make sure we won't have to pay anything
+						\item Divided the nine components into three each. I am in charge of…
+						 \begin{itemize}
+						 	\item Log File Storage
+						 	\item Lexicon For Mapping Text to Fusion Command
+						 	\item Interaction Model (wake words)
+						 \end{itemize}
+					\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 8 
+			&
+			{
+				This week I completed the tech review. I researched the best data structure for storing log files, how to map text output by the voice synthesizer to a Fusion command, and how to awake Kora in an efficient user friendly fashion.
+				Our weekly Thursday meeting with Patti got canceled because she was traveling.
+			}
+			
+			&
+			\\ \hline
+			
+			Week 9 
+			&
+			{
+				I did absolutely nothing this week. There was school Monday, Tuesday, and Wednesday with Thursday and Friday off for Thanksgiving break. Next week I'll be working on and completing the Design Document and the Progress Report.
+			}
+		
+			&
+			\\ \hline
+			
+			Week 10 
+			&
+			{
+				\begin{itemize}
+					\item We finished the design document and the progress report.
+					\item The meeting with Patti was canceled because she was traveling, however James, Austin, and I had a meeting and discussed how we were going to break down the design document and what parts went into it.
+					\item Austin and I also had a long session mapping out Kora's design on a whiteboard. James wasn't there, but we met up with him after and showed him pictures of the design on the whiteboard. To see these pictures, check the General $\rightarrow$  Design Document page
+				\end{itemize}
+			}
+		
+			&
+			\\ \hline
+			
+			
+			
+			
+			
+			
+			
+			
+			% WINTER TERM
+			&	\textbf{\large{Winter Term 2018}}  &\\ \hline
+			
+			Week 1 
+			& 
+			{
+				\begin{itemize}
+					\item Set up the new meeting time with Junki
+					\item Set up a meeting with Patti and the new project clients
+					\item Researched HTTP APIs for MongoDB
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 2 
+			&  
+			{
+				\begin{itemize}
+					\item Met with Anand, Rob, Patti, and Austin. James was sick so he couldn't make the call. Anand and Rob are very excited to be a part of the project.
+					\item I set the github repo up inside of Fusion so Kora runs as a script in the Add-Ins section.
+					\item I finished setting up the database locally
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 3 
+			&
+			{
+				\begin{itemize}
+					\item Helped James set up the repo in Fusion
+					\item Met with Junki to discuss current progress and alpha demo deadlines
+					\item Met with Austin and discussed transitioning Kora from a script to an Add-In
+					\item Got PyAudio working and a successful API call
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 4 
+			&
+			{
+				\begin{itemize}
+					\item Met with Junki and discussed the Poster and Midterm progress report coming up
+					\item Set Kora up as an Add-In. At first we ran into a problem with the tkinter library causing Fusion on Mac to slowly crash. We resorted back to Fusion's built in message box to fix the problem (but it was a hassle to see where it was failing)
+					\item Made progress on integrating database calls into Kora to log User-Kora interactions. It took awhile to lay the ground work because Fusion only plays nice with relative imports. So, I had to go through the entire mongoengine library and change its imports to relative imports.
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 5 
+			&
+			{
+				\begin{itemize}
+					\item Met with Anand and Jennifer and talked about progress, upcoming progress report, and going up to Autodesk after Expo to give a talk and demo.
+					\item Finished MongoDB set up and code to log every User-Interaction. Instructions below.
+					\item James unfortunately dropped the class so it is just Austin and I now.
+					\item MongoDB is set up and correctly saves a User-Kora interaction
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 6 
+			&
+			{
+				\begin{itemize}
+					\item Met with Jennifer and talked about the preogress report coming up
+					\item Met with Junki and talked about the progress report and poster.
+					\item Created the progress report video and turned it in
+					\item Created a general config file that has WIT access token and debug mode. If debug is on then know user-interactions get stored in the database.
+					\item Created the save and save as command and trained WIT to recognize these commands
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 7 
+			&
+			{
+				\begin{itemize}
+					\item Placed an issue on WIT.ai GitHub account about the latency issue we are having. Apparently the latency used to be ~.5seconds and now that they are attempting to scale their software they have been running into latency issues. We are waiting to here back from them
+					\item Jennifer mentioned not to worry about the latency at the moment and to work on our other requirements.
+					Moving forward we will be implementing a UI and making Kora not crash on silence.
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 8 
+			&
+			{
+					Added code so that Kora doesn’t fire an event unless WIT (our NLP) returns something useful. The way it was previously set up is even if I said "I like chocolate cake and ice cream" Kora would still fire an event to execute the command in Fusion. This also caused an issue later on in the pipeline if WIT returned nonsense since it got white-noise. Now, when WIT responds we tell Kora to disregard the WIT response and keep listening if the response doesn’t have an "Intent" key, or if it does, but the confidence in the "Intent" value is less than the threshold (which is set at 79\%) 
+			}
+			
+			&
+			\\ \hline
+			
+			Week 9 
+			&
+			{
+				Successfully implemented the 'Extrude' command for Kora. The only "issue" is that it doesn't look user friendly at the moment due to not being able to use a command dialog because using a command dialog doesn't allow us to return a \textit{executionStatusCode}.	
+			}
+			
+			&
+			\\ \hline
+			
+			Week 10 
+			&
+			{
+				\begin{itemize}
+					\item Looked at WakeWord software
+					\item Popular software called Snowboy, but even the demo Seg-Faults on Mac. Spent about 3 hours trying to figure it out/tweak things and still didn’t get it to work.
+					May switch gears and start looking into NLP projects that have the wake word included in them, since we may have to pivot away from Wit.ai to reduce the latency anyway
+				\end{itemize}
+			}
+			&
+			\\ \hline
+			
+			
+			
+			
+			
+			
+			
+			
+			% SPRING TERM
+			&	\textbf{\large{Spring  Term 2018}}  & \\ \hline
+			
+			Week 1 
+			& 
+			{
+				\begin{itemize}
+					\item Met with Jennifer and Anand and talked about our progress report and what they thought about it
+					\item No meetings with Junki
+					\item Started looking into Hot Word detection software: Snowboy and PocketSphinx
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 2 
+			&  
+			{
+				\begin{itemize}
+					\item Meeting with Junki cancelled
+					\item Spent many hours trying to get Snowboy working.
+					\begin{itemize}
+						\item I'm assuming there is a problem with Snowboy on Mac, because even their demo that you can download off of their website Seg Faults
+						\item I tried Pip installing it.     Didn't work, Seg Faulted
+						\item I tried git cloning it, building it, running it.     Didn't work, Python crashed and Mac spit out a long log file
+						\item Austin will try getting it on his Windows computer
+					\end{itemize}
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 3 
+			&
+			{
+				\begin{itemize}
+					\item Experimented with Pocket Sphinx. Specifically using it for Hot Word detection
+					\item So far haven't been able to get it to work. There's no specific Mac version, just Linux. So that's probably why
+					\item Researching other Hot Word detection software, and thinking of ways to do it on our own.
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 4 
+			&
+			{
+				\begin{itemize}
+					\item Going Up to Autodesk on Friday to present our project to whoever attends. Anand said he's trying to get as many executives to show up as possible
+					\item No progress as far as coding Kora goes
+					\item Worked on putting together the presentation for Friday
+					\item Presentation went good. About 40 people in person and 5 called in from SF via Skype. 
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 5 
+			&
+			{
+				\begin{itemize}
+					\item Made corrections to the poster that Kirsten suggested
+					\item Submitted the poster
+					\item Worked on the midterm progress report.
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 6 
+			&
+			{
+				\begin{itemize}
+					\item Edited the requirements document. Specifically took the onboarding and wake word and loosened the latency metric.
+					\item The onboarding wasn't doable throw the API and Fusion doesn't allow external GUIs to be used
+					\item The Wake Word believe it or not was really hard to do. None of the open source libraries worked (the demos didn't even run), so we looked into do it ourselves. This is tricky because you have to always be recording and Saving that recording, because if you hear and interpret "Kora" then you have to work backwards in your recording and figure out what the audio was after "Kora" was said, and then send that up to WIT.
+					\item The latency metric was loosened to "at most three seconds longer then it would take to do manually" (which is about where we are at) since WIT.ai was the NLP we went with and the latency was from their end.
+					\item Got the edits approved by Anand and Jennifer
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 7 
+			&
+			{
+				\begin{itemize}
+					\item We had expo this week
+					\item We put together three separate videos to show at expo and included subtitles so the visitors can see what is being said.
+					\begin{enumerate}
+						\item Demo of all of our commands
+						\item Demo showing the database contents we are storing
+						\item Demo of training WIT.ai with Selenium
+					\end{enumerate}
+				\item Canceled our meeting with Anand and Jennifer because they didn't have anything to discuss and wanted to let us focus on expo.
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 8 
+			&
+			{
+				\begin{itemize}
+					\item Worked on Final Report
+					\item Submitted peer evaluation
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 9 
+			&
+			{
+				\begin{itemize}
+					\item Worked on Final Report
+					\item Worked on Final Presentation
+					\item Worked on Documentation, readme, etc. for project to send to clients
+				\end{itemize}
+			}
+			
+			&
+			\\ \hline
+			
+			Week 10 
+			&
+			{
+				Worked on Final Report
+			}
+			
+			&
+			\\ \hline
+			
+		\end{longtabu}
+	\end{center}
+
+
+
+
+
+
+
 
 
 
