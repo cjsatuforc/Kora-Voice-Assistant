@@ -7,10 +7,10 @@
     2. [Preinstalled Packages](#preinstalledPackages)
 4. [Getting Started](#gettingStarted)
 5. [Explaining The Source Code](#sourceCode)
-    1. [User-Kora Interaction Logging]("#interactionLogging")
-    2. [Extrude Command]("#extrudeCmd")  
-    3. [Save Command]("#saveCmd")  
-    4. [Save As Command]("#saveAsCmd")  
+    1. [User-Kora Interaction Logging](#interactionLogging)
+    2. [Extrude Command](#extrudeCmd)  
+    3. [Save Command](#saveCmd)  
+    4. [Save As Command](#saveAsCmd)  
 6. [Next Steps](#nextSteps)
 7. [Authors](#authors)
 
@@ -23,19 +23,25 @@ Kora offers users a tool that decreases the time required to achieve their goals
 
 <a name="packages"></a>
 ## Packages
-  #### Software Needed <a name="softwareNeeded"></a>
+
+  <a name="softwareNeeded"></a>
+  #### Software Needed
   Since _Autodesk's Fusion 360_ runs Add-Ins in their own environment, all software packages needed to run Kora had to be packaged within the Kora Add-In itself.
   Lucky for you, this means the only software that needs to be install is MongoDB.
   For this project we used v3.6.2, but any version newer than this will do.
 
   A user also needs to make an account at https://wit.ai to obtain their Server Access Token.
 
-  #### Preinstalled Packages <a name="preinstalledPackages"></a>
+  <a name="preinstalledPackages"></a>
+  #### Preinstalled Packages
   The software packages that are already packaged within the Kora source code are:
   - _PyAudio_ version 0.2.9. This is used for streaming audio from the user
   - _PortAudio_. This is an executable within PyAudio that PyAudio uses to stream audio.
   - _PyMongo_ version 3.61. PyMongo is the low-level driver wrapping the MongoDB API into Python.
   - _Mongoengine_ version 0.15.0. MongoEngine is a Document-Object Mapper for working with MongoDB from Python.
+
+
+
 
 <a name="gettingStarted"></a>
 ## Getting Started
