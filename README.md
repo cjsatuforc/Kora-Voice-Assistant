@@ -20,6 +20,7 @@ Kora is a proof of concept project that integrates a natural language processing
 Kora is a speech-based virtual assistant for Fusion that lets users perform a subset of tasks within the product such as saving a document by verbally instructing it to perform the task.
 Kora offers users a tool that decreases the time required to achieve their goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
 
+Kora works on Windows and Mac OS
 
 <a name="packages"></a>
 ## Packages
@@ -62,8 +63,9 @@ Kora offers users a tool that decreases the time required to achieve their goals
   4. Click the _Add-Ins_ tab at the top
   5. Click _Create_
   6. Click _Python_ as the language and enter _Kora_ as the Add-In name
-  7. In Folder Location, browse to the Kora folder that you placed in the Add-Ins directory in step 2
-  8. Kora is now set up as an Add-In. Double click the _Kora_ Add-In
+  7. In Folder Location, browse to the Kora folder that you placed in the Add-Ins directory in step 2. Kora is now set up as an Add-In.
+  8. Open a terminal window and type _mongod_ to start the MongoDB daemon.
+  9. Back in Fusion, double click the _Kora_ Add-In, then exit the Add-Ins menu.
   9. Click the _Add-Ins_ tab at the top
   10. Click _Activate Kora_
 

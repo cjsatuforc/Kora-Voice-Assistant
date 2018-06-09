@@ -1944,11 +1944,112 @@
 
 
 \section{Project Documentation}
+%	How does your project work? (Could include the following...)
+%	What is its structure?
+%	What is its Theory of Operation?
+%	Block and flow diagrams are good here.
+%	How does one install your software, if any?
+%	How does one run it?
+%	Are there any special hardware, OS, or runtime requirements to run your software?
+%	Any user guides, API documentation, etc.
+%	This needs to be detailed enough to recreate and/or use your project!
+
+
+
+	\subsubsection{Kora's Flow Of Control}
+		\begin{figure}[H]
+			\includegraphics[width=19cm]{koraFlowChart}
+			\centering
+		\end{figure}
+	
+	
+	
+\section{Working With Kora}
+Kora works on Windows and Mac OS
+
+\subsection{Packages}
+\subsubsection{Software Needed}
+Since \textit{Autodesk's Fusion 360} runs Add-Ins in their own environment, all software packages needed to run Kora had to be packaged within the Kora Add-In itself.
+Lucky for you, this means the only software that needs to be install is MongoDB.
+For this project we used v3.6.2, but any version newer than this will do.
+
+A user also needs to make an account at https://wit.ai to obtain their Server Access Token.
+
+
+\subsubsection{Preinstalled Packages}
+The software packages that are already packaged within the Kora source code are:
+	\begin{itemize}
+		\item \textit{PyAudio} version 0.2.9. This is used for streaming audio from the user
+		\item \textit{PortAudio}. This is an executable within PyAudio that PyAudio uses to stream audio.
+		\item \textit{PyMongo} version 3.61. PyMongo is the low-level driver wrapping the MongoDB API into Python.
+		\item \textit{Mongoengine} version 0.15.0. MongoEngine is a Document-Object Mapper for working with MongoDB from Python.
+	\end{itemize}
 
 
 
 
 
+\subsection{Getting Started}
+Make sure you first read the Packages heading above.
+	\begin{enumerate}
+		\item Install Kora into the Fusion 360 Add-Ins folder.
+		The Add-Ins folder is generally in
+		
+		\textbf{Windows:}
+		\textit{C:/Users/<users>/AppData/Roaming/Autodesk/"Autodesk Fusion 360"/API/AddIns}
+		
+		\textbf{Mac:}
+		\textit{/Users/<users>/Library/"Application Support"/Autodesk/"Autodesk Fusion 360"/API/AddIns}
+		
+		\item Name the installed repository Kora. It is important that the installed repository is named Kora, to match the Add-In name.
+		\item  Go to wit.ai's website and get your \textit{Server Access Token}and paste it in \textit{Kora/main/config.py} WIT\_AI\_CLIENT\_ACCESS\_TOKEN
+		\item  In Fusion click on the \textit{ADD-INS} dropdown in the top right of the ribbon, and click \textit{Scripts and Add-Ins...}
+		\item  Click the \textit{Add-Ins} tab at the top
+		\item Click \textit{Create}
+		\item  Click \textit{Python} as the language and enter \textit{Kora}as the Add-In name
+		\item  In Folder Location, browse to the Kora folder that you placed in the Add-Ins directory in step 2. Kora is now set up as an Add-In.
+		\item  Open a terminal window and type \textit{mongod}to start the MongoDB daemon.
+		\item  Back in Fusion, double click the \textit{Kora}Add-In, then exit the Add-Ins menu.
+		\item  Click the \textit{Add-Ins} tab at the top
+		\item  Click \textit{Activate Kora}
+	
+	\end{enumerate}
+
+
+
+
+
+\subsection{Explaining The Source Code}
+
+
+\subsubsection{User-Kora Interaction Logging }
+Inside of \textit{Kora/main/modules/logging} is the relevant code.
+\textbf{interaction.py} has the \textit{Mongoengine} class that outlines how the user-kora interaction document should be stored. \textbf{logInteraction.py} is the python decorator responsible for the actual storing of the interaction document. It first calls \textbf{mongoSetup.py} to initiate the connection to the mongoDB daemon.
+
+The \textit{logInteraction()} decorator is placed above the \textit{executeCommand()} function in \textbf{fusion\_execute\_intent.py}. \textit{executeCommand()} is the function called when Kora has a response back from Wit.ai and Kora wants to figure out what command to execute then execute it. Before that happens, the JSON containing the Wit.ai response and some extra, is routed through \textit{logInteraction()}. \textit{logInteraction()} then extracts information from the JSON then lets the JSON continue onto the \textit{executeCommand()}. When \textit{executeCommand()} returns, it returns to \textit{logInteraction()} where the remaining fields needed to store the interaction document are extracted.
+\textit{logInteraction()} then inserts the interaction document into the mongoDB database.
+
+
+
+\subsubsection{Extrude Command}
+All of the commands are located in \textit{Kora/main/modules/fusion\_execute\_intent/tasks}. The \textit{extrude()} function is given a sting representing what the user said, the magnitude, and the units.
+\textit{extrude()} checks if there is a "down" in the sentence. If there is and the magnitude is currently positive, then the magnitude is changed to negative. Next, \textit{extrude()} converts the \textit{magnitude} to the equivalent magnitude in terms of centimeters (the API only excepts centimeters) if the \textit{units} are not already centimeters.
+\textit{extrude()} then scans through all of the profiles and faces in the project and extrudes them by \textit{magnitude} \textit{units}. If there are no profiles or faces selected, then Kora prompts the user to select the profile or face they would like extruded.
+
+
+
+\subsubsection{Save Command} 
+\textit{save()} first checks that the project has been saved before. If it hasn't then Kora prompts the user to input what they want the project to be called and then hands off the flow of control to \textit{saveAs()}. If the project has been saved already, i.e. the project has a name, then \textit{save()} goes ahead and saves the project.
+
+
+Save As Command  
+\textit{saveAs()} first checks if the call is coming from \textit{save()}. If it is, then it creates a copy of the project and saves it as the supplied filename. Otherwise, \textit{saveAs()}firs converts the supplied filename to camelcase and then creates a copy of the file and saves it under the camelcased filename.
+
+
+	
+	
+	
+	
 
 
 
@@ -1960,7 +2061,9 @@
 
 \section{Recommended Technical Resources for Learning More}
 
-
+%	What web sites were helpful? (Listed in order of helpfulness.)
+%	What, if any, reference books really helped?
+%	Were there any people on campus that were really helpful?
 
 
 
@@ -1973,11 +2076,71 @@
 
 \section{Conclusions and Reflections}
 
+%	What technical information did you learn?
+%	What non-technical information did you learn?
+%	What have you learned about project work?
+%	What have you learned about project management?
+%	What have you learned about working in teams?
+%	If you could do it all over, what would you do differently?
+
+\subsection{Jeremy}
+	\subsubsection{Technical Information Learned}
+	
+	
+	
+	\subsubsection{Non-technical Information Learned}
+	
+	
+
+
+	\subsubsection{Learnings About The Project}
+	
+	
+	
+	
+	\subsubsection{Learnings About Project Management}
+
+
+
+
+	\subsubsection{Learnings About Working In Teams}
+
+
+
+
+	\subsubsection{Things I Would Do Differently If I Were To Do It All Again}
 
 
 
 
 
+
+\subsection{Austin}
+\subsubsection{Technical Information Learned}
+
+
+
+\subsubsection{Non-technical Information Learned}
+
+
+
+
+\subsubsection{Learnings About The Project}
+
+
+
+
+\subsubsection{Learnings About Project Management}
+
+
+
+
+\subsubsection{Learnings About Working In Teams}
+
+
+
+
+\subsubsection{Things I Would Do Differently If I Were To Do It All Again}
 
 
 
