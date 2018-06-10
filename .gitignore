@@ -3,6 +3,7 @@
 
 #ignore all files produced by latex makefile
 *.synctex.gz
+*.bbl
 *.aux
 *.toc
 *.log

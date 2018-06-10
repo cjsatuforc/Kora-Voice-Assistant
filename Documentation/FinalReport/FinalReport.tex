@@ -167,25 +167,25 @@
 %	What was the role of the client(s)? (I.e., did they supervise only, or did they participate in doing development)
 
 \section{Introduction to Project}
-	Kora was requested by Patti Vrobel on behalf of Autodesk. 
+	Kora was requested by Patti Vrobel on behalf of Autodesk.
 	After Fall term the project was passed on to Anand Karyekar and Jennifer Talaga, who supervised the project.
 	\newpara
-	Since the inception of publicly available computers until around 2006 society has interacted with computers in the same manner – keyboard and mouse. 
-	Recently there’s been a moving trend toward making computers and machines more interactive. 
+	Since the inception of publicly available computers until around 2006 society has interacted with computers in the same manner – keyboard and mouse.
+	Recently there’s been a moving trend toward making computers and machines more interactive.
 	Nintendo launched the Wii in 2006 and Microsoft’s XBOX division followed in 2010 with the Kinect \cite{wii}\cite{kinect}.
-	 Apple launched Siri in 2010 and Microsoft and Google followed shortly after with their smart assistants \cite{siri}. 
+	 Apple launched Siri in 2010 and Microsoft and Google followed shortly after with their smart assistants \cite{siri}.
 	 Autodesk realizes the competitive advantage of having their products more interactive.
 	 This is what lead to Kora.
 	\newpara
-	Autodesk has the opportunity to gain much more from making their products more interactive than simply retaining and attracting users due to the new ease of use. 
+	Autodesk has the opportunity to gain much more from making their products more interactive than simply retaining and attracting users due to the new ease of use.
 	From a business perspective, enabling natural language processing allows for a new addition to user data that is rich in potential!
 	Instead of only collecting button clicks on dropdown menus and ribbon items, with a voice interface Autodesk would be able to collect exactly what the user is intending to do.
-	This form of data collection rips away the ambiguity of the data. 
+	This form of data collection rips away the ambiguity of the data.
 	\newpara
 	Kora was created by Austin Row and Jeremy Fischer.
 	Since the team consisted of just the two of us, we didn't have assigned roles.
 	Instead, we both touched all aspects of the project.
-	
+
 
 
 
@@ -400,7 +400,7 @@
 			\label{fig:developmentSchedule1}
 		\end{center}
 	\end{figure}
-	
+
 	\subsection{Changes}
 		\subsubsection{Change History}
 		\begin{table}[H]
@@ -414,24 +414,24 @@
 				May 8, 2018 & {User onboarding and Kora wake-word taken out. Performance requirement loosened.} \\ \hline
 			\end{tabular}
 		\end{table}
-		
+
 		The user onboarding requirement was taken off due to an issue on Fusion 360's end.
 		To complete the onboarding through the Fusion API we needed to use Fusion palettes.
 		According to the Fusion API documentation, the palettes support JavaScript. However, the sample palette given on the API's website didn't work.
-		After further discussion with our clients it appears there is a problem on Fusion's end, and the team is working on it. 
+		After further discussion with our clients it appears there is a problem on Fusion's end, and the team is working on it.
 		Unfortunately, this meant we couldn't accomplish the onboarding requirement until the JavaScript issue was handled.
 		\newpara
 		The performance metric was altered from \textit{at most one second longer than the task would take manually} to \textit{at most three seconds longer than the task would take manually}.
 		This was due to WIT.ai's average latency of three seconds to interpret the streamed audio.
 		We could have pivoted and used a different NLP, but our clients instructed to keep working on the other requirements and come back to the latency issue if time allows.
 		\newpara
-		The wake-word requirement was taken out because WIT.ai didn't support a wake-word, and we didn't have enough time to incorporate an open source solution for it. 
+		The wake-word requirement was taken out because WIT.ai didn't support a wake-word, and we didn't have enough time to incorporate an open source solution for it.
 		\newpara
 		We remind you at the time the requirements document was written our team had three members, and so the workload we assigned reflected that. Unfortunately, at the beginning of Kora's development our third member left the group, putting more of a workload on Austin and Jeremy's plates.
-		
+
 	\subsection{Final Gantt Chart}
 		\begin{figure}[H]
-			\includegraphics[width=16cm]{finalGantt.png}
+			\includegraphics[width=16cm]{finalGantt.eps}
 			\centering
 			\caption{Kora's final Gantt chart showing a rough estimate of when Kora's components were developed.}
 		\end{figure}
@@ -1505,37 +1505,53 @@
 			& \textbf{\Large{Jeremy}} & \textbf{\Large{Austin}}  \\ \hline
 			&	\textbf{\large{Fall Term 2017}}  &\\ \hline
 			\textbf{Week} & \textbf{Summary}  & \textbf{Summary }\\ \hline
-			
-			Week 1 
-			& 
+
+			Week 1
+			&
 			{
 				This week I updated my resume and professional biography for class. I also emailed Patti regarding the capstone project. The project involves Natural Language Processing (NLP) , so I found a YouTube video series on NLP taught by two Stanford professors and watched a handful of those. I also researched some NLP methods that I learned from those videos.
 			}
-			
+
 			&
-			\\ \hline
-			
-			Week 2 
-			&  
 			{
-				The team reached out to Patti and set up an introductory meeting from 8:00 - 8:30am on Friday October 6th. The meeting went good. We got an overview of what Autodesk does, as well as Patti's role. We touched on the project and what she's hoping to get out of it, but scheduled an hour long follow up meeting for Monday October 9th to dive deeper into the project. 
+				This week involved a small collection of tasks to prepare for the class as a whole.
+				I wrote and posted the Professional Biography and reviewed my resume for the in-class editing activity.
+				I also submitted my project preferences for project selection.
 			}
-			
-			&
 			\\ \hline
-			
-			Week 3 
+
+			Week 2
+			&
+			{
+				The team reached out to Patti and set up an introductory meeting from 8:00 - 8:30am on Friday October 6th. The meeting went good. We got an overview of what Autodesk does, as well as Patti's role. We touched on the project and what she's hoping to get out of it, but scheduled an hour long follow up meeting for Monday October 9th to dive deeper into the project.
+			}
+
+			&
+			{
+				This week I was assigned to my project and group.
+				I met with my group mates and discussed the overarching idea for the project in a meeting with our client.
+				We didn't get many details for our project out of our meeting so we have scheduled another one next Monday to discuss project specifics.
+				We will have a better idea of exactly what we will be doing for our project after this meeting.
+			}
+			\\ \hline
+
+			Week 3
 			&
 			{
 				We met with Patti for about an hour Monday afternoon and got a better understanding of the project. The meeting notes can be found in 3.1. She mentioned that we won't be getting Fusion source code, we will have to use the Fusion APIs instead. This will be challenging, because we will have to figure out a way to work through the API to integrate the voice control libraries.
-				
+
 				I found an open source library called Mycroft that seems like the whole package: Voice-to-text, text-to-voice, sentence sentiment, and more. I haven't looked at it too deeply yet, but just from what I've seen so far I think there is a major obstacle to overcome If we want to use it. Mycroft is only supported on Raspberry Pis, android, and Linux because it is aimed towards embedded device. So, to get this running on Mac OS or Windows may not be possible. We'll see.
 			}
-			 
+
  			&
+			{
+				This week we had another meeting with our client to discuss some of the details of our project and clarify exactly what she wants.
+				We also drafted our problem statements and received in-class feedback.
+				Looking forward we will aim to formulate specific project requirements and research tools that will help us meet these requirements.
+			}
 			\\ \hline
-			
-			Week 4 
+
+			Week 4
 			&
 			{
 				\begin{itemize}
@@ -1545,11 +1561,15 @@
 					\item We created a scenario to demonstrate at Expo. This is our project goal.
 				\end{itemize}
 			}
-			 
+
 			&
+			{
+				This week we reorganized our GitHub directory structure as per the instructions given to us by our TA in our weekly meeting, finished and submitted the final draft of the problem statement, and further discussed and clarified the goals of our project with our client.
+				Next week we will start thinking more about smaller details of our project as we begin the requirements document.
+			}
 			\\ \hline
-			
-			Week 5 
+
+			Week 5
 			&
 			{
 				\begin{itemize}
@@ -1558,25 +1578,37 @@
 					\item Thursday meeting with Patti was canceled - she was traveling
 				\end{itemize}
 			}
-			 
+
 			&
+			{
+				This week was dedicated specifically to writing the first draft of the requirements document.
+				Patti cancelled the normal Thursday meeting since she was travelling for work.
+				We had no problems creating this first draft.
+				Next week we will look to finalize and submit the project requirements.
+			}
 			\\ \hline
-			
-			Week 6 
+
+			Week 6
 			&
 			{
 				\begin{itemize}
 					\item Met with Junki on Tuesday and discussed whether there was a research component to our project -- we agreed there was in our stretch goals
 					\item Went to the research class on Thursday (see notes in 6.4)
-					\item Met with Patti Thursday night and went through the requirements document. She liked it, and added a few things to think about 
+					\item Met with Patti Thursday night and went through the requirements document. She liked it, and added a few things to think about
 					Turned requirements document in.
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				This week we finalized and submitted the project requirements after reviewing them with our client.
+				We also attended the research lecture to learn about how to approach the research-oriented aspects of our project.
+				We did not encounter any problems this week.
+				Next week we will discuss how we intend to break up the project into different pieces for the technology review and may begin drafting our individual technology reviews.
+			}
 			\\ \hline
-			
-			Week 7 
+
+			Week 7
 			&
 			{
 					\begin{itemize}
@@ -1591,30 +1623,48 @@
 						 \end{itemize}
 					\end{itemize}
 			}
-			
+
 			&
+			{
+				This week was dedicated entirely to breaking the project into components for the tech review.
+				This was difficult as there are really only a few core technologies that need to be linked together to implement our project.
+				Patti, the client, said that she believed that we should add a discussion of methods for signaling to the assistant that it is being given a voice command and some others agreed.
+				However, I'm not sure that this is actually an appropriate discussion for the technology review assignment.
+				Next week We will complete and iterate upon our individual first drafts of the technology review assignment.
+			}
 			\\ \hline
-			
-			Week 8 
+
+			Week 8
 			&
 			{
 				This week I completed the tech review. I researched the best data structure for storing log files, how to map text output by the voice synthesizer to a Fusion command, and how to awake Kora in an efficient user friendly fashion.
 				Our weekly Thursday meeting with Patti got canceled because she was traveling.
 			}
-			
+
 			&
+			{
+				This week I revised my tech review document to incorporate changes suggested during the in-class peer review.
+				I sent the revised document to Patti for feedback.
+				Next week we will start our design document.
+				No problems were encountered this week.
+			}
 			\\ \hline
-			
-			Week 9 
+
+			Week 9
 			&
 			{
 				I did absolutely nothing this week. There was school Monday, Tuesday, and Wednesday with Thursday and Friday off for Thanksgiving break. Next week I'll be working on and completing the Design Document and the Progress Report.
 			}
-		
+
 			&
+			{
+				No progress was made this week as it is Thanksgiving week.
+				As such, there were no problems.
+				Next week our group will do the design document.
+			}
 			\\ \hline
-			
-			Week 10 
+
+			Week 10
 			&
 			{
 				\begin{itemize}
@@ -1623,22 +1673,30 @@
 					\item Austin and I also had a long session mapping out Kora's design on a whiteboard. James wasn't there, but we met up with him after and showed him pictures of the design on the whiteboard. To see these pictures, check the General $\rightarrow$  Design Document page
 				\end{itemize}
 			}
-		
+
 			&
+			{
+				This week was dedicated entirely to the planning and completion of the first iteration of the design doc which was submitted on Friday.
+				Thursday's usual meeting with Patti was cancelled due to her being unavailable.
+				Next week will be finals/winter break and so we will start upon the second iteration of the design document.
+				Our team's goal is to come back from winter break with every aspect of the project satisfactorily specified in the design document so that implementing the project will be easy and clean.
+				This should keep the code structure from devolving into anything too messy and gives an ultimate reference for any potential implementation questions in the context of design.
+				There were no problems this week.
+			}
 			\\ \hline
-			
-			
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
+
 			% WINTER TERM
 			&	\textbf{\large{Winter Term 2018}}  &\\ \hline
-			
-			Week 1 
-			& 
+
+			Week 1
+			&
 			{
 				\begin{itemize}
 					\item Set up the new meeting time with Junki
@@ -1646,12 +1704,17 @@
 					\item Researched HTTP APIs for MongoDB
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				This week we tackled the issue of how to allow Kora to use non-standard Python libraries since the code runs in an isolated environment with access only to standard python libraries.
+				We bundled the source of the libraries that we want to use into the directory containing Kora and use all relative imports to get around this as it is the method suggested by the Fusion API developers.
+				Looking forward we will begin to try to get the save and rotate commands to work in the editor through Kora.
+			}
 			\\ \hline
-			
-			Week 2 
-			&  
+
+			Week 2
+			&
 			{
 				\begin{itemize}
 					\item Met with Anand, Rob, Patti, and Austin. James was sick so he couldn't make the call. Anand and Rob are very excited to be a part of the project.
@@ -1659,11 +1722,17 @@
 					\item I finished setting up the database locally
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				This week we met the individuals at Autodesk who will be taking over our project in February when Patti officially leaves the company.
+				We also got rotation to partially work in the editor.
+				Given a command to rotate by a certain amount in a certain direction, Kora will rotate the object in the editor in the correct direction, but not by the correct amount.
+				Next week will be focused on get the magnitude of rotation right and implementing the save command.
+			}
 			\\ \hline
-			
-			Week 3 
+
+			Week 3
 			&
 			{
 				\begin{itemize}
@@ -1673,11 +1742,16 @@
 					\item Got PyAudio working and a successful API call
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				This week we discovered that the Fusion 360 editor runs Add Ins on the same thread as the editor itself and therefore does not inherently support running Add Ins in the background.
+				We managed to get Kora to run in the background anyway using Python's threading module and firing events that briefly return control of the main thread back to the Kora Add In for executing code that can only be executed in the main thread.
+				There are several features not yet taken on the Kanban board including devising a testing framework for Kora so that is likely what I will work on next week.
+			}
 			\\ \hline
-			
-			Week 4 
+
+			Week 4
 			&
 			{
 				\begin{itemize}
@@ -1686,11 +1760,16 @@
 					\item Made progress on integrating database calls into Kora to log User-Kora interactions. It took awhile to lay the ground work because Fusion only plays nice with relative imports. So, I had to go through the entire mongoengine library and change its imports to relative imports.
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				This week was largely dedicated to classes other than capstone.
+				However, I did manage to solve the issue of having to manually train WIT's NLP model one example at a time by using selenium to automatically generate and validate training examples on the Wit.ai website.
+				Next week I will look at getting the UI elements of Kora implemented.
+			}
 			\\ \hline
-			
-			Week 5 
+
+			Week 5
 			&
 			{
 				\begin{itemize}
@@ -1700,11 +1779,16 @@
 					\item MongoDB is set up and correctly saves a User-Kora interaction
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				This week along with our weekly meeting we developed elevator pitches for our project in class and created the first draft of our poster for expo.
+				No new problems arose.
+				Next week we will complete the Winter midterm progress report.
+			}
 			\\ \hline
-			
-			Week 6 
+
+			Week 6
 			&
 			{
 				\begin{itemize}
@@ -1715,11 +1799,16 @@
 					\item Created the save and save as command and trained WIT to recognize these commands
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				This week was dedicated to reflecting on the first half of the development process for Kora and completing the progress report.
+				We encountered no particular difficulties in doing this.
+				Next week we will either begin looking into alternatives to Wit for performing Kora's NLP responsibilities or will begin implementing Kora's associated GUI components.
+			}
 			\\ \hline
-			
-			Week 7 
+
+			Week 7
 			&
 			{
 				\begin{itemize}
@@ -1728,29 +1817,45 @@
 					Moving forward we will be implementing a UI and making Kora not crash on silence.
 				\end{itemize}
 			}
-			
-			&
-			\\ \hline
-			
-			Week 8 
+
 			&
 			{
-					Added code so that Kora doesn’t fire an event unless WIT (our NLP) returns something useful. The way it was previously set up is even if I said "I like chocolate cake and ice cream" Kora would still fire an event to execute the command in Fusion. This also caused an issue later on in the pipeline if WIT returned nonsense since it got white-noise. Now, when WIT responds we tell Kora to disregard the WIT response and keep listening if the response doesn’t have an "Intent" key, or if it does, but the confidence in the "Intent" value is less than the threshold (which is set at 79\%) 
+				We started this week by looking into alternatives to Wit for Kora's natural language processing functionalities.
+				Upon determining that implementing an alternative may be a larger undertaking than previously expected, and with the advice of our client, we decided to leave the NLP latency issues for now and focus on  completing the other remaining project requirements.
+				At the end of the week, we started looking at implementing the GUI components of Kora and will continue to work on that into next week.
 			}
-			
-			&
 			\\ \hline
-			
-			Week 9 
+
+			Week 8
 			&
 			{
-				Successfully implemented the 'Extrude' command for Kora. The only "issue" is that it doesn't look user friendly at the moment due to not being able to use a command dialog because using a command dialog doesn't allow us to return a \textit{executionStatusCode}.	
+					Added code so that Kora doesn’t fire an event unless WIT (our NLP) returns something useful. The way it was previously set up is even if I said "I like chocolate cake and ice cream" Kora would still fire an event to execute the command in Fusion. This also caused an issue later on in the pipeline if WIT returned nonsense since it got white-noise. Now, when WIT responds we tell Kora to disregard the WIT response and keep listening if the response doesn’t have an "Intent" key, or if it does, but the confidence in the "Intent" value is less than the threshold (which is set at 79\%)
 			}
-			
+
 			&
+			{
+				This was the week that we started implementing Kora's UI for status messaging and onboarding with PyQt, a Python GUI framework.
+				By the end of the week, we discovered that none of the available Python GUI frameworks are going to work for what we want to do since they don't work properly in separate threads.
+				We will go back to looking for options within the Fusion API for implementing Kora's UI next week.
+			}
 			\\ \hline
-			
-			Week 10 
+
+			Week 9
+			&
+			{
+				Successfully implemented the 'Extrude' command for Kora. The only "issue" is that it doesn't look user friendly at the moment due to not being able to use a command dialog because using a command dialog doesn't allow us to return a \textit{executionStatusCode}.
+			}
+
+			&
+			{
+				This week we transitioned to using the Palette object provided by the Fusion API to implement Kora's UI for status messaging and onboarding.
+				We ran into problems when trying to communicate between the AddIn and the palette and discovered that it was a bug in the API.
+				Jennifer and Anand are going to talk to the API team to try to resolve this.
+				Next week we will continue the implementation of the UI.
+			}
+			\\ \hline
+
+			Week 10
 			&
 			{
 				\begin{itemize}
@@ -1760,20 +1865,24 @@
 				\end{itemize}
 			}
 			&
+			{
+				This week we worked around the issues we were having in implementing Kora's feedback messaging with Fusion's Palette object by using a different HTML template for each of the messages and switching to a new template when appropriate.
+				Next week we will focus on putting together the Winter Progress Report.
+			}
 			\\ \hline
-			
-			
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
+
 			% SPRING TERM
 			&	\textbf{\large{Spring  Term 2018}}  & \\ \hline
-			
-			Week 1 
-			& 
+
+			Week 1
+			&
 			{
 				\begin{itemize}
 					\item Met with Jennifer and Anand and talked about our progress report and what they thought about it
@@ -1781,12 +1890,16 @@
 					\item Started looking into Hot Word detection software: Snowboy and PocketSphinx
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				No progress was made this week.
+				Next week we will look into implementing a hot word for activating Kora.
+			}
 			\\ \hline
-			
-			Week 2 
-			&  
+
+			Week 2
+			&
 			{
 				\begin{itemize}
 					\item Meeting with Junki cancelled
@@ -1799,11 +1912,15 @@
 					\end{itemize}
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				We looked into but were unable to implement the use of an activation phrase for Kora.
+				Next week we will continue to look into this.
+			}
 			\\ \hline
-			
-			Week 3 
+
+			Week 3
 			&
 			{
 				\begin{itemize}
@@ -1812,25 +1929,34 @@
 					\item Researching other Hot Word detection software, and thinking of ways to do it on our own.
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				We looked into but were unable to implement the use of an activation phrase for Kora.
+				We also completed the WIRED article assignment.
+				Next week will be spent making preparations to present the project to Autodesk employees.
+			}
 			\\ \hline
-			
-			Week 4 
+
+			Week 4
 			&
 			{
 				\begin{itemize}
 					\item Going Up to Autodesk on Friday to present our project to whoever attends. Anand said he's trying to get as many executives to show up as possible
 					\item No progress as far as coding Kora goes
 					\item Worked on putting together the presentation for Friday
-					\item Presentation went good. About 40 people in person and 5 called in from SF via Skype. 
+					\item Presentation went good. About 40 people in person and 5 called in from SF via Skype.
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				This week we prepared for and gave a presentation on our project to Autodesk employee's at their Portland office.
+				Next week we will complete the midterm progress report.
+			}
 			\\ \hline
-			
-			Week 5 
+
+			Week 5
 			&
 			{
 				\begin{itemize}
@@ -1839,11 +1965,15 @@
 					\item Worked on the midterm progress report.
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				This week we completed the midterm progress report.
+				We will make final preparations for expo next week.
+			}
 			\\ \hline
-			
-			Week 6 
+
+			Week 6
 			&
 			{
 				\begin{itemize}
@@ -1854,11 +1984,14 @@
 					\item Got the edits approved by Anand and Jennifer
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				We finished preparations for expo then went to expo.
+			}
 			\\ \hline
-			
-			Week 7 
+
+			Week 7
 			&
 			{
 				\begin{itemize}
@@ -1872,11 +2005,14 @@
 				\item Canceled our meeting with Anand and Jennifer because they didn't have anything to discuss and wanted to let us focus on expo.
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				Working on final report and presentation.
+			}
 			\\ \hline
-			
-			Week 8 
+
+			Week 8
 			&
 			{
 				\begin{itemize}
@@ -1884,11 +2020,14 @@
 					\item Submitted peer evaluation
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				Working on final report and presentation.
+			}
 			\\ \hline
-			
-			Week 9 
+
+			Week 9
 			&
 			{
 				\begin{itemize}
@@ -1897,19 +2036,25 @@
 					\item Worked on Documentation, readme, etc. for project to send to clients
 				\end{itemize}
 			}
-			
+
 			&
+			{
+				Working on final report and presentation.
+			}
 			\\ \hline
-			
-			Week 10 
+
+			Week 10
 			&
 			{
 				Worked on Final Report
 			}
-			
+
 			&
+			{
+				Completed and submitted final report and presentation.
+			}
 			\\ \hline
-			
+
 		\end{longtabu}
 	\end{center}
 
@@ -1926,7 +2071,7 @@
 
 \section{Final Poster}
 	\begin{figure}[H]
-		\includegraphics[width=19cm]{poster.png}
+		\includegraphics[width=19cm]{poster.eps}
 		\centering
 	\end{figure}
 
@@ -1953,19 +2098,6 @@
 %	Are there any special hardware, OS, or runtime requirements to run your software?
 %	Any user guides, API documentation, etc.
 %	This needs to be detailed enough to recreate and/or use your project!
-
-
-
-	\subsubsection{Kora's Flow Of Control}
-		\begin{figure}[H]
-			\includegraphics[width=19cm]{koraFlowChart.png}
-			\centering
-		\end{figure}
-	
-	
-	
-\section{Working With Kora}
-Kora works on Windows and Mac OS
 
 \subsection{Packages}
 \subsubsection{Software Needed}
@@ -1994,13 +2126,13 @@ Make sure you first read the Packages heading above.
 	\begin{enumerate}
 		\item Install Kora into the Fusion 360 Add-Ins folder.
 		The Add-Ins folder is generally in
-		
+
 		\textbf{Windows:}
 		\textit{C:/Users/<users>/AppData/Roaming/Autodesk/"Autodesk Fusion 360"/API/AddIns}
-		
+
 		\textbf{Mac:}
 		\textit{/Users/<users>/Library/"Application Support"/Autodesk/"Autodesk Fusion 360"/API/AddIns}
-		
+
 		\item Name the installed repository Kora. It is important that the installed repository is named Kora, to match the Add-In name.
 		\item  Go to wit.ai's website and get your \textit{Server Access Token}and paste it in \textit{Kora/main/config.py} WIT\_AI\_CLIENT\_ACCESS\_TOKEN
 		\item  In Fusion click on the \textit{ADD-INS} dropdown in the top right of the ribbon, and click \textit{Scripts and Add-Ins...}
@@ -2012,7 +2144,7 @@ Make sure you first read the Packages heading above.
 		\item  Back in Fusion, double click the \textit{Kora}Add-In, then exit the Add-Ins menu.
 		\item  Click the \textit{Add-Ins} tab at the top
 		\item  Click \textit{Activate Kora}
-	
+
 	\end{enumerate}
 
 
@@ -2021,6 +2153,14 @@ Make sure you first read the Packages heading above.
 
 \subsection{Explaining The Source Code}
 
+\subsubsection{Control Flow Diagram}
+	\begin{figure}[H]
+		\includegraphics[width=19cm]{koraFlowChart.eps}
+		\centering
+		\caption{Kora's Control Flow}
+	\end{figure}
+The application starts in the same thread running the Fusion editor and immediately spawns a thread for recording the user voice commands and performing the natural language processing on those commands.
+After a command has been parsed by WIT, the response is sent in an event that is caught and used to make the Appropriate API calls back in the main thread.
 
 \subsubsection{User-Kora Interaction Logging }
 Inside of \textit{Kora/main/modules/logging} is the relevant code.
@@ -2038,18 +2178,12 @@ All of the commands are located in \textit{Kora/main/modules/fusion\_execute\_in
 
 
 
-\subsubsection{Save Command} 
+\subsubsection{Save Command}
 \textit{save()} first checks that the project has been saved before. If it hasn't then Kora prompts the user to input what they want the project to be called and then hands off the flow of control to \textit{saveAs()}. If the project has been saved already, i.e. the project has a name, then \textit{save()} goes ahead and saves the project.
 
 
-Save As Command  
-\textit{saveAs()} first checks if the call is coming from \textit{save()}. If it is, then it creates a copy of the project and saves it as the supplied filename. Otherwise, \textit{saveAs()}firs converts the supplied filename to camelcase and then creates a copy of the file and saves it under the camelcased filename.
-
-
-	
-	
-	
-	
+Save As Command
+\textit{saveAs()} first checks if the call is coming from \textit{save()}. If it is, then it creates a copy of the project and saves it as the supplied filename. Otherwise, \textit{saveAs()} first converts the supplied filename to camelcase and then creates a copy of the file and saves it under the camelcased filename.
 
 
 
@@ -2059,12 +2193,25 @@ Save As Command
 
 
 
-\section{Recommended Technical Resources for Learning More}
+
+
+
+
 
 %	What web sites were helpful? (Listed in order of helpfulness.)
 %	What, if any, reference books really helped?
 %	Were there any people on campus that were really helpful?
+\section{Recommended Technical Resources for Learning More}
+	The entirety of the project can be completed using the following three resources:
 
+	\begin{enumerate}
+		\item \textbf{https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-C1545D80-D804-4CF3-886D-9B5C54B2D7A2} \\
+			Contains information regarding how to create Fusion AddIns as well as the documentation for the Fusion API.
+		\item \textbf{https://wit.ai/docs} \\
+			Contains the API for WIT, the web service used for handling natural language processing.
+		\item \textbf{https://forums.autodesk.com/t5/fusion-360-api-and-scripts/bd-p/22} \\
+			Contains the official forum for asking questions regarding building Scripts and AddIns for Fusion.
+	\end{enumerate}
 
 
 
@@ -2090,26 +2237,26 @@ Save As Command
 				\item How to set up and run a MongoDB database locally, and how to connect to it via  Python.
 				\item I learned about libraries for streaming audio, and software for extracting meaning from the audio.
 			\end{itemize}
-	
-		
-	
-	
+
+
+
+
 	\subsubsection{Non-technical Information Learned}
 		I learned how create and deliver a presentation with confidence. Austin and I not only attended the engineering expo, but visited Autodesk's Portland location and presented our project to their staff.
-		
-	
+
+
 
 
 	\subsubsection{Learnings About Project Work}
 		\begin{itemize}
-			\item I learned to always assume that a task is going to take longer than you initially think it will. 
+			\item I learned to always assume that a task is going to take longer than you initially think it will.
 			\item I learned to communicate with your team members often.
 			\item I learned to ask people who have worked on the project or similar projects for advice and guidance.
 		\end{itemize}
-	
-	
-	
-	
+
+
+
+
 	\subsubsection{Learnings About Project Management}
 		\begin{itemize}
 			\item I learned to physically take note of technical issues as soon as you  encounter them; even if you think to yourself \textit{I'll remember to come back and fix this}.
@@ -2124,7 +2271,7 @@ Save As Command
 			\item I learned the importance of being open to alternative ideas
 			\item I learned to give credit when credit is due as well as constructive criticism
 		\end{itemize}
-		
+
 
 
 
@@ -2137,38 +2284,44 @@ Save As Command
 
 
 \subsection{Austin}
-\subsubsection{Technical Information Learned}
+	\subsubsection{Technical Information Learned}
+		Among the technical things that I learned while working on this project were the event-driven programming paradigm, how to use various APIs and Python libraries, and how to work with and create Python modules.
+		Due to the nature Fusion 360 plugins, the implementation of the project necessarily relied on events to communicate and coordinate between various threads.
+		This use of events to drive the state transitions of the application was not entirely new to me, but it was a new application of something that I have only previously been familiar with in the context of web development.
+		There were also several libraries and APIs that I learned to use including the WIT and Fusion APIs and the Pyaudio library for Python.
+		I had no knowledge of Python modules before this project, so I also learned how to make and use them over the course of implementing Kora.
+
+	\subsubsection{Non-technical Information Learned}
+		The primary non-technical takeaways that I had during the completion of this project were those relating to coordinating groups of people.
+		This project required the coordination of multiple developers all working on different parts of the project and coordination with clients through meetings.
+		I also learned to give myself a little more time than I thought I needed in time estimations since things often took longer to complete than I initially thought they would.
+
+	\subsubsection{Learnings About Project Work}
+		One of the biggest things that I have learned about working on projects is that they will likely take longer than you think they will.
+		Initially, I believed that we would complete all of our main objectives early on and would be able to tackle our stretch goals before the end of Winter Term.
+		This belief was naive in that it did not take into consideration the possibility of unforseen difficulties of which there were many.
+		Working of this project has taught me that things will not go as smoothly as you believe and that you should take that into consideration when estimating how long it will take you to complete everything.
+
+	\subsubsection{Learnings About Project Management}
+		After approximately eight months of working on Kora, I think that the keys to project management are open and frequent communication and mutual respect amongst peers.
+		We did not encounter many issues in the management of our project and I believe that it was because we had both of these things.
+		Communicating ensures that everyone on the team knows what is going on and keeps anyone from accidentally doing anything in opposition to the team's goals as a result of not being informed.
+		Mutual respect keeps everyone working together happily and prevents project-halting intra-team conflict.
+
+	\subsubsection{Learnings About Working In Teams}
+		I learned that while working with other developers, it is best if you can find code-related duties that are largely unrelated.
+		When developers work in the same section of the code, there is likely to be conflict when you try to merge everything together.
+		Having developers work on different parts of the code minimizes this risk.
+
+	\subsubsection{Things I Would Do Differently If I Were To Do It All Again}
+		If I were to do a similar project again, I would put more effort into the Technology Review.
+		I was in charge of deciding what the best solution would be for handling the natural language aspects of our project, and I am not sure that I made the correct decision.
+		We had significant performance issues that stemmed from our use of WIT as a web service for handling natural language processing.
+		If I had put more time into the Technology Review, it is possible that we would not have been burdened with many of the issues that came from using WIT.
 
 
 
-\subsubsection{Non-technical Information Learned}
 
-
-
-
-\subsubsection{Learnings About Working On A Project}
-
-
-
-
-\subsubsection{Learnings About Project Management}
-
-
-
-
-\subsubsection{Learnings About Working In Teams}
-
-
-
-
-\subsubsection{Things I Would Do Differently If I Were To Do It All Again}
-
-
-
-
-
-
-\section{Appendix 1: Essential Code Listings}
 
 
 
