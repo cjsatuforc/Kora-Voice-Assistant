@@ -80,7 +80,7 @@ Kora works on Windows and Mac OS
  ##### User-Kora Interaction Logging  
  ***
  Inside of _Kora/main/modules/logging_ is the relevant code.
- ** interaction.py ** has the _Mongoengine_ class that outlines how the user-kora interaction document should be stored. ** logInteraction.py ** is the python decorator responsible for the actual storing of the interaction document. It first calls ** mongoSetup.py ** to initiate the connection to the mongoDB daemon.
+ **interaction.py** has the _Mongoengine_ class that outlines how the user-kora interaction document should be stored. **logInteraction.py** is the python decorator responsible for the actual storing of the interaction document. It first calls **mongoSetup.py** to initiate the connection to the mongoDB daemon.
 
  The *logInteraction()* decorator is placed above the *executeCommand()* function in **fusion_execute_intent.py**. *executeCommand()* is the function called when Kora has a response back from Wit.ai and Kora wants to figure out what command to execute then execute it. Before that happens, the JSON containing the Wit.ai response and some extra, is routed through *logInteraction()*. *logInteraction()* then extracts information from the JSON then lets the JSON continue onto the *executeCommand()*. When *executeCommand()* returns, it returns to *logInteraction()* where the remaining fields needed to store the interaction document are extracted.
  *logInteraction()* then inserts the interaction document into the mongoDB database.
