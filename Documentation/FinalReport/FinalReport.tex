@@ -2161,14 +2161,14 @@ Make sure you first read the Packages heading above.
 		\caption{Kora's Control Flow}
 	\end{figure}
 The application starts in the same thread running the Fusion editor and immediately spawns a thread for recording the user voice commands and performing the natural language processing on those commands.
-After a command has been parsed by WIT, the response is sent in an event that is caught and used to make the Appropriate API calls back in the main thread.
+After a command has been parsed by WIT, the response is sent in an event that is caught and used to make the appropriate API calls back in the main thread.
 
 \subsubsection{Recording and Parsing Commands}
 The recording and parsing of user voice commands occurs in the \textit{nlp} module and is all done via the \textit{streamAudio} function which takes optional callbacks for when the beginning and end of a command is detected.
-The function begins by opening an audio stream using the Pyaudio library and making an HTTP request to WIT to parse chunked audio data coming the generator \textit{\_gen} which handles recording from the stream.
+The function begins by opening an audio stream using the Pyaudio library and making an HTTP request to WIT to parse chunked audio data coming from the generator \textit{\_gen} which handles recording from the stream.
 When \textit{\_gen} detects audio levels above a specified silence threshold, it starts recording and yielding chunks of audio to WIT.
 Upon the audio levels falling below and remaining below the threshold for a specified amount of time, the command is deemed to be complete and the end of the audio data is signalled.
-In \textit{streamAudio} the response from WIT containing the parsed meaning of the streamed audio is waited upon.
+In \textit{streamAudio}, the response from WIT containing the parsed meaning of the streamed audio is waited upon.
 Once the response is received, the Pyaudio stream is closed and the response is returned from the function.
 
 \subsubsection{User-Kora Interaction Logging }
@@ -2191,9 +2191,9 @@ The function \textit{saveAs} first checks if the call is coming from \textit{sav
 
 \subsubsection{Rotate Command}
 The \textit{rotate} function begins by converting the magnitude to radians if it is not already given as radians.
-The function the proceeds to determine the axis about which it should rotate the camera.
+The function then proceeds to determine the axis about which it should rotate the camera.
 If the rotation direction is left or right, then it rotates about the vector that defines the camera's up direction.
-Otherwise if rotates about a vector that is perpendicular to the camera's up direction and to the vector that defines the camera's position relative to the origin of what it is viewing, i.e. its target.
+Otherwise it rotates about a vector that is perpendicular to the camera's up direction and to the vector that defines the camera's position relative to the origin of what it is viewing, i.e. its target.
 Before the rotation occurs, the axis of rotation is set to intersect the camera's target so that the camera is rotating around its target.
 
 
@@ -2290,8 +2290,8 @@ Before the rotation occurs, the axis of rotation is set to intersect the camera'
 \subsection{Austin}
 	\subsubsection{Technical Information Learned}
 		Among the technical things that I learned while working on this project were the event-driven programming paradigm, how to use various APIs and Python libraries, and how to work with and create Python modules.
-		Due to the nature Fusion 360 plugins, the implementation of the project necessarily relied on events to communicate and coordinate between various threads.
-		This use of events to drive the state transitions of the application was not entirely new to me, but it was a new application of something that I have only previously been familiar with in the context of web development.
+		Due to the nature of Fusion 360 plugins, the implementation of the project necessarily relied on events to communicate and coordinate between various threads.
+		The use of events to drive the state transitions of the application was not an entirely new concept to me, but it was a new application of something that I have only previously been familiar with in the context of web development.
 		There were also several libraries and APIs that I learned to use including the WIT and Fusion APIs and the Pyaudio library for Python.
 		I had no knowledge of Python modules before this project, so I also learned how to make and use them over the course of implementing Kora.
 
@@ -2302,31 +2302,26 @@ Before the rotation occurs, the axis of rotation is set to intersect the camera'
 
 	\subsubsection{Learnings About Project Work}
 		One of the biggest things that I have learned about working on projects is that they will likely take longer than you think they will.
-		Initially, I believed that we would complete all of our main objectives early on and would be able to tackle our stretch goals before the end of Winter Term.
-		This belief was naive in that it did not take into consideration the possibility of unforseen difficulties of which there were many.
-		Working of this project has taught me that things will not go as smoothly as you believe and that you should take that into consideration when estimating how long it will take you to complete everything.
+		Initially, I believed that we would complete all of our main objectives early and would be able to tackle our stretch goals before the end of Winter Term.
+		This belief was naive in that it did not take into consideration the possibility of unforseen difficulties, of which there were many.
+		Working on this project has taught me that things will not go as smoothly as you believe and that you should take that into consideration when estimating how long it will take you to complete everything.
 
 	\subsubsection{Learnings About Project Management}
-		After approximately eight months of working on Kora, I think that the keys to project management are open and frequent communication and mutual respect amongst peers.
+		After approximately eight months of working on Kora, I think that some of the keys to project management are open and frequent communication and mutual respect amongst peers.
 		We did not encounter many issues in the management of our project and I believe that it was because we had both of these things.
 		Communicating ensures that everyone on the team knows what is going on and keeps anyone from accidentally doing anything in opposition to the team's goals as a result of not being informed.
 		Mutual respect keeps everyone working together happily and prevents project-halting intra-team conflict.
 
 	\subsubsection{Learnings About Working In Teams}
-		I learned that while working with other developers, it is best if you can find code-related duties that are largely unrelated.
+		I learned that while working with other developers it is best if you can find code-related duties that are largely unrelated.
 		When developers work in the same section of the code, there is likely to be conflict when you try to merge everything together.
-		Having developers work on different parts of the code minimizes this risk.
+		Having developers work on different parts of the code minimizes the risk of this happening.
 
 	\subsubsection{Things I Would Do Differently If I Were To Do It All Again}
-		If I were to do a similar project again, I would put more effort into the Technology Review.
+		If I were to do a similar project again, I would spend more time reviewing the technologies that our project could use.
 		I was in charge of deciding what the best solution would be for handling the natural language aspects of our project, and I am not sure that I made the correct decision.
 		We had significant performance issues that stemmed from our use of WIT as a web service for handling natural language processing.
-		If I had put more time into the Technology Review, it is possible that we would not have been burdened with many of the issues that came from using WIT.
-
-
-
-
-
+		If I had put more time into researching solutions for natural language processing, it is possible that we would not have been burdened with many of the issues that came from using WIT.
 
 
 
