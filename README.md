@@ -52,13 +52,13 @@ Kora works on Windows and Mac OS
     The Add-Ins folder is generally in
 
   **Windows:**
-  _C:/Users/<users\>/AppData/Roaming/Autodesk/"Autodesk Fusion 360"/API/AddIns_
+  *C:/Users/<user\>/AppData/Roaming/Autodesk/"Autodesk Fusion 360"/API/AddIns*
 
   **Mac:**
-  _/Users/<users\>/Library/"Application Support"/Autodesk/"Autodesk Fusion 360"/API/AddIns_
+  */Users/<user\>/Library/"Application Support"/Autodesk/"Autodesk Fusion 360"/API/AddIns*
 
   2. Name the installed repository Kora. It is important that the installed repository is named Kora, to match the Add-In name.
-  3. Go to wit.ai's website and get your _Server Access Token_ and paste it in _Kora/main/config.py WIT_AI_CLIENT_ACCESS_TOKEN_
+  3. Go to wit.ai's website and get your *Server Access Token* and paste it in *Kora/main/config.py WIT\_AI\_CLIENT\_ACCESS\_TOKEN*
   3. In Fusion click on the _ADD-INS_ dropdown in the top right of the ribbon, and click _Scripts and Add-Ins..._
   4. Click the _Add-Ins_ tab at the top
   5. Click _Create_
@@ -69,42 +69,53 @@ Kora works on Windows and Mac OS
   9. Click the _Add-Ins_ tab at the top
   10. Click _Activate Kora_
 
-
-
-
-
 <a name="sourceCode"></a>
 ## Explaining The Source Code
 
- <a name="interactionLogging"></a>
- ##### User-Kora Interaction Logging  
- ***
- Inside of _Kora/main/modules/logging_ is the relevant code.
- **interaction.py** has the _Mongoengine_ class that outlines how the user-kora interaction document should be stored. **logInteraction.py** is the python decorator responsible for the actual storing of the interaction document. It first calls **mongoSetup.py** to initiate the connection to the mongoDB daemon.
+<a name="nlp"></a> 
+##### Recording and Parsing Voice Commands
+***
+The recording and parsing of user voice commands occurs in the *nlp* module and is all done via the *streamAudio* function which takes optional callbacks for when the beginning and end of a command is detected.
+The function begins by opening an audio stream using the Pyaudio library and making an HTTP request to WIT to parse chunked audio data coming the generator *_gen* which handles recording from the stream.
+When *\_gen* detects audio levels above a specified silence threshold, it starts recording and yielding chunks of audio to WIT.
+Upon the audio levels falling below and remaining below the threshold for a specified amount of time, the command is deemed to be complete and the end of the audio data is signalled.
+In *streamAudio* the response from WIT containing the parsed meaning of the streamed audio is waited upon. 
+Once the response is received, the Pyaudio stream is closed and the response is returned from the function.
 
- The *logInteraction()* decorator is placed above the *executeCommand()* function in **fusion_execute_intent.py**. *executeCommand()* is the function called when Kora has a response back from Wit.ai and Kora wants to figure out what command to execute then execute it. Before that happens, the JSON containing the Wit.ai response and some extra, is routed through *logInteraction()*. *logInteraction()* then extracts information from the JSON then lets the JSON continue onto the *executeCommand()*. When *executeCommand()* returns, it returns to *logInteraction()* where the remaining fields needed to store the interaction document are extracted.
- *logInteraction()* then inserts the interaction document into the mongoDB database.
+<a name="interactionLogging"></a>
+##### User-Kora Interaction Logging
+***
+Inside of **Kora/main/modules/logging** is the relevant code.
+The file **interaction.py** has the *Mongoengine* class that outlines how the user-kora interaction document should be stored. The function *logInteraction* is the python decorator responsible for the actual storing of the interaction document. It first calls *mongoSetup* to initiate the connection to the mongoDB daemon.
 
+In **fusion\_execute\_intent.py**, the *executeCommand* function is decorated by *logInteraction* and is called when Kora has a response back from Wit.ai and Kora wants to figure out what command to execute then execute it. Before that happens, the JSON containing the Wit.ai response and some extra, is routed through *logInteraction*. The *logInteraction* function then extracts information from the JSON then lets the JSON continue on to *executeCommand*. When *executeCommand* returns, it returns to *logInteraction* where the remaining fields needed to store the interaction document are extracted.
+Then *logInteraction* inserts the interaction document into the mongoDB database.
 
- <a name="extrudeCmd"></a>
- ##### Extrude Command  
- ***
- All of the commands are located in <em>Kora/main/modules/fusion_execute_intent/tasks</em>. The _extrude()_ function is given a sting representing what the user said, the magnitude, and the units.
-_extrude()_ checks if there is a "down" in the sentence. If there is and the magnitude is currently positive, then the magnitude is changed to negative. Next, _extrude()_ converts the _magnitude_ to the equivalent magnitude in terms of centimeters (the API only excepts centimeters) if the _units_ are not already centimeters.
-_extrude()_ then scans through all of the profiles and faces in the project and extrudes them by _magnitude_ _units_. If there are no profiles or faces selected, then Kora prompts the user to select the profile or face they would like extruded.
+<a name="extrudeCmd"></a>
+##### Extrude Command
+***
+All of the commands are located in *Kora/main/modules/fusion\_execute\_intent/tasks*. The *extrude* function is given a string representing what the user said, the magnitude, and the units.
+*extrude* checks if there is a "down" in the sentence. If there is and the magnitude is currently positive, then the magnitude is changed to negative. Next, *extrude* converts the *magnitude* to the equivalent magnitude in terms of centimeters (the API only excepts centimeters) if the *units* are not already centimeters.
+Then *extrude* scans through all of the profiles and faces in the project and extrudes them by *magnitude units*. If there are no profiles or faces selected, then Kora prompts the user to select the profile or face they would like extruded.
 
+<a name="saveCmd"></a>
+##### Save Command
+***
+The function *save* first checks that the project has been saved before. If it hasn't then Kora prompts the user to input what they want the project to be called and then hands off the flow of control to *saveAs*. If the project has been saved already, i.e. the project has a name, then *save* goes ahead and saves the project.
 
+<a name="saveAsCmd"></a>
+##### Save As Command
+***
+The function *saveAs* first checks if the call is coming from *save*. If it is, then it creates a copy of the project and saves it as the supplied filename. Otherwise, *saveAs* first converts the supplied filename to camelcase and then creates a copy of the file and saves it under the camelcased filename.
 
- <a name="saveCmd"></a>
- ##### Save Command  
- ***
-_save()_ first checks that the project has been saved before. If it hasn't then Kora prompts the user to input what they want the project to be called and then hands off the flow of control to _saveAs()_. If the project has been saved already, i.e. the project has a name, then _save()_ goes ahead and saves the project.
-
-
- <a name="saveAsCmd"></a>
- ##### Save As Command  
- ***
-_saveAs()_ first checks if the call is coming from _save()_. If it is, then it creates a copy of the project and saves it as the supplied filename. Otherwise, _saveAs()_ firs converts the supplied filename to camelcase and then creates a copy of the file and saves it under the camelcased filename.
+<a name="rotateCmd"></a>
+##### Rotate Command
+***
+The *rotate* function begins by converting the magnitude to radians if it is not already given as radians.
+The function the proceeds to determine the axis about which it should rotate the camera.
+If the rotation direction is left or right, then it rotates about the vector that defines the camera's up direction.
+Otherwise if rotates about a vector that is perpendicular to the camera's up direction and to the vector that defines the camera's position relative to the origin of what it is viewing, i.e. its target.
+Before the rotation occurs, the axis of rotation is set to intersect the camera's target so that the camera is rotating around its target.
 
 
 
@@ -118,8 +129,8 @@ _saveAs()_ first checks if the call is coming from _save()_. If it is, then it c
 
 <a name="authors"></a>
 ## Authors
-Kora was developed by ...
-- Austin Row rowa@oregonstate.edu
+Developed by: 
+- Austin Row rowaustin.96@gmail.com
 - Jeremy Fischer fischjer4@gmail.com
 
 For their undergraduate senior project at Oregon State University
