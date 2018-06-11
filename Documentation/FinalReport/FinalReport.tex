@@ -183,6 +183,10 @@
 	Instead of only collecting button clicks on dropdown menus and ribbon items, with a voice interface Autodesk would be able to collect exactly what the user is intending to do.
 	This form of data collection rips away the ambiguity of the data.
 	\newpara
+	Kora is a proof of concept project that integrates a natural language processing library into Autodesk's 3-D computer aided design software, Fusion 360.
+	Kora is a speech-based virtual assistant for Fusion that lets users perform a subset of tasks within the product such as saving a document by verbally instructing it to perform the task.
+	Kora offers users a tool that decreases the time required to achieve their goals within Fusion by offering an interface that runs in parallel with and complements the keyboard and mouse.
+	\newpara
 	Kora was created by Austin Row and Jeremy Fischer.
 	Since the team consisted of just the two of us, we didn't have assigned roles.
 	Instead, we both touched all aspects of the project.
@@ -1793,7 +1797,7 @@
 			&
 			{
 				\begin{itemize}
-					\item Met with Jennifer and talked about the preogress report coming up
+					\item Met with Jennifer and talked about the progress report coming up
 					\item Met with Junki and talked about the progress report and poster.
 					\item Created the progress report video and turned it in
 					\item Created a general config file that has WIT access token and debug mode. If debug is on then know user-interactions get stored in the database.
@@ -1813,7 +1817,7 @@
 			&
 			{
 				\begin{itemize}
-					\item Placed an issue on WIT.ai GitHub account about the latency issue we are having. Apparently the latency used to be ~.5seconds and now that they are attempting to scale their software they have been running into latency issues. We are waiting to here back from them
+					\item Placed an issue on WIT.ai GitHub account about the latency issue we are having. Apparently the latency used to be about half a second and now that they are attempting to scale their software they have been running into latency issues. We are waiting to here back from them
 					\item Jennifer mentioned not to worry about the latency at the moment and to work on our other requirements.
 					Moving forward we will be implementing a UI and making Kora not crash on silence.
 				\end{itemize}
@@ -1860,7 +1864,7 @@
 			&
 			{
 				\begin{itemize}
-					\item Looked at WakeWord software
+					\item Looked at Wake-Word software
 					\item Popular software called Snowboy, but even the demo Seg-Faults on Mac. Spent about 3 hours trying to figure it out/tweak things and still didn’t get it to work.
 					May switch gears and start looking into NLP projects that have the wake word included in them, since we may have to pivot away from Wit.ai to reduce the latency anyway
 				\end{itemize}
@@ -2167,8 +2171,8 @@ After a command has been parsed by WIT, the response is sent in an event that is
 The recording and parsing of user voice commands occurs in the \textit{nlp} module and is all done via the \textit{streamAudio} function which takes optional callbacks for when the beginning and end of a command is detected.
 The function begins by opening an audio stream using the Pyaudio library and making an HTTP request to WIT to parse chunked audio data coming from the generator \textit{\_gen} which handles recording from the stream.
 When \textit{\_gen} detects audio levels above a specified silence threshold, it starts recording and yielding chunks of audio to WIT.
-Upon the audio levels falling below and remaining below the threshold for a specified amount of time, the command is deemed to be complete and the end of the audio data is signalled.
-In \textit{streamAudio}, the response from WIT containing the parsed meaning of the streamed audio is waited upon.
+Upon the audio levels falling below and remaining below the threshold for a specified amount of time, the command is deemed to be complete and the end of the audio data is signaled.
+In \textit{streamAudio} the response from WIT containing the parsed meaning of the streamed audio is waited upon.
 Once the response is received, the Pyaudio stream is closed and the response is returned from the function.
 
 \subsubsection{User-Kora Interaction Logging }
@@ -2187,7 +2191,7 @@ Then \textit{extrude} scans through all of the profiles and faces in the project
 The function \textit{save} first checks that the project has been saved before. If it hasn't then Kora prompts the user to input what they want the project to be called and then hands off the flow of control to \textit{saveAs}. If the project has been saved already, i.e. the project has a name, then \textit{save} goes ahead and saves the project.
 
 \subsubsection{Save As Command}
-The function \textit{saveAs} first checks if the call is coming from \textit{save}. If it is, then it creates a copy of the project and saves it as the supplied filename. Otherwise, \textit{saveAs} first converts the supplied filename to camelcase and then creates a copy of the file and saves it under the camelcased filename.
+The function \textit{saveAs} first checks if the call is coming from \textit{save}. If it is, then it creates a copy of the project and saves it as the supplied filename. Otherwise, \textit{saveAs} first converts the supplied filename to camel-case and then creates a copy of the file and saves it under the camel-cased filename.
 
 \subsubsection{Rotate Command}
 The \textit{rotate} function begins by converting the magnitude to radians if it is not already given as radians.

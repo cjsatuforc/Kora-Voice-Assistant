@@ -72,14 +72,14 @@ Kora works on Windows and Mac OS
 <a name="sourceCode"></a>
 ## Explaining The Source Code
 
-<a name="nlp"></a> 
+<a name="nlp"></a>
 ##### Recording and Parsing Voice Commands
 ***
 The recording and parsing of user voice commands occurs in the *nlp* module and is all done via the *streamAudio* function which takes optional callbacks for when the beginning and end of a command is detected.
 The function begins by opening an audio stream using the Pyaudio library and making an HTTP request to WIT to parse chunked audio data coming the generator *_gen* which handles recording from the stream.
 When *\_gen* detects audio levels above a specified silence threshold, it starts recording and yielding chunks of audio to WIT.
 Upon the audio levels falling below and remaining below the threshold for a specified amount of time, the command is deemed to be complete and the end of the audio data is signalled.
-In *streamAudio* the response from WIT containing the parsed meaning of the streamed audio is waited upon. 
+In *streamAudio* the response from WIT containing the parsed meaning of the streamed audio is waited upon.
 Once the response is received, the Pyaudio stream is closed and the response is returned from the function.
 
 <a name="interactionLogging"></a>
@@ -129,7 +129,7 @@ Before the rotation occurs, the axis of rotation is set to intersect the camera'
 
 <a name="authors"></a>
 ## Authors
-Developed by: 
+Developed by:
 - Austin Row rowaustin.96@gmail.com
 - Jeremy Fischer fischjer4@gmail.com
 
