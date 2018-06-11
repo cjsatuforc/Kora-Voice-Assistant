@@ -7,10 +7,12 @@
     2. [Preinstalled Packages](#preinstalledPackages)
 4. [Getting Started](#gettingStarted)
 5. [Explaining The Source Code](#sourceCode)
+    1. [Recording and Parsing Voice Commands](#nlp)
     1. [User-Kora Interaction Logging](#interactionLogging)
     2. [Extrude Command](#extrudeCmd)  
     3. [Save Command](#saveCmd)  
     4. [Save As Command](#saveAsCmd)  
+    4. [Rotate Command](#rotateCmd)  
 6. [Next Steps](#nextSteps)
 7. [Authors](#authors)
 
