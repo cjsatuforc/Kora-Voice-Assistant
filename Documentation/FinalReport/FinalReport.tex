@@ -2162,6 +2162,14 @@ Make sure you first read the Packages heading above.
 The application starts in the same thread running the Fusion editor and immediately spawns a thread for recording the user voice commands and performing the natural language processing on those commands.
 After a command has been parsed by WIT, the response is sent in an event that is caught and used to make the Appropriate API calls back in the main thread.
 
+\subsubsection{Recording and Parsing Commands}
+The recording and parsing of user voice commands occurs in the \textit{nlp} module and is all done via the \textit{streamAudio} function which takes optional callbacks for when the beginning and end of a command is detected.
+The function begins by opening an audio stream using the Pyaudio library and making an HTTP request to WIT to parse chunked audio data coming the generator \textit{\_gen} which handles recording from the stream.
+When \textit{\_gen} detects audio levels above a specified silence threshold, it starts recording and yielding chunks of audio to WIT.
+Upon the audio levels falling below and remaining below the threshold for a specified amount of time, the command is deemed to be complete and the end of the audio data is signalled.
+In \textit{streamAudio} the response from WIT containing the parsed meaning of the streamed audio is waited upon.
+Once the response is received, the Pyaudio stream is closed and the response is returned from the function.
+
 \subsubsection{User-Kora Interaction Logging }
 Inside of \textit{Kora/main/modules/logging} is the relevant code.
 \textbf{interaction.py} has the \textit{Mongoengine} class that outlines how the user-kora interaction document should be stored. \textbf{logInteraction.py} is the python decorator responsible for the actual storing of the interaction document. It first calls \textbf{mongoSetup.py} to initiate the connection to the mongoDB daemon.
